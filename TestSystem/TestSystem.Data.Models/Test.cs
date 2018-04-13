@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
+using TestSystem.Data.Models.Abstractions;
 
 namespace TestSystem.Data.Models
 {
-    public class Test
+    public class Test : DataModel
     {
-        [Key]
-        public Guid Id { get; set; }
-
         [Required]
         public string TestName { get; set; }
 
@@ -20,13 +17,9 @@ namespace TestSystem.Data.Models
         public string CategoryId { get; set; }
         public Category Category { get; set; }  //NP
         
-        public List<Question> Questions { get; set; }
+        public ICollection<Question> Questions { get; set; }
 
         [Required]
         public string Status { get; set; }
-        
-        [Required]
-        public bool IsDeleted { get; set; }
-
     }
 }

@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Bytes2you.Validation" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TestSystem.Data.Data\TestSystem.Data.Data.csproj" />
+    <ProjectReference Include="..\TestSystem.DTO\TestSystem.DTO.csproj" />
+    <ProjectReference Include="..\TestSystem.Infrastructure\TestSystem.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
