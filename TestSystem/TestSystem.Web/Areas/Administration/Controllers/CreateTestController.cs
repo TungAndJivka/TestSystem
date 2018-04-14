@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using TestSystem.DTO;
 
-namespace TestSystem.Web.Controllers
+namespace TestSystem.Web.Areas.Administration.Controllers
 {
     public class CreateTestController : Controller
-    {
+    {[Area("Administration")]
         public IActionResult Index()
         {
             var categories = new List<CategoryDto>()
@@ -16,7 +16,7 @@ namespace TestSystem.Web.Controllers
                 new CategoryDto() { Name = "JavaScript" }
             };
 
-            var model = new TestSystem.Web.Models.CreateTestViewModels.IndexViewModel() { Categories = categories };
+            var model = new TestSystem.Web.Areas.Administration.Models.CreateTestViewModels.IndexViewModel() { Categories = categories };
 
             if (User.IsInRole("admin"))
             {

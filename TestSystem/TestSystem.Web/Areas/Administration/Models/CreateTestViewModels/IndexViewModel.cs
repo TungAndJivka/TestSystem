@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TestSystem.DTO;
 
-namespace TestSystem.Web.Models.CreateTestViewModels
+namespace TestSystem.Web.Areas.Administration.Models.CreateTestViewModels
 {
     public class IndexViewModel
     {
