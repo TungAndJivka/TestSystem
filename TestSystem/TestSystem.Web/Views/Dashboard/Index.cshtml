@@ -4,59 +4,46 @@
 }
 
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title>@ViewData["Title"]</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-</head>
-<body>
-    <h4>@ViewData["Title"]</h4>
+<h4>@ViewData["Title"]</h4>
 
-    <div>
-        <asp:LoginName id="LoginName1" runat="server" FormatString="Welcome, {0}" />
-    </div>
+<div>
+    <asp:LoginName id="LoginName1" runat="server" FormatString="Welcome, {0}" />
+</div>
 
 
-    <div>
-
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
-            @for (int i = 0; i < Model.Categories.Count(); i++)
+<div>
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        @for (int i = 0; i < Model.Categories.Count(); i++)
+        {
+            if (i == 0)
             {
-                if (i == 0)
-                {
-                    <li class="nav-item">
-                        <a class="nav-link active"
-                           title="@i-tab"
-                           id="@i-tab"
-                           data-toggle="tab"
-                           href="#@i-content"
-                           role="tab"
-                           aria-controls="@i-content"
-                           aria-selected="true">@Model.Categories[i].Name</a>
-                    </li>
-                }
-                else
-                {
-                    <li class="nav-item">
-                        <a class="nav-link" id="@i-tab" data-toggle="tab" href="#@i-content" role="tab" aria-controls="@i-content" aria-selected="false">@Model.Categories[i].Name</a>
-                    </li>
-                }
+                <li class="nav-item">
+                    <a class="nav-link active"
+                       title="@i-tab"
+                       id="@i-tab"
+                       data-toggle="tab"
+                       href="#@i-content"
+                       role="tab"
+                       aria-controls="@i-content"
+                       aria-selected="true">@Model.Categories[i].Name</a>
+                </li>
             }
-        </ul>
-
-        <div class="tab-content" id="myTabContent2">
-            @for (int i = 0; i < Model.Categories.Count(); i++)
+            else
             {
-                <div class="tab-pane fade" id="@i-content" role="tabpanel" aria-labelledby="@i-tab">@Model.Tests[i].Name</div>
+                <li class="nav-item">
+                    <a class="nav-link" id="@i-tab" data-toggle="tab" href="#@i-content" role="tab" aria-controls="@i-content" aria-selected="false">@Model.Categories[i].Name</a>
+                </li>
+            }
+        }
+    </ul>
+    <div class="tab-content" id="myTabContent2">
+        @for (int i = 0; i < Model.Categories.Count(); i++)
+        {
+            <div class="tab-pane fade" id="@i-content" role="tabpanel" aria-labelledby="@i-tab">@Model.Tests[i].Name</div>
 
-                @*<button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
+            @*<button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
                     Start
                 </button>*@
-            }
-        </div>
-
+        }
     </div>
-
-</body>
-</html>
+</div>
