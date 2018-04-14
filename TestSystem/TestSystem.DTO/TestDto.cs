@@ -8,7 +8,6 @@ namespace TestSystem.DTO
     public class TestDto : ITestDto
     {
         public string Name { get; set; }
-        public CategoryDto Category { get; set; }
 
 
 
