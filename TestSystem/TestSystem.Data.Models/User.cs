@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
 using TestSystem.Data.Models.Abstractions;
 
 namespace TestSystem.Data.Models
@@ -7,5 +8,7 @@ namespace TestSystem.Data.Models
     public class User : IdentityUser, IDeletable
     {
         public bool IsDeleted { get; set; }
+
+        public ICollection<Result> Results { get; set; } //NP
     }
 }
