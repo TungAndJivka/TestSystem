@@ -1,8 +1,7 @@
-﻿using TestSystem.DTO.Contracts;
-
+﻿
 namespace TestSystem.DTO
 {
-    public class CategoryDto : ICategoryDto
+    public class CategoryDto
     {
         public string Name { get; set; }
     }

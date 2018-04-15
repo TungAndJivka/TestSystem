@@ -28,6 +28,7 @@
   <ItemGroup>
     <ProjectReference Include="..\TestSystem.Data.Data\TestSystem.Data.Data.csproj" />
     <ProjectReference Include="..\TestSystem.DTO\TestSystem.DTO.csproj" />
+    <ProjectReference Include="..\TestSystem.Services\TestSystem.Services.csproj" />
   </ItemGroup>
 
 </Project>

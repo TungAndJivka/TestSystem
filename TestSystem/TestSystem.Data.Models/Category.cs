@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using TestSystem.Data.Models.Abstractions;
 
 namespace TestSystem.Data.Models
 {
-    public class Category
+    public class Category : IDeletable
     {
         [Key]
         public Guid Id { get; set; }
@@ -13,5 +14,7 @@ namespace TestSystem.Data.Models
         public string Name { get; set; }
 
         public List<Test> Tests { get; set; } //NP
+
+        public bool IsDeleted { get; set; }
     }
 }

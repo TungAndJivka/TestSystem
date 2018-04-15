@@ -1,45 +1,79 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using TestSystem.Data.Data.Repositories;
+using TestSystem.Data.Data.Saver;
 using TestSystem.Data.Models;
-using TestSystem.Web.Services;
+using TestSystem.Infrastructure.Providers;
+using TestSystem.Services;
+using TestSystem.Services.Contracts;
 using TestSystem.Web.Data;
 
 namespace TestSystem.Web
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
-            Configuration = configuration;
+            this.Configuration = configuration;
+            this.Environment = env;
         }
 
         public IConfiguration Configuration { get; }
+        public IHostingEnvironment Environment { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Data
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            {
+                var connectionString = Configuration.GetConnectionString("DefaultConnection");
+                options.UseSqlServer(connectionString);
+            });
 
+            services.AddScoped(typeof(IEfGenericRepository<>), typeof(EfGenericRepository<>));
+            services.AddScoped<ISaver, Saver>();
+
+
+            // Authentication
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            // Add application services.
-            services.AddTransient<IEmailSender, EmailSender>();
+            if (this.Environment.IsDevelopment())
+            {
+                services.Configure<IdentityOptions>(options =>
+                {
+                    // Password settings
+                    options.Password.RequireDigit = false;
+                    options.Password.RequiredLength = 3;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireUppercase = false;
+                    options.Password.RequireLowercase = false;
+                    options.Password.RequiredUniqueChars = 0;
 
+                    // Lockout settings
+                    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromSeconds(1);
+                    options.Lockout.MaxFailedAccessAttempts = 999;
+                });
+            }
+
+
+            // Services
+            services.AddTransient<IUserService, UserService>();
+
+
+            // Infrastructure
             services.AddMvc();
+            //services.AddAutoMapper(); TODO fix
+            services.AddScoped<IMappingProvider, MappingProvider>();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())

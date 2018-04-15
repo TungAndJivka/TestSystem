@@ -4,8 +4,7 @@ using System.Text;
 
 namespace TestSystem.Services.Contracts
 {
-    public interface IUserService
+    public interface IQuestionService
     {
-
     }
 }

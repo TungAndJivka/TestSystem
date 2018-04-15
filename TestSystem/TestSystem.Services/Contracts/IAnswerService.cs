@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TestSystem.DTO.Contracts
+namespace TestSystem.Services.Contracts
 {
-    public interface IUserDto
+    public interface IAnswerService
     {
     }
 }

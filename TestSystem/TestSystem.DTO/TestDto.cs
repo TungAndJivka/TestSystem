@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using TestSystem.DTO.Contracts;
 
 namespace TestSystem.DTO
 {
-    public class TestDto : ITestDto
+    public class TestDto
     {
-        public string Name { get; set; } // TestName
+        public string Name { get; set; } // TestName  TODO fix
 
         public string TestName { get; set; }
 

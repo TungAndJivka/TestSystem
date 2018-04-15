@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using TestSystem.Data.Models.Abstractions;
 
 namespace TestSystem.Data.Models
 {
-    public class Result
+    public class Result : IDeletable
     {
         [Required]
         public string UserId { get; set; }
@@ -20,5 +21,7 @@ namespace TestSystem.Data.Models
 
         [Required]
         public double Score { get; set; }
+
+        public bool IsDeleted { get; set; }
     }
 }
