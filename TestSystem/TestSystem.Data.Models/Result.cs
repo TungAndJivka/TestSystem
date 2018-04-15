@@ -23,5 +23,7 @@ namespace TestSystem.Data.Models
         public double Score { get; set; }
 
         public bool IsDeleted { get; set; }
+
+        public DateTime? DeletedOn { get; set; }
     }
 }

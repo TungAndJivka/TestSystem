@@ -13,6 +13,7 @@ using TestSystem.Infrastructure.Providers;
 using TestSystem.Services;
 using TestSystem.Services.Contracts;
 using TestSystem.Web.Data;
+using TestSystem.Web.Services;
 
 namespace TestSystem.Web
 {
@@ -34,6 +35,7 @@ namespace TestSystem.Web
             {
                 var connectionString = Configuration.GetConnectionString("DefaultConnection");
                 options.UseSqlServer(connectionString);
+                //options.UseInMemoryDatabase(); // for testing  /Effort/
             });
 
             services.AddScoped(typeof(IEfGenericRepository<>), typeof(EfGenericRepository<>));
@@ -65,12 +67,14 @@ namespace TestSystem.Web
 
 
             // Services
+            services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<IUserService, UserService>();
+
 
 
             // Infrastructure
             services.AddMvc();
-            //services.AddAutoMapper(); TODO fix
+            services.AddAutoMapper();
             services.AddScoped<IMappingProvider, MappingProvider>();
         }
 
@@ -93,9 +97,9 @@ namespace TestSystem.Web
 
             app.UseMvc(routes =>
             {
-                 routes.MapRoute(
-                    name: "adminArea",
-                    template: "{area=Administration}/{controller=Home}/{action=Index}/{id?}");
+                routes.MapRoute(
+                   name: "adminArea",
+                   template: "{area=Administration}/{controller=Home}/{action=Index}/{id?}");
 
                 routes.MapRoute(
                     name: "default",

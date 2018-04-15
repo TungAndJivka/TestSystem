@@ -6,6 +6,6 @@ namespace TestSystem.Data.Models.Abstractions
     {
         bool IsDeleted { get; set; }
 
-        //DateTime? DeletedOn { get; set; }
+        DateTime? DeletedOn { get; set; }
     }
 }

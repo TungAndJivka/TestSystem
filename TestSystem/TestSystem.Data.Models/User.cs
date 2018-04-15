@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using TestSystem.Data.Models.Abstractions;
 
@@ -10,5 +11,7 @@ namespace TestSystem.Data.Models
         public bool IsDeleted { get; set; }
 
         public ICollection<Result> Results { get; set; } //NP
+
+        public DateTime? DeletedOn { get; set; }
     }
 }

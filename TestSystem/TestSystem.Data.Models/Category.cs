@@ -16,5 +16,7 @@ namespace TestSystem.Data.Models
         public List<Test> Tests { get; set; } //NP
 
         public bool IsDeleted { get; set; }
+
+        public DateTime? DeletedOn { get; set; }
     }
 }

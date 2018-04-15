@@ -8,11 +8,11 @@ using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 using TestSystem.Web.Data;
 
-namespace TestSystem.Web.Data.Migrations
+namespace TestSystem.Data.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180413181019_test")]
-    partial class test
+    [Migration("20180415151638_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -137,9 +137,15 @@ namespace TestSystem.Web.Data.Migrations
                     b.Property<string>("Content")
                         .IsRequired();
 
+                    b.Property<DateTime?>("CreatedOn");
+
+                    b.Property<DateTime?>("DeletedOn");
+
                     b.Property<bool>("IsCorrect");
 
                     b.Property<bool>("IsDeleted");
+
+                    b.Property<DateTime?>("ModifiedOn");
 
                     b.Property<Guid>("QuestionID");
 
@@ -155,6 +161,10 @@ namespace TestSystem.Web.Data.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<DateTime?>("DeletedOn");
+
+                    b.Property<bool>("IsDeleted");
+
                     b.Property<string>("Name")
                         .IsRequired();
 
@@ -168,10 +178,16 @@ namespace TestSystem.Web.Data.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<DateTime?>("CreatedOn");
+
+                    b.Property<DateTime?>("DeletedOn");
+
                     b.Property<string>("Description")
                         .IsRequired();
 
                     b.Property<bool>("IsDeleted");
+
+                    b.Property<DateTime?>("ModifiedOn");
 
                     b.Property<Guid>("TestId");
 
@@ -180,6 +196,27 @@ namespace TestSystem.Web.Data.Migrations
                     b.HasIndex("TestId");
 
                     b.ToTable("Questions");
+                });
+
+            modelBuilder.Entity("TestSystem.Data.Models.Result", b =>
+                {
+                    b.Property<string>("UserId");
+
+                    b.Property<Guid>("TestId");
+
+                    b.Property<DateTime?>("DeletedOn");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<bool>("Passed");
+
+                    b.Property<double>("Score");
+
+                    b.HasKey("UserId", "TestId");
+
+                    b.HasIndex("TestId");
+
+                    b.ToTable("Results");
                 });
 
             modelBuilder.Entity("TestSystem.Data.Models.Test", b =>
@@ -192,9 +229,15 @@ namespace TestSystem.Web.Data.Migrations
 
                     b.Property<Guid?>("CategoryId1");
 
+                    b.Property<DateTime?>("CreatedOn");
+
+                    b.Property<DateTime?>("DeletedOn");
+
                     b.Property<TimeSpan>("Duration");
 
                     b.Property<bool>("IsDeleted");
+
+                    b.Property<DateTime?>("ModifiedOn");
 
                     b.Property<string>("Status")
                         .IsRequired();
@@ -218,6 +261,8 @@ namespace TestSystem.Web.Data.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
+
+                    b.Property<DateTime?>("DeletedOn");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256);
@@ -320,6 +365,19 @@ namespace TestSystem.Web.Data.Migrations
                     b.HasOne("TestSystem.Data.Models.Test", "Test")
                         .WithMany("Questions")
                         .HasForeignKey("TestId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("TestSystem.Data.Models.Result", b =>
+                {
+                    b.HasOne("TestSystem.Data.Models.Test", "Test")
+                        .WithMany("Results")
+                        .HasForeignKey("TestId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("TestSystem.Data.Models.User", "User")
+                        .WithMany("Results")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

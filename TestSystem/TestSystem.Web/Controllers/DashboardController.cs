@@ -43,8 +43,8 @@ namespace TestSystem.Web.Controllers
                     Tests = tests
                 };
 
-                //return View("Index", model);
-                return View("IndexAdmin");
+                return View("Index", model);
+                //return View("IndexAdmin");
             }
         }
     }

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 using TestSystem.Web.Data;
 
-namespace TestSystem.Web.Data.Migrations
+namespace TestSystem.Data.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -136,9 +136,15 @@ namespace TestSystem.Web.Data.Migrations
                     b.Property<string>("Content")
                         .IsRequired();
 
+                    b.Property<DateTime?>("CreatedOn");
+
+                    b.Property<DateTime?>("DeletedOn");
+
                     b.Property<bool>("IsCorrect");
 
                     b.Property<bool>("IsDeleted");
+
+                    b.Property<DateTime?>("ModifiedOn");
 
                     b.Property<Guid>("QuestionID");
 
@@ -154,6 +160,10 @@ namespace TestSystem.Web.Data.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<DateTime?>("DeletedOn");
+
+                    b.Property<bool>("IsDeleted");
+
                     b.Property<string>("Name")
                         .IsRequired();
 
@@ -167,10 +177,16 @@ namespace TestSystem.Web.Data.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<DateTime?>("CreatedOn");
+
+                    b.Property<DateTime?>("DeletedOn");
+
                     b.Property<string>("Description")
                         .IsRequired();
 
                     b.Property<bool>("IsDeleted");
+
+                    b.Property<DateTime?>("ModifiedOn");
 
                     b.Property<Guid>("TestId");
 
@@ -186,6 +202,10 @@ namespace TestSystem.Web.Data.Migrations
                     b.Property<string>("UserId");
 
                     b.Property<Guid>("TestId");
+
+                    b.Property<DateTime?>("DeletedOn");
+
+                    b.Property<bool>("IsDeleted");
 
                     b.Property<bool>("Passed");
 
@@ -208,9 +228,15 @@ namespace TestSystem.Web.Data.Migrations
 
                     b.Property<Guid?>("CategoryId1");
 
+                    b.Property<DateTime?>("CreatedOn");
+
+                    b.Property<DateTime?>("DeletedOn");
+
                     b.Property<TimeSpan>("Duration");
 
                     b.Property<bool>("IsDeleted");
+
+                    b.Property<DateTime?>("ModifiedOn");
 
                     b.Property<string>("Status")
                         .IsRequired();
@@ -234,6 +260,8 @@ namespace TestSystem.Web.Data.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
+
+                    b.Property<DateTime?>("DeletedOn");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256);
