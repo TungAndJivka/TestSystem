@@ -12,6 +12,7 @@ using TestSystem.Data.Models;
 using TestSystem.Infrastructure.Providers;
 using TestSystem.Services;
 using TestSystem.Services.Contracts;
+using TestSystem.Web.Configuration;
 using TestSystem.Web.Data;
 using TestSystem.Web.Services;
 
@@ -105,6 +106,8 @@ namespace TestSystem.Web
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            //new UserRoleSeed(app.ApplicationServices.GetService<RoleManager<IdentityRole>>()).Seed();
         }
     }
 }

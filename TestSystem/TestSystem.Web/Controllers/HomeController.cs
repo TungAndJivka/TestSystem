@@ -78,23 +78,9 @@ namespace TestSystem.Web.Controllers
                 var result = await userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-
-                    if (!await roleManager.RoleExistsAsync("Admin"))
-                    {
-                        var role = new IdentityRole("Admin");
-                        var res = await roleManager.CreateAsync(role);
-
-                        if(res.Succeeded)
-                        {
-                            await userManager.AddToRoleAsync(user, "Admin");
-
-                            await signInManager.SignInAsync(user, isPersistent: false);
-                            logger.LogInformation("User created a new account with password.");                            
-                        }                        
-                    }
-
+                    await signInManager.SignInAsync(user, isPersistent: false);
+                    logger.LogInformation("User created a new account with password.");
                     return RedirectToAction("Index", "DashBoard");
-
                 }
                 AddErrors(result);
             }
