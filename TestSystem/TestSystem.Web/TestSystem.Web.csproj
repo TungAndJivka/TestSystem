@@ -7,9 +7,13 @@
 
   <ItemGroup>
     <Compile Remove="Data\**" />
+    <Compile Remove="Views\Account\**" />
     <Content Remove="Data\**" />
+    <Content Remove="Views\Account\**" />
     <EmbeddedResource Remove="Data\**" />
+    <EmbeddedResource Remove="Views\Account\**" />
     <None Remove="Data\**" />
+    <None Remove="Views\Account\**" />
   </ItemGroup>
 
 

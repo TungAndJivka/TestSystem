@@ -53,6 +53,13 @@ namespace TestSystem.Web.Controllers
                 if (result.Succeeded)
                 {
                     logger.LogInformation("User logged in.");
+
+                    if (User.IsInRole("Admin"))
+                    {
+                        return RedirectToAction("Index", "Administration/Dashboard");
+                    }
+
+
                     return RedirectToAction("Index", "Dashboard");
                 }
                 else
