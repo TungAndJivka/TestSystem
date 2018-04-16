@@ -99,7 +99,7 @@ namespace TestSystem.Web
             {
                 routes.MapRoute(
                    name: "adminArea",
-                   template: "{area=Administration}/{controller=Home}/{action=Index}/{id?}");
+                   template: "{area}/{controller=Home}/{action=Index}/{id?}");
 
                 routes.MapRoute(
                     name: "default",
