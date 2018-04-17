@@ -21,10 +21,10 @@ namespace TestSystem.Services
             this.UserTestRepo = resultRepo;
         }
 
-        public IEnumerable<ResultDto> GetAll()
+        public IEnumerable<UserTestDto> GetAll()
         {
             var entities = this.UserTestRepo.All.ToList();
-            var results = this.Mapper.ProjectTo<ResultDto>(entities);
+            var results = this.Mapper.ProjectTo<UserTestDto>(entities);
             return results;
         }
     }

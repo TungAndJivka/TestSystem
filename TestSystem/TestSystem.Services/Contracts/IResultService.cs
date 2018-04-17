@@ -5,6 +5,6 @@ namespace TestSystem.Services.Contracts
 {
     public interface IResultService
     {
-        IEnumerable<ResultDto> GetAll();
+        IEnumerable<UserTestDto> GetAll();
     }
 }
