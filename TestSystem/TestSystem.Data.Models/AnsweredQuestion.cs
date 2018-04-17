@@ -14,7 +14,7 @@ namespace TestSystem.Data.Models
 
 
         [Required]
-        public Guid AnswersId { get; set; }
+        public Guid AnswerId { get; set; }
         public Answer Answer { get; set; } //NP
     }
 }

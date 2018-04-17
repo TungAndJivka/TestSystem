@@ -160,9 +160,7 @@ namespace TestSystem.Data.Data.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid?>("AnswerId");
-
-                    b.Property<Guid>("AnswersId");
+                    b.Property<Guid>("AnswerId");
 
                     b.Property<DateTime?>("CreatedOn");
 
@@ -188,9 +186,13 @@ namespace TestSystem.Data.Data.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<DateTime?>("CreatedOn");
+
                     b.Property<DateTime?>("DeletedOn");
 
                     b.Property<bool>("IsDeleted");
+
+                    b.Property<DateTime?>("ModifiedOn");
 
                     b.Property<string>("Name")
                         .IsRequired();
@@ -230,10 +232,7 @@ namespace TestSystem.Data.Data.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("CategoryId")
-                        .IsRequired();
-
-                    b.Property<Guid?>("CategoryId1");
+                    b.Property<Guid>("CategoryId");
 
                     b.Property<DateTime?>("CreatedOn");
 
@@ -243,17 +242,20 @@ namespace TestSystem.Data.Data.Migrations
 
                     b.Property<bool>("IsDeleted");
 
-                    b.Property<DateTime?>("ModifiedOn");
+                    b.Property<bool>("IsPusblished");
 
-                    b.Property<string>("Status")
-                        .IsRequired();
+                    b.Property<DateTime?>("ModifiedOn");
 
                     b.Property<string>("TestName")
                         .IsRequired();
 
+                    b.Property<string>("UserId");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId1");
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Tests");
                 });
@@ -401,12 +403,13 @@ namespace TestSystem.Data.Data.Migrations
                 {
                     b.HasOne("TestSystem.Data.Models.Answer", "Answer")
                         .WithMany("AnsweredQuestions")
-                        .HasForeignKey("AnswerId");
+                        .HasForeignKey("AnswerId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("TestSystem.Data.Models.UserTest", "UserTest")
                         .WithMany("AnsweredQuestions")
                         .HasForeignKey("UserTestId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("TestSystem.Data.Models.Question", b =>
@@ -421,7 +424,12 @@ namespace TestSystem.Data.Data.Migrations
                 {
                     b.HasOne("TestSystem.Data.Models.Category", "Category")
                         .WithMany("Tests")
-                        .HasForeignKey("CategoryId1");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("TestSystem.Data.Models.User")
+                        .WithMany("Tests")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("TestSystem.Data.Models.UserTest", b =>

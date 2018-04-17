@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace TestSystem.Data.Data.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Initial1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -55,8 +55,10 @@ namespace TestSystem.Data.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    CreatedOn = table.Column<DateTime>(nullable: true),
                     DeletedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
+                    ModifiedOn = table.Column<DateTime>(nullable: true),
                     Name = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
@@ -175,23 +177,29 @@ namespace TestSystem.Data.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    CategoryId = table.Column<string>(nullable: false),
-                    CategoryId1 = table.Column<Guid>(nullable: true),
+                    CategoryId = table.Column<Guid>(nullable: false),
                     CreatedOn = table.Column<DateTime>(nullable: true),
                     DeletedOn = table.Column<DateTime>(nullable: true),
                     Duration = table.Column<TimeSpan>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
+                    IsPusblished = table.Column<bool>(nullable: false),
                     ModifiedOn = table.Column<DateTime>(nullable: true),
-                    Status = table.Column<string>(nullable: false),
-                    TestName = table.Column<string>(nullable: false)
+                    TestName = table.Column<string>(nullable: false),
+                    UserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Tests", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Tests_Categories_CategoryId1",
-                        column: x => x.CategoryId1,
+                        name: "FK_Tests_Categories_CategoryId",
+                        column: x => x.CategoryId,
                         principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Tests_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -279,8 +287,7 @@ namespace TestSystem.Data.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    AnswerId = table.Column<Guid>(nullable: true),
-                    AnswersId = table.Column<Guid>(nullable: false),
+                    AnswerId = table.Column<Guid>(nullable: false),
                     CreatedOn = table.Column<DateTime>(nullable: true),
                     DeletedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
@@ -295,13 +302,13 @@ namespace TestSystem.Data.Data.Migrations
                         column: x => x.AnswerId,
                         principalTable: "Answers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_AnsweredQuestions_UserTests_UserTestId",
                         column: x => x.UserTestId,
                         principalTable: "UserTests",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -364,9 +371,14 @@ namespace TestSystem.Data.Data.Migrations
                 column: "TestId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tests_CategoryId1",
+                name: "IX_Tests_CategoryId",
                 table: "Tests",
-                column: "CategoryId1");
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tests_UserId",
+                table: "Tests",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserTests_TestId",
@@ -412,13 +424,13 @@ namespace TestSystem.Data.Data.Migrations
                 name: "Questions");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
                 name: "Tests");
 
             migrationBuilder.DropTable(
                 name: "Categories");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
         }
     }
 }

@@ -7,6 +7,11 @@ namespace TestSystem.Data.Models
 {
     public class Test : DataModel
     {
+        public Test()
+        {
+            this.Questions = new HashSet<Question>();           
+        }
+
         [Required]
         public string TestName { get; set; }
 
@@ -14,13 +19,13 @@ namespace TestSystem.Data.Models
         public TimeSpan Duration { get; set; }
 
         [Required]
-        public string CategoryId { get; set; }
+        public Guid CategoryId { get; set; }
         public Category Category { get; set; }  //NP
         
         public ICollection<Question> Questions { get; set; }
 
         [Required]
-        public string Status { get; set; }
+        public bool IsPusblished { get; set; }
 
         public ICollection<UserTest> UserTests { get; set; } //NP
     }
