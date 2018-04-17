@@ -37,4 +37,8 @@
     <ProjectReference Include="..\TestSystem.Services\TestSystem.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Configuration\" />
+  </ItemGroup>
+
 </Project>

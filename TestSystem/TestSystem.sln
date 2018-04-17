@@ -15,11 +15,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestSystem.Data.Models", "T
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Business", "Business", "{4440FEED-6C7B-4B77-88D5-1A228B0CE94B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSystem.Services", "TestSystem.Services\TestSystem.Services.csproj", "{55DB2B3F-FC4D-43CE-AACD-D71D046BED85}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestSystem.Services", "TestSystem.Services\TestSystem.Services.csproj", "{55DB2B3F-FC4D-43CE-AACD-D71D046BED85}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSystem.Infrastructure", "TestSystem.Infrastructure\TestSystem.Infrastructure.csproj", "{9D88D3A4-DB32-4329-A0C1-A20C37024893}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestSystem.Infrastructure", "TestSystem.Infrastructure\TestSystem.Infrastructure.csproj", "{9D88D3A4-DB32-4329-A0C1-A20C37024893}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSystem.DTO", "TestSystem.DTO\TestSystem.DTO.csproj", "{EC240C5D-DBEC-465F-9586-E06CF1596E86}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestSystem.DTO", "TestSystem.DTO\TestSystem.DTO.csproj", "{EC240C5D-DBEC-465F-9586-E06CF1596E86}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{F64120E5-2446-4DEE-A857-02169A41B162}"
 EndProject

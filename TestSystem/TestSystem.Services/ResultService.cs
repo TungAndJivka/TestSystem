@@ -12,18 +12,18 @@ namespace TestSystem.Services
 {
     public class ResultService : AbstractService, IResultService
     {
-        private IEfGenericRepository<Result> resultRepo;
+        private IEfGenericRepository<UserTest> UserTestRepo;
 
-        public ResultService(IEfGenericRepository<Result> resultRepo, IMappingProvider mapper, ISaver saver)
+        public ResultService(IEfGenericRepository<UserTest> resultRepo, IMappingProvider mapper, ISaver saver)
             : base(mapper, saver)
         {
             Guard.WhenArgument(resultRepo, "resultRepo").IsNull().Throw();
-            this.resultRepo = resultRepo;
+            this.UserTestRepo = resultRepo;
         }
 
         public IEnumerable<ResultDto> GetAll()
         {
-            var entities = this.resultRepo.All.ToList();
+            var entities = this.UserTestRepo.All.ToList();
             var results = this.Mapper.ProjectTo<ResultDto>(entities);
             return results;
         }

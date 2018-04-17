@@ -155,6 +155,34 @@ namespace TestSystem.Data.Data.Migrations
                     b.ToTable("Answers");
                 });
 
+            modelBuilder.Entity("TestSystem.Data.Models.AnsweredQuestion", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid?>("AnswerId");
+
+                    b.Property<Guid>("AnswersId");
+
+                    b.Property<DateTime?>("CreatedOn");
+
+                    b.Property<DateTime?>("DeletedOn");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<DateTime?>("ModifiedOn");
+
+                    b.Property<Guid>("UserTestId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AnswerId");
+
+                    b.HasIndex("UserTestId");
+
+                    b.ToTable("AnsweredQuestions");
+                });
+
             modelBuilder.Entity("TestSystem.Data.Models.Category", b =>
                 {
                     b.Property<Guid>("Id")
@@ -195,27 +223,6 @@ namespace TestSystem.Data.Data.Migrations
                     b.HasIndex("TestId");
 
                     b.ToTable("Questions");
-                });
-
-            modelBuilder.Entity("TestSystem.Data.Models.Result", b =>
-                {
-                    b.Property<string>("UserId");
-
-                    b.Property<Guid>("TestId");
-
-                    b.Property<DateTime?>("DeletedOn");
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<bool>("Passed");
-
-                    b.Property<double>("Score");
-
-                    b.HasKey("UserId", "TestId");
-
-                    b.HasIndex("TestId");
-
-                    b.ToTable("Results");
                 });
 
             modelBuilder.Entity("TestSystem.Data.Models.Test", b =>
@@ -306,6 +313,37 @@ namespace TestSystem.Data.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("TestSystem.Data.Models.UserTest", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime?>("CreatedOn");
+
+                    b.Property<DateTime?>("DeletedOn");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<DateTime?>("ModifiedOn");
+
+                    b.Property<bool>("Passed");
+
+                    b.Property<double>("Score");
+
+                    b.Property<Guid>("TestId");
+
+                    b.Property<string>("UserId")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TestId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserTests");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
@@ -359,6 +397,18 @@ namespace TestSystem.Data.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("TestSystem.Data.Models.AnsweredQuestion", b =>
+                {
+                    b.HasOne("TestSystem.Data.Models.Answer", "Answer")
+                        .WithMany("AnsweredQuestions")
+                        .HasForeignKey("AnswerId");
+
+                    b.HasOne("TestSystem.Data.Models.UserTest", "UserTest")
+                        .WithMany("AnsweredQuestions")
+                        .HasForeignKey("UserTestId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("TestSystem.Data.Models.Question", b =>
                 {
                     b.HasOne("TestSystem.Data.Models.Test", "Test")
@@ -367,24 +417,24 @@ namespace TestSystem.Data.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("TestSystem.Data.Models.Result", b =>
-                {
-                    b.HasOne("TestSystem.Data.Models.Test", "Test")
-                        .WithMany("Results")
-                        .HasForeignKey("TestId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("TestSystem.Data.Models.User", "User")
-                        .WithMany("Results")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("TestSystem.Data.Models.Test", b =>
                 {
                     b.HasOne("TestSystem.Data.Models.Category", "Category")
                         .WithMany("Tests")
                         .HasForeignKey("CategoryId1");
+                });
+
+            modelBuilder.Entity("TestSystem.Data.Models.UserTest", b =>
+                {
+                    b.HasOne("TestSystem.Data.Models.Test", "Test")
+                        .WithMany("UserTests")
+                        .HasForeignKey("TestId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("TestSystem.Data.Models.User", "User")
+                        .WithMany("UserTests")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

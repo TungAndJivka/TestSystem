@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using TestSystem.Data.Models.Abstractions;
 
@@ -14,5 +15,7 @@ namespace TestSystem.Data.Models
 
         [Required]
         public bool IsCorrect {get; set;}
+
+        public ICollection<AnsweredQuestion> AnsweredQuestions { get; set; } //NP
     }
 }

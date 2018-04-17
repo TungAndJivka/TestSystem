@@ -22,6 +22,6 @@ namespace TestSystem.Data.Models
         [Required]
         public string Status { get; set; }
 
-        public ICollection<Result> Results { get; set; } //NP
+        public ICollection<UserTest> UserTests { get; set; } //NP
     }
 }

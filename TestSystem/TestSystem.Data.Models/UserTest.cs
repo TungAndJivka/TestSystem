@@ -6,8 +6,9 @@ using TestSystem.Data.Models.Abstractions;
 
 namespace TestSystem.Data.Models
 {
-    public class Result : IDeletable
+    public class UserTest : DataModel
     {
+
         [Required]
         public string UserId { get; set; }
         public User User { get; set; } //Np
@@ -22,8 +23,7 @@ namespace TestSystem.Data.Models
         [Required]
         public double Score { get; set; }
 
-        public bool IsDeleted { get; set; }
 
-        public DateTime? DeletedOn { get; set; }
+        public ICollection<AnsweredQuestion> AnsweredQuestions { get; set; } //NP
     }
 }

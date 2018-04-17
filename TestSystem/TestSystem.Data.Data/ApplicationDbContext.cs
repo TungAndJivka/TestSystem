@@ -35,14 +35,14 @@ namespace TestSystem.Web.Data
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
-            builder.Entity<Result>().HasKey(x => new { x.UserId, x.TestId });
         }
 
         public DbSet<Answer> Answers { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Test> Tests { get; set; }
-        public DbSet<Result> Results { get; set; }
+        public DbSet<UserTest> UserTests { get; set; }
+        public DbSet<AnsweredQuestion> AnsweredQuestions { get; set; }
 
     }
 }
