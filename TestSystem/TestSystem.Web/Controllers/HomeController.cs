@@ -52,12 +52,8 @@ namespace TestSystem.Web.Controllers
                 var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+                    //result.
                     logger.LogInformation("User logged in.");
-
-                    if (User.IsInRole("Admin"))
-                    {
-                        return RedirectToAction("Index", "Administration/Dashboard");
-                    }
 
 
                     return RedirectToAction("Index", "Dashboard");

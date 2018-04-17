@@ -2,18 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TestSystem.DTO;
 using TestSystem.Web.Models.DashboardViewModels;
 
 namespace TestSystem.Web.Controllers
 {
+    [Authorize]
     public class DashboardController : Controller
     {
         public IActionResult Index()
         {
 
-
+            if (User.IsInRole("Admin"))
+            {
+                return RedirectToAction("Index", "Administration/Dashboard");
+            }
             var cat1 = new CategoryDto() { Name = "Java" };
             var cat2 = new CategoryDto() { Name = "SQL" };
             var cat3 = new CategoryDto() { Name = ".NET" };
