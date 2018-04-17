@@ -7,8 +7,6 @@ namespace TestSystem.Services.Contracts
 {
     public interface ITestService
     {
-        IEnumerable<TestDto> GetAll();
-
-        IEnumerable<TestDto> GetAllByCategory();
+        IEnumerable<TestDto> GetUserTests(string Id);
     }
 }
