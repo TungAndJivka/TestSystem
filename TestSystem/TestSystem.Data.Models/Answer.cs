@@ -7,6 +7,11 @@ namespace TestSystem.Data.Models
 {
     public class Answer : DataModel
     {
+        public Answer()
+        {
+            this.AnsweredQuestions = new HashSet<AnsweredQuestion>();
+        }
+
         [Required]
         public string Content { get; set; }
 

@@ -1,4 +1,5 @@
 ﻿using Bytes2you.Validation;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,13 @@ namespace TestSystem.Services
         public IEnumerable<CategoryDto> GetAll()
         {
             var entities = this.categoryRepo.All.ToList();
+            var categories = this.Mapper.ProjectTo<CategoryDto>(entities);
+            return categories;
+        }
+
+        public IEnumerable<CategoryDto> GetAllWithTests()
+        {
+            var entities = this.categoryRepo.All.Include(x => x.Tests).ToList();
             var categories = this.Mapper.ProjectTo<CategoryDto>(entities);
             return categories;
         }

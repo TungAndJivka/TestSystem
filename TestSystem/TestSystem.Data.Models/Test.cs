@@ -9,7 +9,8 @@ namespace TestSystem.Data.Models
     {
         public Test()
         {
-            this.Questions = new HashSet<Question>();           
+            this.Questions = new HashSet<Question>();
+            this.UserTests = new HashSet<UserTest>();
         }
 
         [Required]

@@ -12,6 +12,11 @@ namespace TestSystem.Web.Controllers
     [Authorize]
     public class DashboardController : Controller
     {
+        public DashboardController()
+        {
+
+        }
+
         public IActionResult Index()
         {
 

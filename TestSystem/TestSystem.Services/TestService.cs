@@ -27,9 +27,19 @@ namespace TestSystem.Services
 
         public IEnumerable<TestDto> GetUserTests(string id)
         {
-            var userTests = userRepo.All.Include(u => u.Tests).Where(u => u.Id == id).SelectMany(u => u.Tests).ToArray();
-            var result = this.Mapper.ProjectTo<TestDto>(userTests);
+            var entities = userRepo.All.Include(u => u.Tests).Where(u => u.Id == id).SelectMany(u => u.Tests).ToArray();
+            var result = this.Mapper.ProjectTo<TestDto>(entities);
             return result;
         }
+
+        //public TestDto GetOneRandomTestByCategory(string categoryName)
+        //{
+        //    var max = this.testRepo.All.Where(t => t.Category.Name == categoryName).Count();
+        //    int rnd = this.Random.Next(0, max - 1);
+        //    var test = testRepo.All.Skip(rnd).FirstOrDefault();
+
+        //    var result = this.Mapper.MapTo<TestDto>(test);
+        //    return result;
+        //}
     }
 }
