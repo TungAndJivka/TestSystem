@@ -34,6 +34,7 @@ namespace TestSystem.Web.Controllers
             this.logger = logger;
             this.roleManager = roleManager;
         }
+
         public IActionResult Index()
         {
             return View();
@@ -83,13 +84,13 @@ namespace TestSystem.Web.Controllers
                 {
                     await signInManager.SignInAsync(user, isPersistent: false);
                     logger.LogInformation("User created a new account with password.");
-                    return RedirectToAction("Index", "DashBoard");
+                    return RedirectToAction("Index", "Dashboard");
                 }
                 AddErrors(result);
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return View("Index");
         }
 
 

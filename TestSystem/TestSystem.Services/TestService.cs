@@ -27,9 +27,9 @@ namespace TestSystem.Services
 
         public IEnumerable<TestDto> GetUserTests(string id)
         {
-            var userTests = userRepo.All.Include(u => u.Tests).Where(u => u.Id == id).SelectMany(u => u.Tests);
-
-            
+            var userTests = userRepo.All.Include(u => u.Tests).Where(u => u.Id == id).SelectMany(u => u.Tests).ToArray();
+            var result = this.Mapper.ProjectTo<TestDto>(userTests);
+            return result;
         }
     }
 }

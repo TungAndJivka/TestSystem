@@ -14,19 +14,18 @@ namespace TestSystem.Web.Data
             : base(options)
         {
             Seed();
-
         }
 
         private void Seed()
         {
-            //if (true)//this.Categories.Count() == 0)
-            //{
-            //    this.Categories.Add(new Category() { Id = Guid.NewGuid(), Name = "Java" });
-            //    this.Categories.Add(new Category() { Id = Guid.NewGuid(), Name = "SQL" });
-            //    this.Categories.Add(new Category() { Id = Guid.NewGuid(), Name = "JavaScript" });
-            //    this.Categories.Add(new Category() { Id = Guid.NewGuid(), Name = ".Net" });
-            //    this.SaveChanges();
-            //}
+            if (this.Categories != null && this.Categories.Count() == 0)
+            {
+                this.Categories.Add(new Category() { CreatedOn = DateTime.Now, Id = Guid.NewGuid(), Name = "Java" });
+                this.Categories.Add(new Category() { CreatedOn = DateTime.Now, Id = Guid.NewGuid(), Name = "SQL" });
+                this.Categories.Add(new Category() { CreatedOn = DateTime.Now, Id = Guid.NewGuid(), Name = "JavaScript" });
+                this.Categories.Add(new Category() { CreatedOn = DateTime.Now, Id = Guid.NewGuid(), Name = ".Net" });
+                this.SaveChanges();
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
