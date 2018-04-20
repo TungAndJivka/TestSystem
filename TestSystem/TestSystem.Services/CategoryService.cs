@@ -25,7 +25,7 @@ namespace TestSystem.Services
 
         public IEnumerable<CategoryDto> GetAll()
         {
-            var entities = this.categoryRepo.All.ToList();
+            var entities = this.categoryRepo.All;
             var categories = this.Mapper.ProjectTo<CategoryDto>(entities);
             return categories;
         }

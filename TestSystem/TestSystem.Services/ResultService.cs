@@ -24,7 +24,7 @@ namespace TestSystem.Services
 
         public IEnumerable<UserTestDto> GetAll()
         {
-            var entities = this.userTestRepo.All.ToList();
+            var entities = this.userTestRepo.All;
             var results = this.Mapper.ProjectTo<UserTestDto>(entities);
             return results;
         }

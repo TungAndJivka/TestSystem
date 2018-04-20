@@ -24,7 +24,7 @@ namespace TestSystem.Infrastructure.Providers
             return source.ProjectTo<TDestination>();
         }
 
-        public IEnumerable<TDestination> ProjectTo<TDestination>(IEnumerable<object> source)
+        public IEnumerable<TDestination> EnumerableProjectTo<TDestination>(IEnumerable<object> source)
         {
             return source.AsQueryable().ProjectTo<TDestination>();
         }

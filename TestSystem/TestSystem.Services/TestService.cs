@@ -28,14 +28,14 @@ namespace TestSystem.Services
         public IEnumerable<TestDto> GetAll()
         {
             var entities = this.testRepo.All.ToList();
-            var tests = this.Mapper.ProjectTo<TestDto>(entities);
+            var tests = this.Mapper.ProjectTo<TestDto>(entities.AsQueryable());
             return tests;
         }
 
         public IEnumerable<TestDto> GetUserTests(string id)
         {
             var entities = userRepo.All.Include(u => u.Tests).Where(u => u.Id == id).SelectMany(u => u.Tests).ToArray();
-            var result = this.Mapper.ProjectTo<TestDto>(entities);
+            var result = this.Mapper.ProjectTo<TestDto>(entities.AsQueryable());
             return result;
         }
 

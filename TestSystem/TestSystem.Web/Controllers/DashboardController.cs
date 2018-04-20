@@ -43,7 +43,7 @@ namespace TestSystem.Web.Controllers
             var model = new IndexViewModel()
             {
                 Title = "Dashboard",
-                Categories = (this.mapper.ProjectTo<CategoryViewModel>(categoriesDto)).ToList(),
+                Categories = (this.mapper.ProjectTo<CategoryViewModel>(categoriesDto.AsQueryable())).ToList(),
                 //Tests = tests
             };
 
