@@ -71,7 +71,6 @@ namespace TestSystem.Web.Controllers
                     //result.
                     logger.LogInformation("User logged in.");
 
-
                     return RedirectToAction("Index", "Dashboard");
                 }
                 else
@@ -81,7 +80,6 @@ namespace TestSystem.Web.Controllers
                 }
             }
 
-            // If we got this far, something failed, redisplay form
             return View("Index");
         }
 
@@ -98,14 +96,6 @@ namespace TestSystem.Web.Controllers
 
                 if (result.Succeeded)
                 {
-                    var categories = this.categoryService.GetAll();
-
-                    foreach (var c in categories)
-                    {
-                        Guid randomTestId = this.testService.GetRandomTestIdByCategory(c.Name);
-                        this.resultService.AddNewResult(user.Id, randomTestId);
-                    }                    
-
                     await signInManager.SignInAsync(user, isPersistent: false);
                     logger.LogInformation("User created a new account with password.");
                     return RedirectToAction("Index", "Dashboard");
@@ -114,7 +104,6 @@ namespace TestSystem.Web.Controllers
                 AddErrors(result);
             }
 
-            // If we got this far, something failed, redisplay form
             return View("Index");
         }
 

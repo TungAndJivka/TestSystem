@@ -1,8 +1,10 @@
 ﻿using Bytes2you.Validation;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using TestSystem.Data.Data.Repositories;
 using TestSystem.Data.Data.Saver;
 using TestSystem.Data.Models;
+using TestSystem.DTO;
 using TestSystem.Infrastructure.Providers;
 using TestSystem.Services.Contracts;
 
@@ -17,6 +19,13 @@ namespace TestSystem.Services
         {
             Guard.WhenArgument(userRepo, "userRepo").IsNull().Throw();
             this.userRepo = userRepo;
+        }
+
+        public UserDto GetUserByIdWithTests(string userId)
+        {
+            var entity = userRepo.All.Where(u => u.Id == userId).Include(u => u.UserTests).FirstOrDefault();
+            var userDto = Mapper.MapTo<UserDto>(entity);
+            return userDto;
         }
 
     }

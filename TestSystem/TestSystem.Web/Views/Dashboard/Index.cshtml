@@ -13,40 +13,39 @@
 
 <div>
     <ul class="nav nav-tabs" id="myTab" role="tablist">
+
         @for (int i = 0; i < Model.Categories.Count(); i++)
         {
-            if (i == 0)
-            {
-                <li class="nav-item">
-                    <a class="nav-link active"
-                       title="@i-tab"
-                       id="@i-tab"
-                       data-toggle="tab"
-                       href="#@i-content"
-                       role="tab"
-                       aria-controls="@i-content"
-                       aria-selected="true">@Model.Categories[i].Name</a>
-                </li>
-            }
-            else
-            {
-                <li class="nav-item">
-                    <a class="nav-link" id="@i-tab" data-toggle="tab" href="#@i-content" role="tab" aria-controls="@i-content" aria-selected="false">@Model.Categories[i].Name</a>
-                </li>
-            }
+            string categoryName = Model.Categories[i].Name;
+            
+            <li class="nav-item">
+                <a class="nav-link"
+                   title="@i-tab"
+                   id="@categoryName-tab"
+                   data-toggle="tab"
+                   href="#@i-content"
+                   role="tab"
+                   aria-controls="@i-content"
+                   aria-selected="true">
+                    @Model.Categories[i].Name
+                    (o)
+                </a>
+            </li>
         }
     </ul>
 
     <div class="tab-content" id="myTabContent2">
 
-        @for (int i = 0; i < Model.Categories.Count(); i++)
-        {
-            <div class="tab-pane fade" id="@i-content" role="tabpanel" aria-labelledby="@i-tab">@Model.Tests[i].Name</div>
 
-            <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
-                    Start
-                </button>
-        }
+        @*@for (int i = 0; i < Model.Categories.Count(); i++)
+            {
+                <div class="tab-pane fade" id="@i-content" role="tabpanel" aria-labelledby="@i-tab">@Model.Tests[i].Name</div>
+
+                <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
+                        Start
+                    </button>
+            }*@
 
     </div>
+
 </div>
