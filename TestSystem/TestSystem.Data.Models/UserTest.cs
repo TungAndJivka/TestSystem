@@ -9,6 +9,10 @@ namespace TestSystem.Data.Models
     public class UserTest : DataModel
     {
         //To Be added Start Time
+        public UserTest()
+        {
+            this.AnsweredQuestions = new HashSet<AnsweredQuestion>();
+        }
 
         [Required]
         public string UserId { get; set; }
@@ -18,12 +22,11 @@ namespace TestSystem.Data.Models
         public Guid TestId { get; set; }
         public Test Test { get; set; } //NP
 
-        [Required]
-        public bool Passed { get; set; }
+        public bool? Passed { get; set; }
 
-        [Required]
-        public double Score { get; set; }
+        public double? Score { get; set; }
 
+        public DateTime? StartTime { get; set; }
 
         public ICollection<AnsweredQuestion> AnsweredQuestions { get; set; } //NP
     }

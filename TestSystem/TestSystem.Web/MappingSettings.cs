@@ -21,6 +21,7 @@ namespace TestSystem.Web
             //this.CreateMap<PostViewModel, PostDto>(MemberList.Source);
             //this.CreateMap<PostDto, Post>(MemberList.Source);
             //this.CreateMap<CommentDto, Comment>(MemberList.Source);
+
         }
     }
 }

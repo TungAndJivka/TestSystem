@@ -12,6 +12,7 @@ namespace TestSystem.Data.Models
         public User()
         {
             this.Tests = new HashSet<Test>();
+            this.UserTests = new HashSet<UserTest>();
         }
 
         public ICollection<Test> Tests { get; set; }

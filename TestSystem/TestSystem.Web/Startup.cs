@@ -31,7 +31,13 @@ namespace TestSystem.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
-            // Data
+            RegisterData(services);
+            RegisterAuthentication(services);
+            RegisterServices(services);
+            RegisterInfrastructure(services);
+        }
+
+        private void RegisterData(IServiceCollection services) {
             services.AddDbContext<ApplicationDbContext>(options =>
             {
                 var connectionString = Configuration.GetConnectionString("DefaultConnection");
@@ -41,9 +47,10 @@ namespace TestSystem.Web
 
             services.AddScoped(typeof(IEfGenericRepository<>), typeof(EfGenericRepository<>));
             services.AddScoped<ISaver, Saver>();
+        }
 
-
-            // Authentication
+        private void RegisterAuthentication(IServiceCollection services)
+        {
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
@@ -65,18 +72,27 @@ namespace TestSystem.Web
                     options.Lockout.MaxFailedAccessAttempts = 999;
                 });
             }
+        }
 
-
-            // Services
+        private void RegisterServices(IServiceCollection services)
+        {
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<ICategoryService, CategoryService>();
+            services.AddTransient<ITestService, TestService>();
+            services.AddTransient<IQuestionService, QuestionService>();
+            services.AddTransient<IAnswerService, AnswerService>();
+            services.AddTransient<IResultService, ResultService>();
+        }
 
-
-
-            // Infrastructure
+        private void RegisterInfrastructure(IServiceCollection services)
+        {
             services.AddMvc();
             services.AddAutoMapper();
             services.AddScoped<IMappingProvider, MappingProvider>();
+            services.AddScoped<IRandomProvider, RandomProvider>();
+
+            services.AddScoped<Random>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

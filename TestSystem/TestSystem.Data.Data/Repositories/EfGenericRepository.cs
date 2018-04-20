@@ -3,15 +3,16 @@ using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using TestSystem.Data.Models.Abstractions;
+using TestSystem.Web.Data;
 
 namespace TestSystem.Data.Data.Repositories
 {
     public class EfGenericRepository<T> : IEfGenericRepository<T>
     where T : class, IDeletable
     {
-        private readonly DbContext context;
+        private readonly ApplicationDbContext context;
 
-        public EfGenericRepository(DbContext context)
+        public EfGenericRepository(ApplicationDbContext context)
         {
             this.context = context;
         }

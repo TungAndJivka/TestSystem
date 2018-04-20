@@ -9,20 +9,20 @@ namespace TestSystem.Services
     {
         private readonly IMappingProvider mapper;
         private readonly ISaver saver;
-        private readonly Random random;
+        private readonly IRandomProvider random;
 
-        public AbstractService(IMappingProvider mapper, ISaver saver)
+        public AbstractService(IMappingProvider mapper, ISaver saver, IRandomProvider random)
         {
             Guard.WhenArgument(mapper, "mapper").IsNull().Throw();
             Guard.WhenArgument(saver, "saver").IsNull().Throw();
             this.mapper = mapper;
             this.saver = saver;
-            this.random = new Random(); // TODO wrap the random
+            this.random = random;
         }
 
-        protected IMappingProvider Mapper { get; }
-        protected ISaver Saver { get; }
-        protected Random Random { get; }
+        protected IMappingProvider Mapper { get => this.mapper; }
+        protected ISaver Saver { get => this.saver; }
+        protected IRandomProvider Random { get => this.random; }
 
     }
 }

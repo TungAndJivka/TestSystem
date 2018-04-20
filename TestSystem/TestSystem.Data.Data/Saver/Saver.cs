@@ -1,12 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TestSystem.Web.Data;
 
 namespace TestSystem.Data.Data.Saver
 {
     public class Saver : ISaver
     {
-        private readonly DbContext context;
+        private readonly ApplicationDbContext context;
 
-        public Saver(DbContext context)
+        public Saver(ApplicationDbContext context)
         {
             this.context = context;
         }

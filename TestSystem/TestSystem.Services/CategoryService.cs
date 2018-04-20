@@ -16,8 +16,8 @@ namespace TestSystem.Services
     {
         private IEfGenericRepository<Category> categoryRepo;
 
-        public CategoryService(IEfGenericRepository<Category> categoryRepo, IMappingProvider mapper, ISaver saver)
-            : base(mapper, saver)
+        public CategoryService(IEfGenericRepository<Category> categoryRepo, IMappingProvider mapper, ISaver saver, IRandomProvider random)
+            : base(mapper, saver, random)
         {
             Guard.WhenArgument(categoryRepo, "categoryRepo").IsNull().Throw();
             this.categoryRepo = categoryRepo;
@@ -32,9 +32,9 @@ namespace TestSystem.Services
 
         public IEnumerable<CategoryDto> GetAllWithTests()
         {
-            var entities = this.categoryRepo.All.Include(x => x.Tests).ToList();
+            var entities = this.categoryRepo.All.Include(x => x.Tests);
             var categories = this.Mapper.ProjectTo<CategoryDto>(entities);
-            return categories;
+            return categories.ToList();
         }
     }
 }

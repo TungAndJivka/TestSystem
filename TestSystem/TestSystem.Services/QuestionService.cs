@@ -11,8 +11,8 @@ namespace TestSystem.Services
     {
         private IEfGenericRepository<Question> questionRepo;
 
-        public QuestionService(IEfGenericRepository<Question> questionRepo, IMappingProvider mapper, ISaver saver)
-            : base(mapper, saver)
+        public QuestionService(IEfGenericRepository<Question> questionRepo, IMappingProvider mapper, ISaver saver, IRandomProvider random)
+            : base(mapper, saver, random)
         {
             Guard.WhenArgument(questionRepo, "questionRepo").IsNull().Throw();
             this.questionRepo = questionRepo;

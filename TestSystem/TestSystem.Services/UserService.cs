@@ -1,4 +1,5 @@
 ﻿using Bytes2you.Validation;
+using System.Linq;
 using TestSystem.Data.Data.Repositories;
 using TestSystem.Data.Data.Saver;
 using TestSystem.Data.Models;
@@ -11,8 +12,8 @@ namespace TestSystem.Services
     {
         private readonly IEfGenericRepository<User> userRepo;
 
-        public UserService(IMappingProvider mapper, ISaver saver, IEfGenericRepository<User> userRepo)
-            : base(mapper, saver)
+        public UserService(IMappingProvider mapper, ISaver saver, IEfGenericRepository<User> userRepo, IRandomProvider random)
+            : base(mapper, saver, random)
         {
             Guard.WhenArgument(userRepo, "userRepo").IsNull().Throw();
             this.userRepo = userRepo;

@@ -5,6 +5,12 @@ namespace TestSystem.Data.Models.Abstractions
 {
     public abstract class DataModel : IDeletable
     {
+        public DataModel()
+        {
+            this.CreatedOn = DateTime.Now;
+            this.Id = Guid.NewGuid();
+        }
+
         [Key]
         public Guid Id { get; set; }
 
@@ -14,7 +20,7 @@ namespace TestSystem.Data.Models.Abstractions
         public DateTime? DeletedOn { get; set; }
 
         [DataType(DataType.DateTime)]
-        public DateTime? CreatedOn { get; set; }
+        public DateTime CreatedOn { get; set; }
 
         [DataType(DataType.DateTime)]
         public DateTime? ModifiedOn { get; set; }

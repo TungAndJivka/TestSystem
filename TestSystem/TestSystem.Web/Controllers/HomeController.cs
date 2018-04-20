@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using TestSystem.Data.Models;
+using TestSystem.DTO;
+using TestSystem.Infrastructure.Providers;
+using TestSystem.Services.Contracts;
 using TestSystem.Web.Models;
 using TestSystem.Web.Models.HomeViewModels;
 using TestSystem.Web.Services;
@@ -21,18 +24,30 @@ namespace TestSystem.Web.Controllers
         private readonly IEmailSender emailSender;
         private readonly ILogger<HomeController> logger;
         private readonly RoleManager<IdentityRole> roleManager;
+        private readonly ITestService testService;
+        private readonly ICategoryService categoryService;
+        private readonly IResultService resultService;
+        private readonly IMappingProvider mapper;
 
         public HomeController(UserManager<User> userManager,
             SignInManager<User> signInManager,
             IEmailSender emailSender,
             ILogger<HomeController> logger,
-            RoleManager<IdentityRole> roleManager)
+            RoleManager<IdentityRole> roleManager,
+            ITestService testService, 
+            ICategoryService categoryService,
+            IMappingProvider mapper,
+            IResultService resultService)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.emailSender = emailSender;
             this.logger = logger;
             this.roleManager = roleManager;
+            this.testService = testService;
+            this.categoryService = categoryService;
+            this.resultService = resultService;
+            this.mapper = mapper;
         }
 
         public IActionResult Index()
@@ -80,12 +95,22 @@ namespace TestSystem.Web.Controllers
             {
                 var user = new User { UserName = model.Email, Email = model.Email };
                 var result = await userManager.CreateAsync(user, model.Password);
+
                 if (result.Succeeded)
                 {
+                    var categories = this.categoryService.GetAll();
+
+                    foreach (var c in categories)
+                    {
+                        Guid randomTestId = this.testService.GetRandomTestIdByCategory(c.Name);
+                        this.resultService.AddNewResult(user.Id, randomTestId);
+                    }                    
+
                     await signInManager.SignInAsync(user, isPersistent: false);
                     logger.LogInformation("User created a new account with password.");
                     return RedirectToAction("Index", "Dashboard");
                 }
+
                 AddErrors(result);
             }
 

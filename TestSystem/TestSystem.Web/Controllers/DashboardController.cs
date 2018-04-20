@@ -3,50 +3,48 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using TestSystem.Data.Models;
 using TestSystem.DTO;
+using TestSystem.Infrastructure.Providers;
+using TestSystem.Services.Contracts;
 using TestSystem.Web.Models.DashboardViewModels;
+using TestSystem.Web.Models.Shared;
 
 namespace TestSystem.Web.Controllers
 {
     [Authorize]
     public class DashboardController : Controller
     {
-        public DashboardController()
-        {
+        private readonly UserManager<User> userManager;
+        private readonly ICategoryService categoryService;
+        private readonly ITestService testService;
+        private readonly IMappingProvider mapper;
 
+        public DashboardController(UserManager<User> userManager, ICategoryService categoryService, ITestService testService, IMappingProvider mapper)
+        {
+            this.userManager = userManager;
+            this.categoryService = categoryService;
+            this.testService = testService;
+            this.mapper = mapper;
         }
 
         public IActionResult Index()
         {
+            var categoriesDto = this.categoryService.GetAllWithTests();
+            // get user from the user manager
 
             if (User.IsInRole("Admin"))
             {
                 return RedirectToAction("Index", "Administration/Dashboard");
             }
-            var cat1 = new CategoryDto() { Name = "Java" };
-            var cat2 = new CategoryDto() { Name = "SQL" };
-            var cat3 = new CategoryDto() { Name = ".NET" };
-            var cat4 = new CategoryDto() { Name = "JavaScript" };
-
-            var tests = new List<TestDto>()
-                {
-                    new TestDto() { Name = "test 1" },
-                    new TestDto() { Name = "test 2" },
-                    new TestDto() { Name = "test 3" },
-                    new TestDto() { Name = "test 4" }
-                };
-
-            var categories = new List<CategoryDto>()
-                {
-                    cat1, cat2, cat3, cat4
-                };
 
             var model = new IndexViewModel()
             {
                 Title = "Dashboard",
-                Categories = categories,
-                Tests = tests
+                Categories = (this.mapper.ProjectTo<CategoryViewModel>(categoriesDto)).ToList(),
+                //Tests = tests
             };
 
             return View("Index", model);

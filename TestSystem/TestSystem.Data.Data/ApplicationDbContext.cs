@@ -89,7 +89,6 @@ namespace TestSystem.Web.Data
                 this.Answers.AddRange(list);
                 this.SaveChanges();
             }
-            bool test = true;
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

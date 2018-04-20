@@ -6,8 +6,12 @@ using TestSystem.Data.Models.Abstractions;
 namespace TestSystem.Data.Models
 {
     public class Category : DataModel
-    {        
-        
+    {
+        public Category()
+        {
+            this.Tests = new HashSet<Test>();
+        }
+
         [Required]
         public string Name { get; set; }
 

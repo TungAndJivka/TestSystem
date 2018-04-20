@@ -1,4 +1,5 @@
 ﻿using Bytes2you.Validation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TestSystem.Data.Data.Repositories;
@@ -12,20 +13,33 @@ namespace TestSystem.Services
 {
     public class ResultService : AbstractService, IResultService
     {
-        private IEfGenericRepository<UserTest> UserTestRepo;
+        private IEfGenericRepository<UserTest> userTestRepo;
 
-        public ResultService(IEfGenericRepository<UserTest> resultRepo, IMappingProvider mapper, ISaver saver)
-            : base(mapper, saver)
+        public ResultService(IEfGenericRepository<UserTest> resultRepo, IMappingProvider mapper, ISaver saver, IRandomProvider random)
+            : base(mapper, saver, random)
         {
             Guard.WhenArgument(resultRepo, "resultRepo").IsNull().Throw();
-            this.UserTestRepo = resultRepo;
+            this.userTestRepo = resultRepo;
         }
 
         public IEnumerable<UserTestDto> GetAll()
         {
-            var entities = this.UserTestRepo.All.ToList();
+            var entities = this.userTestRepo.All.ToList();
             var results = this.Mapper.ProjectTo<UserTestDto>(entities);
             return results;
+        }
+
+        public bool AddNewResult(string userId, Guid testId)
+        {
+            try
+            {
+                this.userTestRepo.Add(new UserTest() { UserId = userId, TestId = testId, });
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }
