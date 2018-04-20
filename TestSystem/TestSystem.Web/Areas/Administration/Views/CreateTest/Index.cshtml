@@ -1,39 +1,29 @@
-﻿@model TestSystem.Web.Areas.Administration.Models.CreateTestViewModels.IndexViewModel
+﻿@model TestSystem.Web.Areas.Administration.Models.CreateTestViewModels.CreateTestViewModel
 
-@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
 
 <div style="margin: 0% 10%">
 
     <h2>New Test</h2>
 
-    <form>
+    <form asp-area="Administration" asp-controller="CreateTest" asp-action="CreateTest" method="post">
+        
         <div class="form-row">
             <div class="form-group col-md-5">
-                <label for="TestName">Test Name*</label>
-                <input type="text" class="form-control" placeholder="Test name">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group col-md-2">
-                <label for="Time">Requested Time*</label>
-                <input type="text" class="form-control" placeholder="20 min">
+                <label asp-for="Duration"></label>
+                <input asp-for="Duration" class="form-control" />
+                <span asp-validation-for="Duration" class="text-danger"></span>
             </div>
             <div class="form-group col-md-4">
-                <label for="Category">Category*</label>
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Select Category
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        @foreach (var category in Model.Categories)
-                        {
-                            <a class="dropdown-item" href="#">@category.Name</a>
-                        }
-                    </div>
-                </div>
+                <label asp-for="Category"></label>
+                <input asp-for="Category" class="form-control" />
+                <span asp-validation-for="Category" class="text-danger"></span>
             </div>
         </div>
     </form>
-
 
 </div>

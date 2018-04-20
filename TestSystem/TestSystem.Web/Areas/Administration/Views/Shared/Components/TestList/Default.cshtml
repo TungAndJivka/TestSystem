@@ -1,0 +1,25 @@
+﻿@model IEnumerable<TestSystem.Web.Areas.Administration.Models.Shared.TestListModel>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Test Name</th>
+            <th>Category</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>@item.Name</td>
+            <td>@item.Duration</td>
+            <td>@item.IsPusblished?"Published":"Draft"</td>
+            <td></td>
+        </tr>
+        }
+
+
+    </tbody>
+</table>
