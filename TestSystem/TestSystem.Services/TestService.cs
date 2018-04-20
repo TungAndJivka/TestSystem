@@ -34,8 +34,8 @@ namespace TestSystem.Services
 
         public IEnumerable<TestDto> GetUserTests(string id)
         {
-            var entities = userRepo.All.Include(u => u.Tests).Where(u => u.Id == id).SelectMany(u => u.Tests).ToArray();
-            var result = this.Mapper.ProjectTo<TestDto>(entities.AsQueryable());
+            var entities = userRepo.All.Include(u => u.Tests).Where(u => u.Id == id).SelectMany(u => u.Tests);
+            var result = this.Mapper.ProjectTo<TestDto>(entities);
             return result;
         }
 

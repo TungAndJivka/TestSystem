@@ -10,5 +10,7 @@ namespace TestSystem.Web.Models.DashboardViewModels
 
         public IList<CategoryViewModel> Categories { get; set; }
 
+        public IEnumerable<TestViewModel> Tests { get; set; }
+
     }
 }

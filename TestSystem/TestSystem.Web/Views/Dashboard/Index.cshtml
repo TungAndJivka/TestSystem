@@ -17,7 +17,7 @@
         @for (int i = 0; i < Model.Categories.Count(); i++)
         {
             string categoryName = Model.Categories[i].Name;
-            
+
             <li class="nav-item">
                 <a class="nav-link"
                    title="@i-tab"
@@ -27,8 +27,8 @@
                    role="tab"
                    aria-controls="@i-content"
                    aria-selected="true">
-                    @Model.Categories[i].Name
-                    (o)
+                   @Model.Categories[i].Name
+                    
                 </a>
             </li>
         }
@@ -36,15 +36,6 @@
 
     <div class="tab-content" id="myTabContent2">
 
-
-        @*@for (int i = 0; i < Model.Categories.Count(); i++)
-            {
-                <div class="tab-pane fade" id="@i-content" role="tabpanel" aria-labelledby="@i-tab">@Model.Tests[i].Name</div>
-
-                <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
-                        Start
-                    </button>
-            }*@
 
     </div>
 

@@ -7,10 +7,12 @@ namespace TestSystem.DTO
     public class TestDto
     {
         public string Id { get; set; }
-        public string Name { get; set; } 
-        public TimeSpan Duration { get; set; }
-        public bool IsPusblished { get; set; }
 
+        public string Name { get; set; } 
+
+        public TimeSpan Duration { get; set; }
+
+        public bool IsPusblished { get; set; }
 
         public string CategoryId { get; set; }
         public CategoryDto Category { get; set; }  //NP
