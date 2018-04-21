@@ -27,8 +27,8 @@ namespace TestSystem.Services
 
         public IEnumerable<TestDto> GetAll()
         {
-            var entities = this.testRepo.All.ToList();
-            var tests = this.Mapper.ProjectTo<TestDto>(entities.AsQueryable());
+            var entities = this.testRepo.All;
+            var tests = this.Mapper.ProjectTo<TestDto>(entities);
             return tests;
         }
 
@@ -53,6 +53,6 @@ namespace TestSystem.Services
             var entities = testRepo.All.Where(t => t.Id.Equals(testId)).Include(t => t.Questions).ThenInclude(q => q.Answers).FirstOrDefault();
             var result = this.Mapper.MapTo<TestDto>(entities);
             return result;
-        }
+        }        
     }
 }

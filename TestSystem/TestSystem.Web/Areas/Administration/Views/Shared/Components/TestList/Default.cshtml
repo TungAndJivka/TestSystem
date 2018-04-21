@@ -1,25 +1,49 @@
 ﻿@model IEnumerable<TestSystem.Web.Areas.Administration.Models.Shared.TestListModel>
 
-<table class="table table-striped">
+
+
+<table id="example" class="table table-striped table-bordered" style="width:100%">
     <thead>
         <tr>
-            <th>Test Name</th>
+            <th>Name</th>
             <th>Category</th>
-            <th>Status</th>
-            <th>Actions</th>
+            <th>Office</th>
+            <th>Age</th>
+
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-        <tr>
-            <td>@item.Name</td>
-            <td>@item.Duration</td>
-            <td>@item.IsPusblished?"Published":"Draft"</td>
-            <td></td>
-        </tr>
+            <tr>
+                <td>@item.TestName</td>
+                <td>@item.Category</td>
+                <td>
+                    @if (item.IsPusblished)
+                    {
+                        <text>Published</text>
+                    }
+                    else
+                    {
+                        <text>Draft</text>
+                    }
+                </td>
+                <td>
+                    <a asp-area="Administration" asp-controller="Dashboard" asp-action="Publish" method="get" class="btn btn-primary">Publish</a>
+                    <a asp-area="Administration" asp-controller="Dashboard" asp-action="Edit" method="get" class="btn btn-primary">Edit</a>
+                    <a asp-area="Administration" asp-controller="Dashboard" asp-action="Delete" method="get" class="btn btn-primary">Delete</a>
+                </td>
+            </tr>
         }
 
 
     </tbody>
+
 </table>
+
+
+@section Script {
+
+
+    <script src="~/js/Dashboard.js"></script>
+}
