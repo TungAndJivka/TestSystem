@@ -18,23 +18,47 @@
         {
             string categoryName = Model.Categories[i].Name;
 
-            <li class="nav-item">
-                <a class="nav-link"
-                   title="@i-tab"
-                   id="@categoryName-tab"
-                   data-toggle="tab"
-                   href="#@i-content"
-                   role="tab"
-                   aria-controls="@i-content"
-                   aria-selected="true">
-                   @Model.Categories[i].Name
-                    
-                </a>
-            </li>
+            @if (!Model.Tests.Any(x => x.Name == categoryName))
+            {
+                <li class="nav-item">
+                    <a class="nav-link"
+                       title="@i-tab"
+                       id="@categoryName"
+                       data-toggle="tab"
+                       role="tab"
+                       aria-controls="@i-content"
+                       aria-selected="true"
+                       onclick="categoryTabClickStart('@categoryName Test')">
+                        @Model.Categories[i].Name
+                    </a>
+                </li>
+            }
+            else
+            {
+                <li class="nav-item">
+                    <a class="nav-link"
+                       title="@i-tab"
+                       id="@categoryName"
+                       data-toggle="tab"
+                       role="tab"
+                       aria-controls="@i-content"
+                       aria-selected="true"
+                       onclick="categoryTabClickSubmitted('@categoryName Test')">
+                        @Model.Categories[i].Name
+                    </a>
+                </li>
+            }
+
         }
     </ul>
 
-    <div class="tab-content" id="myTabContent2">
+    <div class="tab-content" id="DashboardContent" 
+         style="
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); 
+        vertical-align:central; 
+        height:50px; 
+        padding:15px 15px 10px 10px;
+        margin-top:10px">
 
 
     </div>

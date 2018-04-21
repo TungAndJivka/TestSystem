@@ -46,11 +46,7 @@ namespace TestSystem.Web.Controllers
 
             foreach (var c in categoriesDto)
             {
-                var tvm = new TestViewModel()
-                {
-                    Name = c.Name + " Test",
-                    CategoryName = c.Name
-                };
+                var tvm = new TestViewModel() { Name = c.Name + " Test", CategoryName = c.Name };
 
                 if (testsSumbitted.Any(x => x.Category.Id == c.Id))
                 {
@@ -63,7 +59,7 @@ namespace TestSystem.Web.Controllers
             var model = new IndexViewModel()
             {
                 Title = "Dashboard",
-                Categories = (this.mapper.ProjectTo<CategoryViewModel>(categoriesDto.AsQueryable())).ToList(),
+                Categories = (this.mapper.EnumerableProjectTo<CategoryViewModel>(categoriesDto).OrderBy(x => x.Name).ToList()),
                 Tests = tests
             };
 
