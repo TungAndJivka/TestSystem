@@ -1,21 +1,4 @@
-﻿//$(categoryTabClick = function (categoryName) {
-//    if (categoryName == 'Java') {
-//        $('#areaSubmitted').css("color", "red");
-//        $('#areaStart').css("visibility", "collapse");
-//        $('#areaSubmitted').css("visibility", "visible");
-//        //$('#areaStart').addClass('isHidden');
-//        //$('#areaSubmitted').removeClass('isHidden');
-//    }
-//    //node = $('#DashboardContent')[0].firstChild;
-//    //if (node) {
-//    //    node.remove();
-//    //}
-//    //$('#DashboardContent').append(categoryName);
-//})
-
-
-
-const categoryTabClickStart = (function (testName) {
+﻿const categoryTabClickStart = (function (testName) {
 
     node = $('#DashboardContent')[0].firstChild;
     if (node) {
@@ -26,7 +9,7 @@ const categoryTabClickStart = (function (testName) {
     let row = $(`
             <div id="areaStart">
                 <span id="testName"></span>
-                <button style="float:right">Start</button>
+                <button class="buttonhover">Start</button>
             </div>
         `);
 
@@ -45,7 +28,7 @@ const categoryTabClickSubmitted = (function (testName) {
     let row = $(`
             <div id="areaStart">
                 <span id="testName"></span>
-                <button style="float:right">Submitted</button>
+                <button class="buttonhover">Submitted</button>
             </div>
         `);
 

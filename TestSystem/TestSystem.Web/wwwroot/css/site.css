@@ -33,3 +33,18 @@
         display: none;
     }
 }
+
+.page-header {
+    color:dimgray;
+    font-weight: bolder;
+}
+
+.pagination {
+    justify-content:center;
+    align-self:center;
+    
+}
+
+.table {
+    color:dimgrey;
+}

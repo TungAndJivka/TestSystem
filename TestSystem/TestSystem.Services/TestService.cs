@@ -27,8 +27,8 @@ namespace TestSystem.Services
 
         public IEnumerable<TestDto> GetAll()
         {
-            var entities = this.testRepo.All.ToList();
-            var tests = this.Mapper.ProjectTo<TestDto>(entities.AsQueryable());
+            var entities = this.testRepo.All.OrderByDescending(t => t.CreatedOn);
+            var tests = this.Mapper.ProjectTo<TestDto>(entities);
             return tests;
         }
 

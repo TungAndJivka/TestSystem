@@ -1,8 +1,5 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using TestSystem.DTO;
 
 namespace TestSystem.Web
 {
@@ -10,13 +7,17 @@ namespace TestSystem.Web
     {
         public MappingSettings()
         {
-            //this.CreateMap<PostDto, PostViewModel>()
-            //       .ForMember(x => x.Author, options => options.MapFrom(x => x.Author.Email))
-            //       .ReverseMap();
+            this.CreateMap<TestDto, TestSystem.Web.Areas.Administration.Models.DashboardViewModels.TestViewModel>()
+               .ForMember(vm => vm.CategoryName, options => options.MapFrom(x => x.Category.Name));
 
-            //this.CreateMap<CommentDto, CommentViewModel>()
-            //       .ForMember(x => x.Author, options => options.MapFrom(x => x.Author.Email))
-            //       .ReverseMap();
+            this.CreateMap<TestDto, TestSystem.Web.Areas.Administration.Models.DashboardViewModels.TestViewModel>(MemberList.Source);
+
+            this.CreateMap<UserTestDto, TestSystem.Web.Areas.Administration.Models.DashboardViewModels.ResultViewModel>()
+               .ForMember(vm => vm.User, options => options.MapFrom(x => x.User.UserName));
+
+            this.CreateMap<UserTestDto, TestSystem.Web.Areas.Administration.Models.DashboardViewModels.ResultViewModel>()
+               .ForMember(vm => vm.Test, options => options.MapFrom(x => x.Test.Name));
+
 
             //this.CreateMap<PostViewModel, PostDto>(MemberList.Source);
             //this.CreateMap<PostDto, Post>(MemberList.Source);
