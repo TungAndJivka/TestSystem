@@ -25,7 +25,7 @@
     </environment>
 </head>
 
-<body>
+<body  id="layout-content">
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="col col-lg-1">
@@ -36,13 +36,13 @@
                 </span>
             </div>
             <div class="col col-lg-4" style="float:right">
-                <div class="navbar-collapse collapse container">
+                <div class="navbar-collapse collapse container" id="layout-content-area">
                     @await Html.PartialAsync("_LoginPartial")
                 </div>
             </div>
         </div>
     </nav>
-    <div class="container body-content" style="padding:0% 10% 10% 10%">
+    <div class="container body-content">
         @RenderBody()
         <hr />
         <footer>

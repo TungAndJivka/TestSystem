@@ -46,6 +46,11 @@ namespace TestSystem.Web.Controllers
 
             foreach (var c in categoriesDto)
             {
+                if (c.Tests.Count() == 0)
+                {
+                    continue;
+                }
+
                 var tvm = new TestViewModel() { Name = c.Name + " Test", CategoryName = c.Name };
 
                 if (testsSumbitted.Any(x => x.Category.Id == c.Id))
