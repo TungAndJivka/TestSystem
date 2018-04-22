@@ -13,10 +13,14 @@
         <li class="nav-item">
             <a class="nav-link" id="results-tab" data-toggle="tab" href="#results" role="tab" aria-controls="results" aria-selected="false">Test Results</a>
         </li>
+        <a asp-area="Administration" asp-controller="CreateTest" asp-action="Index" method="get" class="btn btn-primary pull-right">New Test</a>
     </ul>
     <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="tests" role="tabpanel" aria-labelledby="tests-tab">Tests</div>
-        <div class="tab-pane fade" id="results" role="tabpanel" aria-labelledby="results-tab">Results</div>
+        <div class="tab-pane fade show active" id="tests" role="tabpanel" aria-labelledby="tests-tab">
+            @await  Component.InvokeAsync("TestList")
+        </div>
+        <div class="tab-pane fade" id="results" role="tabpanel" aria-labelledby="results-tab">
+        Results</div>
     </div>
 </div>
 

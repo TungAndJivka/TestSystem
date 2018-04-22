@@ -85,7 +85,7 @@ namespace TestSystem.Web.Data
 
             if (this.Answers != null && this.Answers.Count() == 0)
             {
-                var list = new List<Answer>() { a1, a2, a3, a4, a5, a6, a7, a8 ,a9, a10};
+                var list = new List<Answer>() { a1, a2, a3, a4, a5, a6, a7, a8, a9, a10 };
                 this.Answers.AddRange(list);
                 this.SaveChanges();
             }

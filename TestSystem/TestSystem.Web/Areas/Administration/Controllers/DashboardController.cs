@@ -15,6 +15,12 @@ namespace TestSystem.Web.Areas.Administration.Controllers
         public IActionResult Index()
         {
             return View();
-        }
+        }       
+        //[HttpPost]
+        //public IActionResult CreateTest()
+        //{
+        //    return View();
+        //}
+
     }
 }

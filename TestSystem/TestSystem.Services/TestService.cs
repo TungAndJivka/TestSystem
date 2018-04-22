@@ -27,8 +27,8 @@ namespace TestSystem.Services
 
         public IEnumerable<TestDto> GetAll()
         {
-            var entities = this.testRepo.All.ToList();
-            var tests = this.Mapper.ProjectTo<TestDto>(entities.AsQueryable());
+            var entities = this.testRepo.All;
+            var tests = this.Mapper.ProjectTo<TestDto>(entities);
             return tests;
         }
 
@@ -39,19 +39,20 @@ namespace TestSystem.Services
             return result;
         }
 
-        public Guid GetRandomTestIdByCategory(string categoryName)
+        public TestDto GetRandomTestByCategory(string categoryName)
         {
-            var list = this.testRepo.All.Where(t => t.Category.Name == categoryName && t.IsPusblished).ToList();
-            int rnd = this.Random.Next(0, list.Count - 1);
-            return list[rnd].Id;
-            // TODO return DTO ???
-        }
-
+            int allCount = this.testRepo.All.Where(t => t.Category.Name == categoryName).Count();
+            int skip = this.Random.Next(0, allCount - 1);
+            var dbTest = testRepo.All.Where(t => t.Category.Name == categoryName).Skip(skip).Take(1);
+            var testDto = Mapper.MapTo<TestDto>(dbTest);
+            return testDto;
+        }   
+                             
         public TestDto GetFullTestInfo(string testId)
         {
             var entities = testRepo.All.Where(t => t.Id.Equals(testId)).Include(t => t.Questions).ThenInclude(q => q.Answers).FirstOrDefault();
             var result = this.Mapper.MapTo<TestDto>(entities);
             return result;
-        }
+        }        
     }
 }

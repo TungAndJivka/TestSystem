@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using TestSystem.DTO;
+using TestSystem.Web.Areas.Administration.Models.Shared;
 
 namespace TestSystem.Web
 {
@@ -17,6 +15,9 @@ namespace TestSystem.Web
             //this.CreateMap<CommentDto, CommentViewModel>()
             //       .ForMember(x => x.Author, options => options.MapFrom(x => x.Author.Email))
             //       .ReverseMap();
+
+            this.CreateMap<TestDto, TestListModel>()
+                 .ForMember(x => x.Category, options => options.MapFrom(x => x.Category.Name));
 
             //this.CreateMap<PostViewModel, PostDto>(MemberList.Source);
             //this.CreateMap<PostDto, Post>(MemberList.Source);

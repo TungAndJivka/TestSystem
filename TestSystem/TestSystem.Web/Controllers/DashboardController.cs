@@ -21,24 +21,27 @@ namespace TestSystem.Web.Controllers
         private readonly ICategoryService categoryService;
         private readonly ITestService testService;
         private readonly IMappingProvider mapper;
+        private readonly IUserService userService;
 
-        public DashboardController(UserManager<User> userManager, ICategoryService categoryService, ITestService testService, IMappingProvider mapper)
+        public DashboardController(UserManager<User> userManager, ICategoryService categoryService, ITestService testService, IMappingProvider mapper, IUserService userService)
         {
             this.userManager = userManager;
             this.categoryService = categoryService;
             this.testService = testService;
+            this.userService = userService;
             this.mapper = mapper;
         }
 
         public IActionResult Index()
         {
-            var categoriesDto = this.categoryService.GetAllWithTests();
-            // get user from the user manager
-
             if (User.IsInRole("Admin"))
             {
                 return RedirectToAction("Index", "Administration/Dashboard");
             }
+
+            var categoriesDto = this.categoryService.GetAll();
+            var userId = userManager.GetUserId(HttpContext.User);
+            var user = this.userService.GetUserByIdWithTests(userId);
 
             var model = new IndexViewModel()
             {

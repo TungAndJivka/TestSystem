@@ -1,32 +1,25 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using TestSystem.DTO;
+using TestSystem.Web.Areas.Administration.Models.CreateTestViewModels;
 
 namespace TestSystem.Web.Areas.Administration.Controllers
 {
-    public class CreateTestController : Controller
-    {[Area("Administration")]
+    [Area("Administration")]
+    [Authorize(Roles = "Admin")]
+    public class CreateTestController : Controller    
+    {       
+
+        [HttpGet]
         public IActionResult Index()
         {
-            var categories = new List<CategoryDto>()
-            {
-                new CategoryDto() { Name = "Java" },
-                new CategoryDto() { Name = "SQL" },
-                new CategoryDto() { Name = ".NET" },
-                new CategoryDto() { Name = "JavaScript" }
-            };
-
-            var model = new TestSystem.Web.Areas.Administration.Models.CreateTestViewModels.IndexViewModel() { Categories = categories };
-
-            if (User.IsInRole("admin"))
-            {
-                return View(model);
-            }
-            else
-            {
-                return View(model);
-                //return View("Unauthorized");
-            }
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Index(CreateTestViewModel model)
+        {
+            return View();
         }
     }
 }
