@@ -1,9 +1,9 @@
 ﻿@model TestSystem.Web.Areas.Administration.Models.CreateTestViewModels.CreateTestViewModel
 
 
-<div style="margin: 0% 10%">
+<div>
 
-    <h2>New Test</h2>
+    <h2 class="page-header">New Test</h2>
 
     <form asp-area="Administration" asp-controller="CreateTest" asp-action="CreateTest" method="post">
         
@@ -23,7 +23,6 @@
                 <input asp-for="Category" class="form-control" />
                 <span asp-validation-for="Category" class="text-danger"></span>
             </div>
-        </div>
-    </form>
+        </form>
 
 </div>

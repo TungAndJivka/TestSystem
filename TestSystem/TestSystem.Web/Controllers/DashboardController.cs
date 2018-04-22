@@ -41,13 +41,26 @@ namespace TestSystem.Web.Controllers
 
             var categoriesDto = this.categoryService.GetAll();
             var userId = userManager.GetUserId(HttpContext.User);
-            var user = this.userService.GetUserByIdWithTests(userId);
+            var testsSumbitted = testService.GetUserTests(userId);
+            var tests = new List<TestViewModel>();
+
+            foreach (var c in categoriesDto)
+            {
+                var tvm = new TestViewModel() { Name = c.Name + " Test", CategoryName = c.Name };
+
+                if (testsSumbitted.Any(x => x.Category.Id == c.Id))
+                {
+                    tvm.IsSubmitted = true;                 
+                }
+
+                tests.Add(tvm);
+            }
 
             var model = new IndexViewModel()
             {
                 Title = "Dashboard",
-                Categories = (this.mapper.ProjectTo<CategoryViewModel>(categoriesDto.AsQueryable())).ToList(),
-                //Tests = tests
+                Categories = (this.mapper.EnumerableProjectTo<CategoryViewModel>(categoriesDto).OrderBy(x => x.Name).ToList()),
+                Tests = tests
             };
 
             return View("Index", model);

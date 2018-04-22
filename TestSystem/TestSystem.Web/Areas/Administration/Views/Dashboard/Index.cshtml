@@ -1,9 +1,11 @@
-﻿
+﻿@model TestSystem.Web.Areas.Administration.Models.DashboardViewModels.IndexViewModel
+
 @{
-    ViewData["Title"] = "IndexAdmin";
+    ViewData["Title"] = "Admin Dashboard";
 }
 
-<h2>Admin Dashboard</h2>
+<h2 class="page-header">@ViewData["Title"]</h2>
+
 
 <div>
     <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -21,6 +23,137 @@
         </div>
         <div class="tab-pane fade" id="results" role="tabpanel" aria-labelledby="results-tab">
         Results</div>
+    </div>
+    <div class="col col-lg-4">
+        <a href="#" class="NewTestBtn">New Test</a>
+    </div>
+
+
+    <div class="tab-content" id="AdminTabContent">
+        <div id="TestsListTable">
+            <table class="table table-bordered">
+                @*Table Header*@
+                <thead>
+                    <tr class="table-header">
+                        <th scope="col" class="col-md-4 text-center">Test Name</th>
+                        <th scope="col" class="col-md-2 text-center">Category</th>
+                        <th scope="col" class="col-md-2 text-center">Status</th>
+                        <th scope="col" class="col-md-5 text-center">Actions</th>
+                    </tr>
+                </thead>
+                @*Table Body*@
+                <tbody>
+                    @{int i = 0; }
+                    @foreach (var test in Model.Tests)
+                    {
+                        i++;
+                        if (i == 10)
+                        {
+                            break;
+                        }
+
+                        <tr id="test-row-@i">
+                            <td scope="row">@test.TestName</td>
+                            <td class="text-center">@test.CategoryName</td>
+                            <td class="text-center">@test.Status</td>
+                            <td>
+                                <div class="col-sm-4">
+                                    @if (!test.IsPusblished)
+                                    {
+                                        <a href="#" class="myButton">Publish</a>
+                                    }
+                                    else
+                                    {
+                                        <a class="DisabledBtn">Publish</a>
+                                    }
+                                </div>
+                                <div class="col-sm-4">
+                                    @if (!test.IsPusblished)
+                                    {
+                                        <a href="#" class="myButton">Edit</a>
+                                    }
+                                    else
+                                    {
+                                        <a class="DisabledBtn">Edit</a>
+                                    }
+                                </div>
+                                <div class="col-sm-4">
+                                    @if (!test.IsPusblished)
+                                    {
+
+                                        <a href="#" class="myButton">Delete</a>
+                                    }
+                                    else
+                                    {
+                                        <a href="#" class="myButton">Disable</a>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div id="ResultsListTable">
+            <table class="table table-bordered" style="display:none">
+                @*Table Header*@
+                <thead>
+                    <tr class="table-header">
+                        <th scope="col" class="col-md-3 text-center">Test Name</th>
+                        <th scope="col" class="col-md-3 text-center">User</th>
+                        <th scope="col" class="col-md-3 text-center">Category</th>
+                        <th scope="col" class="col-md-1 text-center">Requested Time</th>
+                        <th scope="col" class="col-md-1 text-center">Execution Time</th>
+                        <th scope="col" class="col-md-1 text-center">Result</th>
+                    </tr>
+                </thead>
+                @*Table Body*@
+                <tbody>
+                    @{int j = 0; }
+                    @foreach (var result in Model.Results)
+                    {
+                        j++;
+                        if (j == 10)
+                        {
+                            break;
+                        }
+
+                        <tr id="test-row-@i">
+                            <td scope="row">@result.TestName</td>
+                            <td scope="row">@result.User</td>
+                            <td class="text-center">@result.CategoryName</td>
+                            <td class="text-center">@result.RequestedTime</td>
+                            <td class="text-center">@result.ExecutionTime</td>
+                            <td class="text-center">@result.Result</td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+
+        @*Pagination*@
+        <nav aria-label="Page navigation example" class="pagination-area text-center">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
     </div>
 </div>
 

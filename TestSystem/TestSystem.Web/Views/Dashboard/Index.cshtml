@@ -4,11 +4,8 @@
 }
 
 
-<h2>@ViewData["Title"]</h2>
+<h2 class="page-header">@ViewData["Title"]</h2>
 
-<div>
-    <asp:LoginName id="LoginName1" runat="server" FormatString="Welcome, {0}" />
-</div>
 
 
 <div>
@@ -17,34 +14,42 @@
         @for (int i = 0; i < Model.Categories.Count(); i++)
         {
             string categoryName = Model.Categories[i].Name;
-            
-            <li class="nav-item">
-                <a class="nav-link"
-                   title="@i-tab"
-                   id="@categoryName-tab"
-                   data-toggle="tab"
-                   href="#@i-content"
-                   role="tab"
-                   aria-controls="@i-content"
-                   aria-selected="true">
-                    @Model.Categories[i].Name
-                    (o)
-                </a>
-            </li>
+
+            @if (!Model.Tests.Any(x => x.Name == categoryName))
+            {
+                <li class="nav-item">
+                    <a class="nav-link"
+                       title="@i-tab"
+                       id="@categoryName"
+                       data-toggle="tab"
+                       role="tab"
+                       aria-controls="@i-content"
+                       aria-selected="true"
+                       onclick="categoryTabClickStart('@categoryName Test')">
+                        @Model.Categories[i].Name
+                    </a>
+                </li>
+            }
+            else
+            {
+                <li class="nav-item">
+                    <a class="nav-link"
+                       title="@i-tab"
+                       id="@categoryName"
+                       data-toggle="tab"
+                       role="tab"
+                       aria-controls="@i-content"
+                       aria-selected="true"
+                       onclick="categoryTabClickSubmitted('@categoryName Test')">
+                        @Model.Categories[i].Name
+                    </a>
+                </li>
+            }
+
         }
     </ul>
 
-    <div class="tab-content" id="myTabContent2">
-
-
-        @*@for (int i = 0; i < Model.Categories.Count(); i++)
-            {
-                <div class="tab-pane fade" id="@i-content" role="tabpanel" aria-labelledby="@i-tab">@Model.Tests[i].Name</div>
-
-                <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
-                        Start
-                    </button>
-            }*@
+    <div id="DashboardContent">
 
     </div>
 

@@ -25,14 +25,14 @@ namespace TestSystem.Services
 
         public IEnumerable<CategoryDto> GetAll()
         {
-            var entities = this.categoryRepo.All;
+            var entities = this.categoryRepo.All.OrderBy(c => c.Name);
             var categories = this.Mapper.ProjectTo<CategoryDto>(entities);
             return categories;
         }
 
         public IEnumerable<CategoryDto> GetAllWithTests()
         {
-            var entities = this.categoryRepo.All.Include(x => x.Tests);
+            var entities = this.categoryRepo.All.Include(x => x.Tests).OrderBy(c => c.Name);
             var categories = this.Mapper.ProjectTo<CategoryDto>(entities);
             return categories.ToList();
         }

@@ -11,7 +11,6 @@ namespace TestSystem.DTO
         public TimeSpan Duration { get; set; }
         public bool IsPusblished { get; set; }
 
-
         public string CategoryId { get; set; }
         public CategoryDto Category { get; set; }  //NP
 

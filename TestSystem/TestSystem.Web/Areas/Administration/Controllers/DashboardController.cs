@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using TestSystem.Infrastructure.Providers;
+using TestSystem.Services.Contracts;
+using TestSystem.Web.Areas.Administration.Models.DashboardViewModels;
 
 namespace TestSystem.Web.Areas.Administration.Controllers
 {
@@ -11,6 +10,20 @@ namespace TestSystem.Web.Areas.Administration.Controllers
     [Area("Administration")]
     public class DashboardController: Controller
     {
+        private readonly ITestService testService;
+        private readonly IResultService resultService;
+        private readonly IMappingProvider mapper;
+
+        public DashboardController(
+            ITestService testService,
+            IResultService resultService,
+            IMappingProvider mapper)
+        {
+            this.testService = testService;
+            this.resultService = resultService;
+            this.mapper = mapper;
+        }
+
         [HttpGet]
         public IActionResult Index()
         {

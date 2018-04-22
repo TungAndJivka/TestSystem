@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Data.SqlClient;
 using TestSystem.Data.Data.Repositories;
 using TestSystem.Data.Data.Saver;
 using TestSystem.Data.Models;

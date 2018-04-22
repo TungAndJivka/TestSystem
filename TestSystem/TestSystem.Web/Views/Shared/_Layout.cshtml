@@ -12,6 +12,8 @@
 
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
 
+        <link rel="stylesheet" href="~/css/Dashboard.css" />
+        <link rel="stylesheet" href="~/css/CreateTest.css" />
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -19,23 +21,28 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
         <link rel="stylesheet" href="~/css/Home.css" />
+        <link rel="stylesheet" href="~/css/Dashboard.css" />
     </environment>
 </head>
 
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
-            <span>
-                <a>
-                    <img src="https://dev.bg/wp-content/uploads/2016/10/Endava_logo_.png" alt="http://judge.telerikacademy.com/static/icons/logo.45f6419f360e.png" height="30" />
-                </a>
-            </span>
-            <div class="navbar-collapse collapse container">
-                @await Html.PartialAsync("_LoginPartial")
+            <div class="col col-lg-1">
+                <span>
+                    <a>
+                        <img id="logo" src="https://dev.bg/wp-content/uploads/2016/10/Endava_logo_.png" alt="http://judge.telerikacademy.com/static/icons/logo.45f6419f360e.png"/>
+                    </a>
+                </span>
+            </div>
+            <div class="col col-lg-4" style="float:right">
+                <div class="navbar-collapse collapse container">
+                    @await Html.PartialAsync("_LoginPartial")
+                </div>
             </div>
         </div>
     </nav>
-    <div class="container body-content" style="margin:2% 10% 0% 10%">
+    <div class="container body-content" style="padding:0% 10% 10% 10%">
         @RenderBody()
         <hr />
         <footer>

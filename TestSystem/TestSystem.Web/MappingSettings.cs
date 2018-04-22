@@ -8,13 +8,27 @@ namespace TestSystem.Web
     {
         public MappingSettings()
         {
-            //this.CreateMap<PostDto, PostViewModel>()
-            //       .ForMember(x => x.Author, options => options.MapFrom(x => x.Author.Email))
-            //       .ReverseMap();
+            this.CreateMap<TestDto, TestSystem.Web.Areas.Administration.Models.DashboardViewModels.TestViewModel>()
+               .ForMember(vm => vm.CategoryName, options => options.MapFrom(x => x.Category.Name));
 
-            //this.CreateMap<CommentDto, CommentViewModel>()
-            //       .ForMember(x => x.Author, options => options.MapFrom(x => x.Author.Email))
-            //       .ReverseMap();
+            this.CreateMap<TestDto, TestSystem.Web.Areas.Administration.Models.DashboardViewModels.TestViewModel>(MemberList.Source);
+
+
+
+            this.CreateMap<UserTestDto, TestSystem.Web.Areas.Administration.Models.DashboardViewModels.ResultViewModel>()
+               .ForMember(vm => vm.User, options => options.MapFrom(x => x.User.UserName));
+
+            this.CreateMap<UserTestDto, TestSystem.Web.Areas.Administration.Models.DashboardViewModels.ResultViewModel>()
+               .ForMember(vm => vm.TestName, options => options.MapFrom(x => x.Test.TestName));
+
+            this.CreateMap<UserTestDto, TestSystem.Web.Areas.Administration.Models.DashboardViewModels.ResultViewModel>()
+               .ForMember(vm => vm.Duration, options => options.MapFrom(x => x.Test.Duration));
+
+            this.CreateMap<UserTestDto, TestSystem.Web.Areas.Administration.Models.DashboardViewModels.ResultViewModel>()
+               .ForMember(vm => vm.CategoryName, options => options.MapFrom(x => x.Test.Category.Name));
+
+            this.CreateMap<UserTestDto, TestSystem.Web.Areas.Administration.Models.DashboardViewModels.ResultViewModel>(MemberList.Source);
+
 
             this.CreateMap<TestDto, TestListModel>()
                  .ForMember(x => x.Category, options => options.MapFrom(x => x.Category.Name));
