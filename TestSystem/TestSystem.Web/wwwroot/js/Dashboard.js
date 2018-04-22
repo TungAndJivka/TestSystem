@@ -9,7 +9,7 @@
     let row = $(`
             <div id="areaStart">
                 <span id="testName"></span>
-                <button class="buttonhover">Start</button>
+                <a href="#" class="StartTestBtn">Start</a>
             </div>
         `);
 
@@ -28,7 +28,7 @@ const categoryTabClickSubmitted = (function (testName) {
     let row = $(`
             <div id="areaStart">
                 <span id="testName"></span>
-                <button class="buttonhover">Submitted</button>
+                <a class="SubmittedTestBtn">Submitted</a>
             </div>
         `);
 

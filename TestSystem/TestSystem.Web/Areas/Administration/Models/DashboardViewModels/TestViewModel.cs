@@ -4,7 +4,7 @@ namespace TestSystem.Web.Areas.Administration.Models.DashboardViewModels
 {
     public class TestViewModel
     {
-        public string Name { get; set; }
+        public string TestName { get; set; }
 
         public TimeSpan Duration { get; set; }
 

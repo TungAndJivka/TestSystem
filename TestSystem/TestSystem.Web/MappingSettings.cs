@@ -12,11 +12,21 @@ namespace TestSystem.Web
 
             this.CreateMap<TestDto, TestSystem.Web.Areas.Administration.Models.DashboardViewModels.TestViewModel>(MemberList.Source);
 
+
+
             this.CreateMap<UserTestDto, TestSystem.Web.Areas.Administration.Models.DashboardViewModels.ResultViewModel>()
                .ForMember(vm => vm.User, options => options.MapFrom(x => x.User.UserName));
 
             this.CreateMap<UserTestDto, TestSystem.Web.Areas.Administration.Models.DashboardViewModels.ResultViewModel>()
-               .ForMember(vm => vm.Test, options => options.MapFrom(x => x.Test.Name));
+               .ForMember(vm => vm.TestName, options => options.MapFrom(x => x.Test.TestName));
+
+            this.CreateMap<UserTestDto, TestSystem.Web.Areas.Administration.Models.DashboardViewModels.ResultViewModel>()
+               .ForMember(vm => vm.Duration, options => options.MapFrom(x => x.Test.Duration));
+
+            this.CreateMap<UserTestDto, TestSystem.Web.Areas.Administration.Models.DashboardViewModels.ResultViewModel>()
+               .ForMember(vm => vm.CategoryName, options => options.MapFrom(x => x.Test.Category.Name));
+
+            this.CreateMap<UserTestDto, TestSystem.Web.Areas.Administration.Models.DashboardViewModels.ResultViewModel>(MemberList.Source);
 
 
             //this.CreateMap<PostViewModel, PostDto>(MemberList.Source);

@@ -8,18 +8,23 @@
 
 
 <div>
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <li class="nav-item">
-            <a class="nav-link active" id="tests-tab" data-toggle="tab" href="#tests" role="tab" aria-controls="tests" aria-selected="true">Tests</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="results-tab" data-toggle="tab" href="#results" role="tab" aria-controls="results" aria-selected="false">Test Results</a>
-        </li>
-    </ul>
+
+    <div class="col col-lg-8">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="tests-tab" data-toggle="tab" href="#tests" role="tab" aria-controls="tests" aria-selected="true">Tests List</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="results-tab" data-toggle="tab" href="#results" role="tab" aria-controls="results" aria-selected="false">Test Results</a>
+            </li>
+        </ul>
+    </div>
+    <div class="col col-lg-4">
+        <a href="#" class="NewTestBtn">New Test</a>
+    </div>
 
 
     <div class="tab-content" id="AdminTabContent">
-
         <div id="TestsListTable">
             <table class="table table-bordered">
                 @*Table Header*@
@@ -31,52 +36,92 @@
                         <th scope="col" class="col-md-5 text-center">Actions</th>
                     </tr>
                 </thead>
-
                 @*Table Body*@
                 <tbody>
-
-
-                    @for (int i = 0; i < Model.Tests.Count(); i++)
+                    @{int i = 0; }
+                    @foreach (var test in Model.Tests)
                     {
+                        i++;
                         if (i == 10)
                         {
                             break;
                         }
 
-                        <tr id="row-@i">
-                            <td scope="row">Sample Test Name</td>
-                            <td class="text-center">Java</td>
-                            <td class="text-center">Draft</td>
+                        <tr id="test-row-@i">
+                            <td scope="row">@test.TestName</td>
+                            <td class="text-center">@test.CategoryName</td>
+                            <td class="text-center">@test.Status</td>
                             <td>
                                 <div class="col-sm-4">
-                                    <button class="button">Publish</button>
+                                    @if (!test.IsPusblished)
+                                    {
+                                        <a href="#" class="myButton">Publish</a>
+                                    }
                                 </div>
                                 <div class="col-sm-4">
-                                    <button class="button">Edit</button>
+                                    @if (!test.IsPusblished)
+                                    {
+                                        <a href="#" class="myButton">Edit</a>
+                                    }
                                 </div>
                                 <div class="col-sm-4">
-                                    <button class="button">Delete</button>
+                                    @if (!test.IsPusblished)
+                                    {
+
+                                        <a href="#" class="myButton">Delete</a>
+                                    }
+                                    else
+                                    {
+                                        <a href="#" class="myButton">Disable</a>
+                                    }
                                 </div>
                             </td>
                         </tr>
-
                     }
-
-
-
-
-
                 </tbody>
             </table>
-
         </div>
 
         <div id="ResultsListTable">
+            <table class="table table-bordered">
+                @*Table Header*@
+                <thead>
+                    <tr class="table-header">
+                        <th scope="col" class="col-md-3 text-center">Test Name</th>
+                        <th scope="col" class="col-md-3 text-center">User</th>
+                        <th scope="col" class="col-md-3 text-center">Category</th>
+                        <th scope="col" class="col-md-1 text-center">Requested Time</th>
+                        <th scope="col" class="col-md-1 text-center">Execution Time</th>
+                        <th scope="col" class="col-md-1 text-center">Result</th>
+                    </tr>
+                </thead>
+                @*Table Body*@
+                <tbody>
+                    @{int j = 0; }
+                    @foreach (var result in Model.Results)
+                    {
+                        j++;
+                        if (j == 10)
+                        {
+                            break;
+                        }
 
+                        <tr id="test-row-@i">
+                            <td scope="row">@result.TestName</td>
+                            <td scope="row">@result.User</td>
+                            <td class="text-center">@result.CategoryName</td>
+                            <td class="text-center">@result.RequestedTime</td>
+                            <td class="text-center">@result.ExecutionTime</td>
+                            <td class="text-center">@result.Result</td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
         </div>
 
         @*Pagination*@
-        <nav aria-label="Page navigation example" class="pagination-area">
+        <nav aria-label="Page navigation example" class="pagination-area text-center">
             <ul class="pagination">
                 <li class="page-item">
                     <a class="page-link" href="#" aria-label="Previous">
