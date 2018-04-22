@@ -7,9 +7,9 @@
 
 
     let row = $(`
-            <div id="areaStart">
+            <div class="dash-area" id="areaStart">
                 <span id="testName"></span>
-                <a href="#" class="StartTestBtn">Start</a>
+                <a href="#" class="StartTestBtn DashBtn">Start</a>
             </div>
         `);
 
@@ -26,9 +26,9 @@ const categoryTabClickSubmitted = (function (testName) {
     }
 
     let row = $(`
-            <div id="areaStart">
+            <div class="dash-area" id="areaSubmitted">
                 <span id="testName"></span>
-                <a class="SubmittedTestBtn">Submitted</a>
+                <a class="SubmittedTestBtn DashBtn">Submitted</a>
             </div>
         `);
 

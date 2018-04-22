@@ -19,12 +19,16 @@
 
 .nav-item {
     width: 130px;
-text-align: center;
+    text-align: center;
 }
 
 .nav-tabs {
     font-size: 15px;
     font-weight: bold;
+}
+
+.nav-link {
+    color: #DF3A01;
 }
 
 /*Shared*/
@@ -50,14 +54,16 @@ text-align: center;
     float: right;
 }
 
+#DashboardContent {
+    padding: 10px 20px 10px 20px;
+    font-weight: bold;
+    color: dimgrey;
+    font-size: 16px;
+    justify-content:center;
+}
 
-
-/*Admin Dashboard*/
-#AdminTabContent {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    vertical-align: central;
-    height: auto;
-    padding: 20px 20px 20px 20px;
+.dash-area {
+    margin-top: 10px;
 }
 
 .button {
@@ -147,6 +153,13 @@ text-align: center;
 
 
 
+/*Admin Dashboard*/
+#AdminTabContent {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    vertical-align: central;
+    height: auto;
+    padding: 20px 20px 20px 20px;
+}
 
 
 .NewTestBtn {
@@ -191,58 +204,23 @@ text-align: center;
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*#NewTestBtn {
-    background-color: #DF3A01;
-    width: 90px;
-    font-size: 16px;
-    color: white;
-    font-weight: bolder;
-    float: right;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}*/
-
-/*#NewTestBtn {
-    background: rgba(248,80,50,1);
-    background: -moz-linear-gradient(top, rgba(248,80,50,1) 0%, rgba(241,111,92,1) 19%, rgba(246,41,12,1) 44%, rgba(240,47,23,1) 61%, rgba(168,36,24,1) 100%);
-    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(248,80,50,1)), color-stop(19%, rgba(241,111,92,1)), color-stop(44%, rgba(246,41,12,1)), color-stop(61%, rgba(240,47,23,1)), color-stop(100%, rgba(168,36,24,1)));
-    background: -webkit-linear-gradient(top, rgba(248,80,50,1) 0%, rgba(241,111,92,1) 19%, rgba(246,41,12,1) 44%, rgba(240,47,23,1) 61%, rgba(168,36,24,1) 100%);
-    background: -o-linear-gradient(top, rgba(248,80,50,1) 0%, rgba(241,111,92,1) 19%, rgba(246,41,12,1) 44%, rgba(240,47,23,1) 61%, rgba(168,36,24,1) 100%);
-    background: -ms-linear-gradient(top, rgba(248,80,50,1) 0%, rgba(241,111,92,1) 19%, rgba(246,41,12,1) 44%, rgba(240,47,23,1) 61%, rgba(168,36,24,1) 100%);
-    background: linear-gradient(to bottom, rgba(248,80,50,1) 0%, rgba(241,111,92,1) 19%, rgba(246,41,12,1) 44%, rgba(240,47,23,1) 61%, rgba(168,36,24,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f85032', endColorstr='#a82418', GradientType=0 );
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
+.DisabledBtn {
+    background-color: #ededed;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    display: inline-block;
+    cursor: pointer;
+    color: #777777;
     font-family: Arial;
-    color: black;
-    font-size: 17px;
-    padding: 5px 20px 5px 20px;
-    margin: 10px 10px 10px 10px;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 5px 19px;
     text-decoration: none;
-    float: right;
-    font-weight: bolder;
-}*/
-
-
+    text-shadow: 0px 1px 0px #adadad;
+    width: 75px;
+    text-align: center;
+}
 
 .myButton {
     -moz-box-shadow: inset 0px 1px 0px 0px #ebebeb;

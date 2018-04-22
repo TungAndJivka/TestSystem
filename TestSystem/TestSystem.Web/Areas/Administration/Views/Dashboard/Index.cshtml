@@ -57,11 +57,19 @@
                                     {
                                         <a href="#" class="myButton">Publish</a>
                                     }
+                                    else
+                                    {
+                                        <a class="DisabledBtn">Publish</a>
+                                    }
                                 </div>
                                 <div class="col-sm-4">
                                     @if (!test.IsPusblished)
                                     {
                                         <a href="#" class="myButton">Edit</a>
+                                    }
+                                    else
+                                    {
+                                        <a class="DisabledBtn">Edit</a>
                                     }
                                 </div>
                                 <div class="col-sm-4">
@@ -83,7 +91,7 @@
         </div>
 
         <div id="ResultsListTable">
-            <table class="table table-bordered">
+            <table class="table table-bordered" style="display:none">
                 @*Table Header*@
                 <thead>
                     <tr class="table-header">
