@@ -13,24 +13,15 @@ namespace TestSystem.Web.Areas.Administration.Controllers
         private readonly ITestService testService;
         private readonly IResultService resultService;
         private readonly IMappingProvider mapper;
-        //private readonly UserManager<User> userManager;
-        //private readonly ICategoryService categoryService;
-        //private readonly IUserService userService;
 
         public DashboardController(
             ITestService testService,
             IResultService resultService,
             IMappingProvider mapper)
-            //UserManager<User> userManager, 
-            //ICategoryService categoryService, 
-            //IUserService userService)
         {
             this.testService = testService;
             this.resultService = resultService;
             this.mapper = mapper;
-            //this.userManager = userManager;
-            //this.categoryService = categoryService;
-            //this.userService = userService;
         }
 
         [HttpGet]

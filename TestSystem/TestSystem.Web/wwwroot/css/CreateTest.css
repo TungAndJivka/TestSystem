@@ -1,0 +1,24 @@
+﻿#CreateTestContent {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    vertical-align: central;
+    height: auto;
+    min-height: 500px;
+    padding: 20px 20px 20px 20px;
+}
+
+.window {
+    border: 1px solid #dcdcdc;
+}
+
+.icons-area {
+    float:right;
+}
+
+.icon {
+    border:none;
+    float:right;
+}
+
+.col {
+    display:inline-block;
+}
