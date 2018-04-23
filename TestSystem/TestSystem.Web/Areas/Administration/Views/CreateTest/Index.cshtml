@@ -6,7 +6,7 @@
     <h2 class="page-header">New Test</h2>
 
     <form asp-area="Administration" asp-controller="CreateTest" asp-action="CreateTest" method="post">
-        
+
         <div class="form-row">
             <div class="form-group col-md-5">
                 <label asp-for="Name"></label>
@@ -23,6 +23,20 @@
                 <input asp-for="Category" class="form-control" />
                 <span asp-validation-for="Category" class="text-danger"></span>
             </div>
-        </form>
+        </div>
+
+
+
+        <div class="row col-md-12">
+            <div id="questions-container">
+                    <button id="add-question" class="btn btn-default" type="button">Add Question</button>
+                    <div id="questions-body" class="row"></div>
+
+            </div>
+        </div>
+
+    </form>
 
 </div>
+
+

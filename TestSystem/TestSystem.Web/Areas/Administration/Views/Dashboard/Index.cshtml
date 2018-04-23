@@ -16,13 +16,16 @@
         <a asp-area="Administration" asp-controller="CreateTest" asp-action="Index" method="get" class="btn btn-primary pull-right NewTestBtn">New Test</a>
     </ul>
 
-    <div  id="myTabContent">
+    <div id="myTabContent">
         <div class="tab-pane fade show active" id="tests" role="tabpanel" aria-labelledby="tests-tab">
-            @await  Component.InvokeAsync("TestList")
+            @await Component.InvokeAsync("TestList")
         </div>
 
         <div class="tab-pane fade" id="results" role="tabpanel" aria-labelledby="results-tab">
-        Results</div>
+            Results
+        </div>
     </div>
 </div>
+
+
 
