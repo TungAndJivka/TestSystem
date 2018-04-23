@@ -28,9 +28,20 @@
                     }
                 </td>
                 <td class="text-center">
-                    <a asp-area="Administration" asp-controller="Dashboard" asp-action="Publish" method="get" class="btn btn-primary myButton">Publish</a>
-                    <a asp-area="Administration" asp-controller="Dashboard" asp-action="Edit" method="get" class="btn btn-primary myButton">Edit</a>
-                    <a asp-area="Administration" asp-controller="Dashboard" asp-action="Delete" method="get" class="btn btn-primary myButton">Delete</a>
+                    @if (item.IsPusblished)
+                    {
+                        <a asp-area="Administration" asp-controller="Dashboard" method="get" class="btn button disabled">Publish</a>
+                        <a asp-area="Administration" asp-controller="Dashboard" method="get" class="btn button disabled">Edit</a>
+                        <a asp-area="Administration" asp-controller="Dashboard" asp-action="Disable" method="get" class="btn btn-primary myButton">Disable</a>
+                    }
+                    else
+                    {
+                        <a asp-area="Administration" asp-controller="Dashboard" asp-action="Publish" method="get" class="btn btn-primary myButton">Publish</a>
+                        <a asp-area="Administration" asp-controller="Dashboard" asp-action="Edit" method="get" class="btn btn-primary myButton">Edit</a>
+                        <a asp-area="Administration" asp-controller="Dashboard" asp-action="Delete" method="get" class="btn btn-primary myButton">Delete</a>
+                    }
+
+
                 </td>
             </tr>
         }

@@ -9,6 +9,6 @@ namespace TestSystem.Web.Areas.Administration.Models.CreateTestViewModels
     {
         public string Description { get; set; }
 
-        ICollection<AnswerViewModel> Answers {get;set;}
+        public IEnumerable<AnswerViewModel> Answers {get;set;}
     }
 }

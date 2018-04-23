@@ -1,0 +1,64 @@
+﻿@model TestSystem.Web.Models.TakeTestViewModels.IndexViewModel
+
+@{
+    int i = 0; // questions counter
+    int j = 0; // answer counter
+}
+
+<div id="page">
+
+    <div id="test-name" class="page-header table-header">@Model.TestName</div>
+
+    <div class="take-test-content" style="width:100%">
+        <form asp-controller="CreateTest" asp-action="Index" method="post">
+
+            <div class="form-row">
+                <div id="ctg-name"class="col inline">
+                    <div class="ctg"> Category: @Model.CategoryName</div>
+                </div>
+                <div class="col inline ctg set-right">
+                    Time: @Model.Duration.Minutes min
+                </div>
+                <br/>
+            </div>
+
+            <br/>
+
+            <div>
+                @*Questions*@
+                @foreach (var question in Model.Questions)
+                {
+                    <div class="form-row title">
+                        <div class="col col-sm-1 inline right">
+                            @(i + 1).
+                        </div>
+                        <div class="col col-lg-11 title">
+                            @question.Description
+                        </div>
+                    </div>
+
+                    <div class="area-answers">
+                    @*//Answers*@
+                    @foreach (var answer in question.Answers)
+                    {
+                        <input asp-for="@Model.Questions[i].SelectedAnswer" type="radio" name="question-@i" id="radio-@i-@j" value="@answer.Id">
+                        <label for="radio-@i-@j" value="@answer.Content" > @answer.Content</label>
+                        <br/>
+                        j++;
+                    }
+                    </div>
+                    <br/>
+                    i++;
+                }
+
+            </div>
+
+
+            <div class="centered-btn-area">
+                <button id="submit-test-btn" type="submit">Submit</button>
+            </div>
+
+        </form>
+    </div>
+
+</div>

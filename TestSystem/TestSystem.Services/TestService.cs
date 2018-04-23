@@ -34,23 +34,43 @@ namespace TestSystem.Services
 
         public IEnumerable<TestDto> GetUserTests(string id)
         {
-            var entities = userRepo.All.Include(u => u.Tests).Where(u => u.Id == id).SelectMany(u => u.Tests);
+            var entities = userRepo.All
+                .Include(u => u.Tests)
+                .Where(u => u.Id == id)
+                .SelectMany(u => u.Tests);
+
             var result = this.Mapper.ProjectTo<TestDto>(entities);
             return result;
         }
 
         public TestDto GetRandomTestByCategory(string categoryName)
         {
-            int allCount = this.testRepo.All.Where(t => t.Category.Name == categoryName).Count();
+            int allCount = this.testRepo.All.Include(t => t.Category).Where(t => t.Category.Name == categoryName).Count();
             int skip = this.Random.Next(0, allCount - 1);
-            var dbTest = testRepo.All.Where(t => t.Category.Name == categoryName).Skip(skip).Take(1);
+
+            var dbTest = testRepo.All
+                .Include(t => t.Category)
+                .Where(t => t.Category.Name == categoryName)
+                .Include(t => t.Questions)
+                .ThenInclude(q => q.Answers)
+                .FirstOrDefault();
+
+            //.Skip(skip)
+            //.Take(1)
+
+
             var testDto = Mapper.MapTo<TestDto>(dbTest);
             return testDto;
         }   
                              
         public TestDto GetFullTestInfo(string testId)
         {
-            var entities = testRepo.All.Where(t => t.Id.Equals(testId)).Include(t => t.Questions).ThenInclude(q => q.Answers).FirstOrDefault();
+            var entities = testRepo.All
+                .Where(t => t.Id.Equals(testId))
+                .Include(t => t.Questions)
+                .ThenInclude(q => q.Answers)
+                .FirstOrDefault();
+
             var result = this.Mapper.MapTo<TestDto>(entities);
             return result;
         }        
