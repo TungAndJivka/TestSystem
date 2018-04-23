@@ -44,7 +44,10 @@ namespace TestSystem.Web
 
             this.CreateMap<QuestionDto, TestSystem.Web.Models.TakeTestViewModels.QuestionViewModel>()
                 .ForMember(q => q.Answers, o => o.MapFrom(x => x.Answers))
-                .MaxDepth(3);
+                .MaxDepth(3)
+                .ReverseMap();
+
+
 
 
         }

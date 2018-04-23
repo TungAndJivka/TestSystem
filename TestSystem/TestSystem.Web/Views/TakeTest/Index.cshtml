@@ -10,24 +10,33 @@
     <div id="test-name" class="page-header table-header">@Model.TestName</div>
 
     <div class="take-test-content" style="width:100%">
-        <form asp-controller="CreateTest" asp-action="Index" method="post">
+
+        <form asp-controller="TakeTest" asp-action="Index" method="post">
+
+            <input asp-for="@Model.CategoryName" type="hidden" value="@Model.CategoryName">
+            <input asp-for="@Model.TestName" type="hidden" value="@Model.TestName">
+            <input asp-for="@Model.TestId" type="hidden" value="@Model.TestId">
+            <input asp-for="@Model.Duration" type="hidden" value="@Model.Duration">
+            <input asp-for="@Model.StartedOn" type="hidden" value="@Model.StartedOn">
+            <input asp-for="@Model.UserId" type="hidden" value="@Model.UserId">
 
             <div class="form-row">
-                <div id="ctg-name"class="col inline">
+                <div id="ctg-name" class="col inline">
                     <div class="ctg"> Category: @Model.CategoryName</div>
                 </div>
                 <div class="col inline ctg set-right">
                     Time: @Model.Duration.Minutes min
                 </div>
-                <br/>
+                <br />
             </div>
 
-            <br/>
+            <br />
 
             <div>
                 @*Questions*@
                 @foreach (var question in Model.Questions)
                 {
+                    <input asp-for="@Model.Questions[i].Id" type="hidden" value="@question.Id">
                     <div class="form-row title">
                         <div class="col col-sm-1 inline right">
                             @(i + 1).
@@ -38,16 +47,16 @@
                     </div>
 
                     <div class="area-answers">
-                    @*//Answers*@
-                    @foreach (var answer in question.Answers)
-                    {
-                        <input asp-for="@Model.Questions[i].SelectedAnswer" type="radio" name="question-@i" id="radio-@i-@j" value="@answer.Id">
-                        <label for="radio-@i-@j" value="@answer.Content" > @answer.Content</label>
-                        <br/>
-                        j++;
-                    }
+                        @*//Answers*@
+                        @foreach (var answer in question.Answers)
+                        {
+                            <input asp-for="@Model.Questions[i].SelectedAnswer" type="radio" name="question-@i" id="radio-@i-@j" value="@answer.Id">
+                            <label for="radio-@i-@j" value="@answer.Content"> @answer.Content</label>
+                            <br />
+                            j++;
+                        }
                     </div>
-                    <br/>
+                    <br />
                     i++;
                 }
 
@@ -57,6 +66,8 @@
             <div class="centered-btn-area">
                 <button id="submit-test-btn" type="submit">Submit</button>
             </div>
+
+            <input asp-for="@Model.Questions" type="hidden" value="@Model.Questions">
 
         </form>
     </div>

@@ -32,6 +32,8 @@ namespace TestSystem.Web.Controllers
             var user = await this.userManager.GetUserAsync(HttpContext.User);
             string userId = user.Id;
 
+            DateTime startedOn = DateTime.Now;
+
             var model = new IndexViewModel()
             {
                 UserId = userId,
@@ -39,7 +41,8 @@ namespace TestSystem.Web.Controllers
                 TestName = testDto.TestName,
                 Duration = testDto.Duration,
                 CategoryName = id,
-                Questions = questions
+                Questions = questions,
+                StartedOn = startedOn
             };
 
             return View(model);
@@ -48,6 +51,10 @@ namespace TestSystem.Web.Controllers
         [HttpPost]
         public IActionResult Index(IndexViewModel test)
         {
+            if (ModelState.IsValid)
+            {
+
+            }
             return View();
         }
     }
