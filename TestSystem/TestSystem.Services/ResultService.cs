@@ -41,5 +41,12 @@ namespace TestSystem.Services
                 return false;
             }
         }
+
+        public IEnumerable<UserTestDto> GetAllResults()
+        {
+            var entities = this.userTestRepo.All;
+            var results = this.Mapper.ProjectTo<UserTestDto>(entities);
+            return results;
+        }
     }
 }
