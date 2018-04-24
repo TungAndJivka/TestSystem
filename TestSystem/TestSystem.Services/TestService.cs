@@ -54,5 +54,14 @@ namespace TestSystem.Services
             var result = this.Mapper.MapTo<TestDto>(entities);
             return result;
         }        
+
+        public void CreateTest(TestDto test)
+        {
+            var testToBeSaved = this.Mapper.MapTo<Test>(test);
+
+            testRepo.Add(testToBeSaved);
+
+            Saver.SaveChanges();
+        }
     }
 }

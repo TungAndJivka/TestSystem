@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using System;
 using TestSystem.Data.Models;
 using TestSystem.DTO;
+using TestSystem.Web.Areas.Administration.Models.CreateTestViewModels;
 using TestSystem.Web.Areas.Administration.Models.Shared;
 
 namespace TestSystem.Web
@@ -19,6 +21,10 @@ namespace TestSystem.Web
                 .ForMember(db => db.TestName, option => option.MapFrom(x => x.Test.TestName))
                 .ForMember(db => db.Category, option => option.MapFrom(x => x.Test.Category.Name))
                 .ForMember(db => db.RequestedTime, option => option.MapFrom(x => x.Test.Duration));
+
+
+            this.CreateMap<CreateTestViewModel, TestDto>(MemberList.Source)
+                .ForMember(x => x.Duration, option => option.MapFrom(x => TimeSpan.FromMinutes(x.Duration)));
                 
             //this.CreateMap<PostViewModel, PostDto>(MemberList.Source);
             //this.CreateMap<PostDto, Post>(MemberList.Source);

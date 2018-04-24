@@ -42,10 +42,13 @@ namespace TestSystem.Services
             }
         }
 
-        public IEnumerable<UserTestDto> GetAllResults()
+        public IEnumerable<ResultListDto> GetAllResults()
         {
             var entities = this.userTestRepo.All;
-            var results = this.Mapper.ProjectTo<UserTestDto>(entities);
+            var results = entities.Select(x => new ResultListDto
+            {
+                ExecutionTime = x.SubmittedOn.Value - x.StartTime.Value
+            });
             return results;
         }
     }

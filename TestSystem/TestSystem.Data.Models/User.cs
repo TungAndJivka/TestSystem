@@ -19,8 +19,8 @@ namespace TestSystem.Data.Models
 
         public bool IsDeleted { get; set; }
 
-        public ICollection<UserTest> UserTests { get; set; } //NP
 
+        public ICollection<UserTest> UserTests { get; set; } //NP
         public DateTime? DeletedOn { get; set; }
     }
 }

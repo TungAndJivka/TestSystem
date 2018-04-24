@@ -1,7 +1,7 @@
 ﻿var questionTemplate = `
 <div id="question-{{q_id}}" class="question-container">
     <div class="panel-heading">
-        <a data-toggle="collapse" href="#collapse-{{q_id}}">Question {{q_number}}</a>
+        <a id="questionNumber" data-toggle="collapse" href="#collapse-{{q_id}}">Question {{q_number}}</a>
         <button type="button" class="delete-question">X</button>
     </div>
 
@@ -17,14 +17,14 @@
     </div>
 </div>`;
 var answerTemplate = `
-<div id="question-{{q_id}}-answer-{{a_id}}">
+<div id="question-{{q_id}}-answer-{{a_id}}" class="answer-container">
     <div class="answer-heading">
-        <div>Answer {{a_number}}</div>
+        <div id="answerNumber">Answer {{a_number}}</div>
         <input id="Questions_{{q_id}}__Answers_{{a_id}}__IsCorrect" name="radio-{{q_id}}" type="radio" value="true" autocomplete="off">
-        <button class="delete-answer" type="button">X</button>        
+        <button class="delete-answer" type="button">Delete Answer</button>        
     </div>
     <div class="answer-body">        
-        <input id="Questions_{{q_id}}__Answers_{{a_id}}__Content" name="Questions[{{q_id}}].Answers[{{a_id}}].Content" class="answer-content summernote form-control"></input>
+        <input id="Questions_{{q_id}}__Answers_{{a_id}}__Content" name="Questions[{{q_id}}].Answers[{{a_id}}].Content" class="answer-content"></input>
     </div>    
 </div>`;
 
@@ -47,8 +47,8 @@ $(function () {
 
             $(question).attr('id', `question-${newQuestionId}`);
             $(`#question-${newQuestionId} a`).attr('href', `#collapse-${newQuestionId}`);
-            $(`#question-${newQuestionId} a h4`).text(`Question ${newQuestionId + 1}`);
-            $(`#question-${newQuestionId} .panel-collapse`).attr('id', `collapse-${newQuestionId}`);
+            $(`#question-${newQuestionId} #questionNumber`).text(`Question ${newQuestionId + 1}`);
+            $(`#questi-on-${newQuestionId} .panel-collapse`).attr('id', `collapse-${newQuestionId}`);
             $(`#question-${newQuestionId} .question-description input`).attr('id', `Questions_${newQuestionId}__Body`);
             $(`#question-${newQuestionId} .question-description input`).attr('name', `Questions[${newQuestionId}].Body`);
             $(`#question-${newQuestionId} .add-answer`).attr('name', `collapse-${newQuestionId}`);
@@ -106,11 +106,11 @@ $(function () {
 
 
     var deleteAnswerClickEvent = $('#questions-container #questions-body').on('click', '.delete-answer', function () {
-        var answerId = this.parentNode.id.split('-');
+        var answerId = this.parentNode.parentNode.id.split('-');
         var questionId = parseInt(answerId[1]);
         var answerNumber = parseInt(answerId[3]);
 
-        $(this.parentNode).remove();
+        $(this.parentNode.parentNode).remove();
 
         var nextAnswers = $(`#questions-body #question-${questionId} .answer-container`)
             .filter(function () {
@@ -123,7 +123,7 @@ $(function () {
             var newAnswerNumber = parseInt(a.id.split('-')[3]) - 1;
 
             $(a).attr('id', `question-${questionId}-answer-${newAnswerNumber}`);
-            $(`#question-${questionId}-answer-${newAnswerNumber} h3`).text(`Answer ${newAnswerNumber + 1}`);
+            $(`#question-${questionId}-answer-${newAnswerNumber} #answerNumber`).text(`Answer ${newAnswerNumber + 1}`);
             $(`#question-${questionId}-answer-${newAnswerNumber} .answer-content`).attr('id', `Questions_${questionId}__Answers_${newAnswerNumber}__Content`);
             $(`#question-${questionId}-answer-${newAnswerNumber} .answer-content`).attr('name', `Questions[${questionId}].Answers[${newAnswerNumber}].Content`);
         });
@@ -141,6 +141,18 @@ $(function () {
         if (!hasCheckedRadioButton && answerRadioButtons.first() !== undefined) {
             answerRadioButtons.first().prop('checked', true);
         }
+    });
+
+    var createTestClickEvent = $('.create-test').on('click', function (event) {
+        $('#questions-container #questions-body .answer-is-correct')
+            .toArray()
+            .forEach(function (rButton) {
+                var params = $(rButton).closest('.answer-container')[0].id.split('-');
+                var questionId = params[1];
+                var answerNumber = params[3];
+
+                $(rButton).attr('name', `Questions[${questionId}].Answers[${answerNumber}].IsCorrect`);
+            });
     });
 
 });

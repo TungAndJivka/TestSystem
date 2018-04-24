@@ -17,5 +17,7 @@ namespace TestSystem.Services.Contracts
         //Guid GetRandomTestIdByCategory(string categoryName);
 
         TestDto GetRandomTestByCategory(string categoryName);
+
+        void CreateTest(TestDto test);
     }
 }
