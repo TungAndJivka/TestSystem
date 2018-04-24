@@ -46,18 +46,16 @@ namespace TestSystem.Services
         public TestDto GetRandomTestByCategory(string categoryName)
         {
             int allCount = this.testRepo.All.Include(t => t.Category).Where(t => t.Category.Name == categoryName).Count();
-            int skip = this.Random.Next(0, allCount - 1);
+            int random = this.Random.Next(0, allCount);
 
-            var dbTest = testRepo.All
+            var tests = testRepo.All
                 .Include(t => t.Category)
                 .Where(t => t.Category.Name == categoryName)
                 .Include(t => t.Questions)
                 .ThenInclude(q => q.Answers)
-                .FirstOrDefault();
+                .ToList();
 
-            //.Skip(skip)
-            //.Take(1)
-
+            var dbTest = tests[random];
 
             var testDto = Mapper.MapTo<TestDto>(dbTest);
             return testDto;

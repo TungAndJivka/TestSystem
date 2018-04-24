@@ -7,11 +7,11 @@
 
 <div id="page">
 
-    <div id="test-name" class="page-header table-header">@Model.TestName</div>
-
     <div class="take-test-content" style="width:100%">
 
         <form asp-controller="TakeTest" asp-action="Index" method="post">
+
+            <div id="test-name" class="page-header table-header">@Model.TestName</div>
 
             <input asp-for="@Model.CategoryName" type="hidden" value="@Model.CategoryName">
             <input asp-for="@Model.TestName" type="hidden" value="@Model.TestName">
@@ -51,7 +51,7 @@
                         @foreach (var answer in question.Answers)
                         {
                             <input asp-for="@Model.Questions[i].SelectedAnswer" type="radio" name="question-@i" id="radio-@i-@j" value="@answer.Id">
-                            <label for="radio-@i-@j" value="@answer.Content"> @answer.Content</label>
+                            <label for="radio-@i-@j" name="@answer.Id" value="@answer.Content"> @answer.Content</label>
                             <br />
                             j++;
                         }
