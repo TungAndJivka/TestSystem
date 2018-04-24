@@ -15,6 +15,7 @@ namespace TestSystem.Services
         {
             Guard.WhenArgument(mapper, "mapper").IsNull().Throw();
             Guard.WhenArgument(saver, "saver").IsNull().Throw();
+            Guard.WhenArgument(random, "random").IsNull().Throw();
             this.mapper = mapper;
             this.saver = saver;
             this.random = random;

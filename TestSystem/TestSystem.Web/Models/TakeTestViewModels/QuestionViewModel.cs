@@ -10,6 +10,6 @@ namespace TestSystem.Web.Models.TakeTestViewModels
 
         public IList<AnswerViewModel> Answers { get; set; }
 
-        public AnswerViewModel SelectedAnswer { get; set; }
+        public string SelectedAnswer { get; set; }
     }
 }

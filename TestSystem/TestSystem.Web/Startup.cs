@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -36,6 +38,30 @@ namespace TestSystem.Web
             RegisterAuthentication(services);
             RegisterServices(services);
             RegisterInfrastructure(services);
+
+            // In-memory database
+
+            //services.AddDbContext<ApplicationDbContext>(options =>
+            //{
+            //    var liteConn = new SqliteConnection("DataSource=:memory:");
+            //    liteConn.Open();
+
+            //    options
+            //        .UseSqlite(liteConn)
+            //        .ConfigureWarnings(warnings =>
+            //        {
+            //            warnings.Throw(RelationalEventId.QueryClientEvaluationWarning);
+            //            warnings.Log(RelationalEventId.ExecutedCommand);
+            //        });
+            //});
+
+            //services.AddDbContext<ApplicationDbContext>(opt => opt.UseInMemoryDatabase());
+
+            services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                options.UseSqlServer(Configuration["ConnectionStrings:Default"]);
+            });
+
         }
 
         private void RegisterData(IServiceCollection services) {
@@ -103,6 +129,10 @@ namespace TestSystem.Web
                 app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
+
+                // In-memory database:
+                //var context = app.ApplicationServices.GetRequiredService<ApplicationDbContext>();
+                //context.Database.EnsureCreated();
             }
             else
             {

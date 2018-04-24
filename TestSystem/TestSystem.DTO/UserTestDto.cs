@@ -6,10 +6,12 @@ namespace TestSystem.DTO
 {
     public class UserTestDto
     {
+        public Guid Id { get; set; }
+
         public string UserId { get; set; }
         public UserDto User { get; set; }
 
-        public Guid TestId { get; set; }
+        public string TestId { get; set; }
         public TestDto Test { get; set; }
 
         public double? Score { get; set; }
@@ -18,6 +20,6 @@ namespace TestSystem.DTO
 
         public DateTime? SubmittedOn { get; set; }
 
-        //public ICollection<AnsweredQuestionDto> AnsweredQuestions { get; set; }
+        public ICollection<AnsweredQuestionDto> AnsweredQuestions { get; set; }
     }
 }

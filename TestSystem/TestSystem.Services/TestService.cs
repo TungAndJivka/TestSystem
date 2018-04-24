@@ -1,6 +1,5 @@
 ﻿using Bytes2you.Validation;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using TestSystem.Data.Data.Repositories;
@@ -17,10 +16,17 @@ namespace TestSystem.Services
         private IEfGenericRepository<Test> testRepo;
         private readonly IEfGenericRepository<User> userRepo;
 
-        public TestService(IEfGenericRepository<Test> testRepo, IEfGenericRepository<User> userRepo, IMappingProvider mapper, ISaver saver, IRandomProvider random)
+        public TestService(
+            IEfGenericRepository<Test> testRepo, 
+            IEfGenericRepository<User> userRepo, 
+            IMappingProvider mapper,
+            ISaver saver, 
+            IRandomProvider random)
+
             : base(mapper, saver, random)
         {
             Guard.WhenArgument(testRepo, "testRepo").IsNull().Throw();
+            Guard.WhenArgument(userRepo, "userRepo").IsNull().Throw();
             this.testRepo = testRepo;
             this.userRepo = userRepo;
         }
@@ -64,13 +70,30 @@ namespace TestSystem.Services
         public TestDto GetFullTestInfo(string testId)
         {
             var entities = testRepo.All
-                .Where(t => t.Id.Equals(testId))
+                .Where(t => t.Id.ToString().Equals(testId))
                 .Include(t => t.Questions)
                 .ThenInclude(q => q.Answers)
                 .FirstOrDefault();
 
             var result = this.Mapper.MapTo<TestDto>(entities);
             return result;
-        }        
+        }
+
+        public int GetQuestionsCount(string testId)
+        {
+            //var dbTest = testRepo.All.Where(x => x.Id.ToString().Equals(testId)).FirstOrDefault();
+            //if (dbTest != null)
+            //{
+            //    return dbTest.Questions.Count;
+            //}
+
+            var test = testRepo.All.Where(t => t.Id.ToString().Equals(testId)).Include(t => t.Questions).FirstOrDefault();
+            if (test != null)
+            {
+                return test.Questions.Count;
+            }
+
+            return 0;
+        }
     }
 }

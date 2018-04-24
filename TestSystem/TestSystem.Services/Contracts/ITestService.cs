@@ -14,7 +14,7 @@ namespace TestSystem.Services.Contracts
 
         TestDto GetFullTestInfo(string testId);
 
-        //Guid GetRandomTestIdByCategory(string categoryName);
+        int GetQuestionsCount(string testId);
 
         TestDto GetRandomTestByCategory(string categoryName);
     }

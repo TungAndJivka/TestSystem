@@ -47,9 +47,16 @@ namespace TestSystem.Web
                 .MaxDepth(3)
                 .ReverseMap();
 
+            this.CreateMap<Answer, AnswerDto>()
+                .ForMember(dto => dto.AnsweredQuestions, o => o.MapFrom(x => x.AnsweredQuestions))
+                .MaxDepth(3)
+                .ReverseMap();
 
+            this.CreateMap<UserTestDto, UserTest>(MemberList.Source)
+    .ForMember(dto => dto.AnsweredQuestions, o => o.MapFrom(x => x.AnsweredQuestions))
+    .MaxDepth(3);
 
-
+            this.CreateMap<AnsweredQuestionDto, AnsweredQuestion>(MemberList.Source);
         }
     }
 }

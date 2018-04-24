@@ -29,6 +29,7 @@ namespace TestSystem.Services
             return results;
         }
 
+        // not used
         public bool AddNewResult(string userId, Guid testId)
         {
             try
@@ -40,6 +41,12 @@ namespace TestSystem.Services
             {
                 return false;
             }
+        }
+
+        public void AddResult(UserTestDto result)
+        {
+            UserTest userTest = Mapper.MapTo<UserTest>(result);
+            userTestRepo.Add(userTest);
         }
     }
 }
