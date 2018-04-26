@@ -5,21 +5,19 @@ using TestSystem.Data.Models.Abstractions;
 
 namespace TestSystem.Data.Models
 {
-    // Add profile data for application users by adding properties to the ApplicationUser class
     public class User : IdentityUser, IDeletable
     {
-
         public User()
         {
             this.Tests = new HashSet<Test>();
             this.UserTests = new HashSet<UserTest>();
         }
 
-        public ICollection<Test> Tests { get; set; }
+        public ICollection<Test> Tests { get; set; } // not used
 
         public bool IsDeleted { get; set; }
 
-        public ICollection<UserTest> UserTests { get; set; } //NP
+        public ICollection<UserTest> UserTests { get; set; }
 
         public DateTime? DeletedOn { get; set; }
     }

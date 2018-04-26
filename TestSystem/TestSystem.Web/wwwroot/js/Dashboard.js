@@ -1,4 +1,9 @@
-﻿const categoryTabClickStart = (function (categoryName) {        
+﻿$(function () {
+    $('#Java').click();
+});
+
+
+const categoryTabClickStart = (function (categoryName) {        
     node = $('#DashboardContent')[0].firstChild;
     if (node) {
         node.remove();
@@ -13,12 +18,14 @@
             </div>
         `);
 
+    let testName = categoryName + ' Test';
+
     $('#DashboardContent').append(row);
-    $('#categoryName').html(categoryName);
+    $('#categoryName').html(testName);
 });
 
 
-const categoryTabClickSubmitted = (function (testName) {
+const categoryTabClickSubmitted = (function (categoryName) {
     node = $('#DashboardContent')[0].firstChild;
     if (node) {
         node.remove();
@@ -30,6 +37,8 @@ const categoryTabClickSubmitted = (function (testName) {
                 <a class="SubmittedTestBtn DashBtn">Submitted</a>
             </div>
         `);
+
+    let testName = categoryName + ' Test';
 
     $('#DashboardContent').append(row);
     $('#testName').html(testName);

@@ -22,7 +22,7 @@ namespace TestSystem.Web.Areas.Administration
         public IViewComponentResult Invoke()
         {
             var tests = testService.GetAll();
-            IEnumerable<TestListModel> model = this.mapper.EnumerableProjectTo<TestListModel>(tests);
+            IEnumerable<TestListModel> model = this.mapper.ProjectTo<TestListModel>(tests.AsQueryable());
             return View(model);
         }
     }

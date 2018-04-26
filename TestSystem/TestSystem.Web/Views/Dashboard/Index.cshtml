@@ -3,9 +3,7 @@
     ViewData["Title"] = "Dashboard";
 }
 
-
 <h2 class="page-header">@ViewData["Title"]</h2>
-
 
 
 <div class="dash-content">
@@ -15,9 +13,9 @@
         {
             string categoryName = Model.Categories[i].Name;
 
-            @if (!Model.Tests.Any(x => x.Name == categoryName))
+            @if (!Model.Tests.Where(t => t.IsSubmitted).Any(x => x.CategoryName == categoryName))
             {
-                <li class="nav-item">
+                <li  class="nav-item">
                     <a class="nav-link"
                        title="@i-tab"
                        id="@categoryName"

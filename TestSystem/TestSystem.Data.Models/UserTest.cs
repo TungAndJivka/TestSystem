@@ -23,7 +23,7 @@ namespace TestSystem.Data.Models
 
         public double? Score { get; set; }
 
-        public DateTime? StartTime { get; set; }
+        public DateTime StartTime { get; set; }
 
         public DateTime? SubmittedOn { get; set; }
 

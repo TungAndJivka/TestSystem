@@ -30,6 +30,13 @@ namespace TestSystem.Services
             return categories;
         }
 
+        public IEnumerable<CategoryDto> GetAllWithPublsihedTests()
+        {
+            var entities = this.categoryRepo.All.Include(c => c.Tests).Where(c => c.Tests.Any<Test>(t => t.IsPusblished));
+            var categories = this.Mapper.ProjectTo<CategoryDto>(entities);
+            return categories;
+        }
+
         public IEnumerable<CategoryDto> GetAllWithTests()
         {
             var entities = this.categoryRepo.All.Include(x => x.Tests).OrderBy(c => c.Name);

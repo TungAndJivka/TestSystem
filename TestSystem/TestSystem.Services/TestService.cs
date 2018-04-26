@@ -13,22 +13,26 @@ namespace TestSystem.Services
 {
     public class TestService : AbstractService, ITestService
     {
-        private IEfGenericRepository<Test> testRepo;
+        private readonly IEfGenericRepository<Test> testRepo;
         private readonly IEfGenericRepository<User> userRepo;
+        private readonly IEfGenericRepository<UserTest> resultRepo;
 
         public TestService(
             IEfGenericRepository<Test> testRepo, 
             IEfGenericRepository<User> userRepo, 
             IMappingProvider mapper,
             ISaver saver, 
-            IRandomProvider random)
+            IRandomProvider random,
+            IEfGenericRepository<UserTest> resultRepo)
 
             : base(mapper, saver, random)
         {
             Guard.WhenArgument(testRepo, "testRepo").IsNull().Throw();
             Guard.WhenArgument(userRepo, "userRepo").IsNull().Throw();
+            Guard.WhenArgument(resultRepo, "resultRepo").IsNull().Throw();
             this.testRepo = testRepo;
             this.userRepo = userRepo;
+            this.resultRepo = resultRepo;
         }
 
         public IEnumerable<TestDto> GetAll()
@@ -40,26 +44,29 @@ namespace TestSystem.Services
 
         public IEnumerable<TestDto> GetUserTests(string id)
         {
-            var entities = userRepo.All
-                .Include(u => u.Tests)
-                .Where(u => u.Id == id)
-                .SelectMany(u => u.Tests);
+            var results = resultRepo.All.Where(r => r.UserId == id).Include(r => r.Test).ThenInclude(t => t.Category);
 
-            var result = this.Mapper.ProjectTo<TestDto>(entities);
+            var entities = new List<Test>();
+            foreach (var r in results)
+            {
+                entities.Add(r.Test);
+            }
+
+            var result = this.Mapper.ProjectTo<TestDto>(entities.AsQueryable());
             return result;
         }
 
         public TestDto GetRandomTestByCategory(string categoryName)
         {
-            int allCount = this.testRepo.All.Include(t => t.Category).Where(t => t.Category.Name == categoryName).Count();
-            int random = this.Random.Next(0, allCount);
-
             var tests = testRepo.All
                 .Include(t => t.Category)
-                .Where(t => t.Category.Name == categoryName)
+                .Where(t => t.Category.Name == categoryName && t.IsPusblished)
                 .Include(t => t.Questions)
                 .ThenInclude(q => q.Answers)
                 .ToList();
+
+            int allCount = tests.Count();
+            int random = this.Random.Next(0, allCount);
 
             var dbTest = tests[random];
 
@@ -81,12 +88,6 @@ namespace TestSystem.Services
 
         public int GetQuestionsCount(string testId)
         {
-            //var dbTest = testRepo.All.Where(x => x.Id.ToString().Equals(testId)).FirstOrDefault();
-            //if (dbTest != null)
-            //{
-            //    return dbTest.Questions.Count;
-            //}
-
             var test = testRepo.All.Where(t => t.Id.ToString().Equals(testId)).Include(t => t.Questions).FirstOrDefault();
             if (test != null)
             {
@@ -95,5 +96,7 @@ namespace TestSystem.Services
 
             return 0;
         }
+
+
     }
 }

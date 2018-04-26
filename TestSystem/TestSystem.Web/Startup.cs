@@ -2,20 +2,16 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Data.SqlClient;
 using TestSystem.Data.Data.Repositories;
 using TestSystem.Data.Data.Saver;
 using TestSystem.Data.Models;
 using TestSystem.Infrastructure.Providers;
 using TestSystem.Services;
 using TestSystem.Services.Contracts;
-using TestSystem.Web.Configuration;
 using TestSystem.Web.Data;
 using TestSystem.Web.Services;
 
@@ -39,24 +35,6 @@ namespace TestSystem.Web
             RegisterServices(services);
             RegisterInfrastructure(services);
 
-            // In-memory database
-
-            //services.AddDbContext<ApplicationDbContext>(options =>
-            //{
-            //    var liteConn = new SqliteConnection("DataSource=:memory:");
-            //    liteConn.Open();
-
-            //    options
-            //        .UseSqlite(liteConn)
-            //        .ConfigureWarnings(warnings =>
-            //        {
-            //            warnings.Throw(RelationalEventId.QueryClientEvaluationWarning);
-            //            warnings.Log(RelationalEventId.ExecutedCommand);
-            //        });
-            //});
-
-            //services.AddDbContext<ApplicationDbContext>(opt => opt.UseInMemoryDatabase());
-
             services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseSqlServer(Configuration["ConnectionStrings:Default"]);
@@ -69,7 +47,6 @@ namespace TestSystem.Web
             {
                 var connectionString = Configuration.GetConnectionString("DefaultConnection");
                 options.UseSqlServer(connectionString);
-                //options.UseInMemoryDatabase(); // for testing  /Effort/
             });
 
             services.AddScoped(typeof(IEfGenericRepository<>), typeof(EfGenericRepository<>));
@@ -129,10 +106,6 @@ namespace TestSystem.Web
                 app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
-
-                // In-memory database:
-                //var context = app.ApplicationServices.GetRequiredService<ApplicationDbContext>();
-                //context.Database.EnsureCreated();
             }
             else
             {
@@ -153,8 +126,6 @@ namespace TestSystem.Web
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-
-            //new UserRoleSeed(app.ApplicationServices.GetService<RoleManager<IdentityRole>>()).Seed();
         }
     }
 }

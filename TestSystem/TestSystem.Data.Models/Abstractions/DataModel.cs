@@ -7,8 +7,8 @@ namespace TestSystem.Data.Models.Abstractions
     {
         public DataModel()
         {
+            //this.Id = Guid.NewGuid();
             this.CreatedOn = DateTime.Now;
-            this.Id = Guid.NewGuid();
         }
 
         [Key]

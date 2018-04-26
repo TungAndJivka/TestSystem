@@ -4,12 +4,10 @@ namespace TestSystem.DTO
 {
     public class AnsweredQuestionDto
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
 
-        public string UserTestId { get; set; }
-        //public UserTestDto UserTest { get; set; }//NP
+        public Guid UserTestId { get; set; }
 
-        public string AnswerId { get; set; }
-        //public AnswerDto Answer { get; set; } //NP
+        public Guid AnswerId { get; set; }
     }
 }

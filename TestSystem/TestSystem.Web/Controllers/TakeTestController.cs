@@ -20,38 +20,61 @@ namespace TestSystem.Web.Controllers
         private readonly IAnswerService answerService;
         private readonly IMappingProvider mapper;
         private readonly IResultService resultService;
+        private readonly IUserService userService;
         private readonly ISaver saver;
 
-        public TakeTestController(UserManager<User> userManager, ITestService testService, IAnswerService answerService, IResultService resultService, IMappingProvider mapper, ISaver saver)
+        public TakeTestController(UserManager<User> userManager, ITestService testService, IAnswerService answerService, IResultService resultService, IMappingProvider mapper, IUserService userService, ISaver saver)
         {
             this.userManager = userManager;
             this.testService = testService;
             this.answerService = answerService;
             this.resultService = resultService;
+            this.userService = userService;
             this.mapper = mapper;
             this.saver = saver;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(string id)
+        public async Task<IActionResult> Index(string id) // id => categoryName
         {
-            var testDto = this.testService.GetRandomTestByCategory(id);
-            var questions = mapper.ProjectTo<QuestionViewModel>(testDto.Questions.AsQueryable()).ToList();
             var user = await this.userManager.GetUserAsync(HttpContext.User);
-            string userId = user.Id;
+            int check = resultService.CheckForTakenTest(user.Id, id);
+            TestDto testDto = null;
 
-            DateTime startedOn = DateTime.Now;
+            if (check == 3)
+            {
+                return RedirectToAction("Index", "Dashboard");
+            }
+
+            if (check == 2)
+            {
+                testDto = this.userService.GetTestFromCategory(user.Id, id);
+            }
+            else
+            {
+                testDto = this.testService.GetRandomTestByCategory(id);
+            }
+
+            var questions = mapper.ProjectTo<QuestionViewModel>(testDto.Questions.AsQueryable()).ToList();
 
             var model = new IndexViewModel()
             {
-                UserId = userId,
+                UserId = user.Id,
                 TestId = testDto.Id,
                 TestName = testDto.TestName,
                 Duration = testDto.Duration,
                 CategoryName = id,
                 Questions = questions,
-                StartedOn = startedOn
+                StartedOn = DateTime.Now
             };
+
+            if (check == 1)
+            {
+                var resultDto = mapper.MapTo<UserTestDto>(model);
+                resultDto.Id = Guid.NewGuid();
+                resultService.AddResult(resultDto);
+                this.saver.SaveChanges();
+            }
 
             return View(model);
         }
@@ -62,28 +85,19 @@ namespace TestSystem.Web.Controllers
             if (ModelState.IsValid)
             {
                 var test = testService.GetFullTestInfo(model.TestId);
-
                 Guid userTestId = Guid.NewGuid();
-
                 int correctAnswers = 0;
-                //int allQuestionsCount = testService.GetQuestionsCount(model.TestId);
-                int allQuestionsCount = test.Questions.Count();
 
                 var answeredQuestions = new List<AnsweredQuestionDto>();
                 foreach (QuestionViewModel question in model.Questions)
                 {
-                    string selectedAnswerId = question.SelectedAnswer;
-                    if (selectedAnswerId == null)
-                    {
-                        continue;
-                    }
+                    if (question.SelectedAnswer == null) { continue; }
 
-                    //AnswerDto answer = this.answerService.GetById(selectedAnswerId);
                     AnswerDto answer = test.Questions
                         .Where(q => q.Id == question.Id)
                         .FirstOrDefault()
                         .Answers
-                        .Where(a => a.Id == selectedAnswerId)
+                        .Where(a => a.Id == question.SelectedAnswer)
                         .FirstOrDefault();
 
                     if (answer.IsCorrect)
@@ -93,29 +107,22 @@ namespace TestSystem.Web.Controllers
 
                     var answeredQuestion = new AnsweredQuestionDto()
                     {
-                        Id = Guid.NewGuid().ToString(),
-                        UserTestId = userTestId.ToString(),
-                        AnswerId = selectedAnswerId
+                        Id = Guid.NewGuid(),
+                        UserTestId = userTestId,
+                        AnswerId = new Guid(question.SelectedAnswer)
                     };
 
                     answeredQuestions.Add(answeredQuestion);
                 }
 
-                double score = (100.0*correctAnswers)/allQuestionsCount;
+                double score = (100.0*correctAnswers)/test.Questions.Count();
 
-                var userTest = new UserTestDto()
-                {
-                    Id = userTestId,
-                    UserId = model.UserId,
-                    TestId = model.TestId,
-                    StartTime = model.StartedOn,
-                    SubmittedOn = DateTime.Now,
-                    AnsweredQuestions = answeredQuestions,
-                    Score = score
-                };
+                var userTest = resultService.GetUserTest(model.UserId, model.TestId);
+                userTest.Score = score;
+                userTest.SubmittedOn = DateTime.Now;
+                userTest.AnsweredQuestions = answeredQuestions;
 
-                this.resultService.AddResult(userTest);
-                this.saver.SaveChanges();
+                this.resultService.Update(userTest);
             }
 
             return RedirectToAction("Index", "Dashboard");

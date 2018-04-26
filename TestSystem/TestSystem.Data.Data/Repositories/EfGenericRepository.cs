@@ -50,7 +50,7 @@ namespace TestSystem.Data.Data.Repositories
         public void Delete(T entity)
         {
             entity.IsDeleted = true;
-            //entity.DeletedOn = DateTime.Now;
+            entity.DeletedOn = DateTime.Now;
 
             var entry = this.context.Entry(entity);
             entry.State = EntityState.Modified;

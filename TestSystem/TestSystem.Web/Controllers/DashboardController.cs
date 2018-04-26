@@ -39,7 +39,7 @@ namespace TestSystem.Web.Controllers
                 return RedirectToAction("Index", "Administration/Dashboard");
             }
 
-            var categoriesDto = this.categoryService.GetAll();
+            var categoriesDto = this.categoryService.GetAllWithPublsihedTests();
             var userId = userManager.GetUserId(HttpContext.User);
             var testsSumbitted = testService.GetUserTests(userId);
             var tests = new List<TestViewModel>();
@@ -53,9 +53,9 @@ namespace TestSystem.Web.Controllers
 
                 var tvm = new TestViewModel() { Name = c.Name + " Test", CategoryName = c.Name };
 
-                if (testsSumbitted.Any(x => x.Category.Id == c.Id))
+                if (testsSumbitted.Any(x => x.Category.Name == c.Name))
                 {
-                    tvm.IsSubmitted = true;                 
+                    tvm.IsSubmitted = true;
                 }
 
                 tests.Add(tvm);
@@ -64,7 +64,7 @@ namespace TestSystem.Web.Controllers
             var model = new IndexViewModel()
             {
                 Title = "Dashboard",
-                Categories = (this.mapper.EnumerableProjectTo<CategoryViewModel>(categoriesDto).OrderBy(x => x.Name).ToList()),
+                Categories = (this.mapper.ProjectTo<CategoryViewModel>(categoriesDto.AsQueryable()).OrderBy(x => x.Name).ToList()),
                 Tests = tests
             };
 

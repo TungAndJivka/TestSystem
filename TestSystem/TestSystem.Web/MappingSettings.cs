@@ -9,7 +9,13 @@ namespace TestSystem.Web
     {
         public MappingSettings()
         {
-            this.CreateMap<Test, TestDto>();
+            this.CreateMap<Test, TestDto>()
+                .ForMember(dto => dto.Questions, options => options.MapFrom(t => t.Questions))
+                .ForMember(dto => dto.Id, options => options.MapFrom(t => t.Id.ToString()))
+                .MaxDepth(3);
+
+            this.CreateMap<Question, QuestionDto>()
+                .ForMember(dto => dto.Answers, options => options.MapFrom(q => q.Answers));
 
             this.CreateMap<TestDto, TestSystem.Web.Areas.Administration.Models.DashboardViewModels.TestViewModel>()
                .ForMember(vm => vm.CategoryName, options => options.MapFrom(x => x.Category.Name));
@@ -53,10 +59,13 @@ namespace TestSystem.Web
                 .ReverseMap();
 
             this.CreateMap<UserTestDto, UserTest>(MemberList.Source)
-    .ForMember(dto => dto.AnsweredQuestions, o => o.MapFrom(x => x.AnsweredQuestions))
-    .MaxDepth(3);
+                .ForMember(dto => dto.AnsweredQuestions, o => o.MapFrom(x => x.AnsweredQuestions))
+                .MaxDepth(3);
 
-            this.CreateMap<AnsweredQuestionDto, AnsweredQuestion>(MemberList.Source);
+            this.CreateMap<AnsweredQuestionDto, AnsweredQuestion>(MemberList.Source)
+                .ForMember(db => db.Id, options => options.MapFrom(dto => dto.Id));
+
+            this.CreateMap<TestSystem.Web.Models.TakeTestViewModels.IndexViewModel, UserTestDto>(MemberList.Source);
         }
     }
 }

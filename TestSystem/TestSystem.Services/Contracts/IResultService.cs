@@ -8,9 +8,12 @@ namespace TestSystem.Services.Contracts
     {
         IEnumerable<UserTestDto> GetAll();
 
-        // not used
-        bool AddNewResult(string userId, Guid testId);
-
         void AddResult(UserTestDto result);
+
+        void Update(UserTestDto result);
+
+        int CheckForTakenTest(string userId, string testId);
+
+        UserTestDto GetUserTest(string userId, string testId);
     }
 }

@@ -29,24 +29,51 @@ namespace TestSystem.Services
             return results;
         }
 
-        // not used
-        public bool AddNewResult(string userId, Guid testId)
+        public UserTestDto GetUserTest(string userId, string testId)
         {
-            try
-            {
-                this.userTestRepo.Add(new UserTest() { UserId = userId, TestId = testId, });
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            var entity = userTestRepo.All
+                .Where(x => x.UserId == userId && x.TestId.ToString() == testId)
+                .FirstOrDefault();
+
+            return Mapper.MapTo<UserTestDto>(entity);
         }
 
         public void AddResult(UserTestDto result)
         {
             UserTest userTest = Mapper.MapTo<UserTest>(result);
             userTestRepo.Add(userTest);
+        }
+
+        public void Update(UserTestDto result)
+        {
+            var entity = userTestRepo.All.Where(r => r.Id.ToString() == result.Id.ToString()).FirstOrDefault();
+
+            var answeredQuestions = Mapper.ProjectTo<AnsweredQuestion>(result.AnsweredQuestions.AsQueryable());
+
+            entity.Score = result.Score;
+            entity.SubmittedOn = result.SubmittedOn;
+            entity.AnsweredQuestions = answeredQuestions.ToList();
+
+            userTestRepo.Update(entity);
+
+            Saver.SaveChanges();
+        }
+
+        public int CheckForTakenTest(string userId, string categoryName)
+        {
+            var userTest = userTestRepo.All.Where(x => x.UserId == userId && x.Test.Category.Name == categoryName).FirstOrDefault();
+
+            if (userTest == null)
+            {
+                return 1; // => GetRandomTest
+            }
+
+            if (userTest != null && userTest.SubmittedOn == null)
+            {
+                return 2; // => GetTheSameTest
+            }
+
+            return 3; // => RedirectToDashboard
         }
     }
 }

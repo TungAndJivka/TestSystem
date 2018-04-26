@@ -8,9 +8,7 @@
 <div id="page">
 
     <div class="take-test-content" style="width:100%">
-
-        <form asp-controller="TakeTest" asp-action="Index" method="post">
-
+        <form asp-controller="TakeTest" asp-action="Index" method="POST">
             <div id="test-name" class="page-header table-header">@Model.TestName</div>
 
             <input asp-for="@Model.CategoryName" type="hidden" value="@Model.CategoryName">
@@ -20,51 +18,61 @@
             <input asp-for="@Model.StartedOn" type="hidden" value="@Model.StartedOn">
             <input asp-for="@Model.UserId" type="hidden" value="@Model.UserId">
 
-            <div class="form-row">
+            <div id="timer-area" class="form-row">
                 <div id="ctg-name" class="col inline">
-                    <div class="ctg"> Category: @Model.CategoryName</div>
+                    <div class="ctg" id="category-name"> Category: @Model.CategoryName</div>
                 </div>
-                <div class="col inline ctg set-right">
-                    Time: @Model.Duration.Minutes min
+                <div id="timer" class="col inline ctg set-right">
+                    <div id="countdown" class="inline">
+                        <div id='tiles'></div>
+                        <div class="labels">
+                            <li>Hours</li>
+                            <li>Mins</li>
+                            <li>Secs</li>
+                        </div>
+                    </div>
                 </div>
                 <br />
             </div>
 
-            <br />
-
-            <div>
+            <div id="center-area">
                 @*Questions*@
                 @foreach (var question in Model.Questions)
-                {
-                    <input asp-for="@Model.Questions[i].Id" type="hidden" value="@question.Id">
-                    <div class="form-row title">
-                        <div class="col col-sm-1 inline right">
-                            @(i + 1).
-                        </div>
-                        <div class="col col-lg-11 title">
-                            @question.Description
-                        </div>
-                    </div>
-
-                    <div class="area-answers">
-                        @*//Answers*@
-                        @foreach (var answer in question.Answers)
-                        {
-                            
-                            <label> 
-                                <input asp-for="@Model.Questions[i].SelectedAnswer" type="radio" value="@answer.Id"> 
-                                @answer.Content
-                            </label>
-                            <br />
-                            j++;
-                        }
-                    </div>
-                    <br />
-                    i++;
-                }
-
+        {
+            <input asp-for="@Model.Questions[i].Id" type="hidden" value="@question.Id">
+            <div class="form-row title">
+                <div class="col col-sm-1 inline right">
+                    @(i + 1).
+                </div>
+                <div class="col col-lg-11 title">
+                    @question.Description
+                </div>
             </div>
 
+            <div class="area-answers">
+                @*//Answers*@
+                @foreach (var answer in question.Answers)
+        {
+            <div>
+                <label>
+                    <input asp-for="@Model.Questions[i].SelectedAnswer" type="radio" value="@answer.Id">
+                    @answer.Content
+                </label>
+            </div>
+    j++;
+}
+            </div>
+            <br />
+    i++;
+}
+            </div>
+
+            @{ 
+                var minutes = Model.Duration.Minutes;
+                var maxTime = Model.StartedOn.AddMinutes(minutes);
+                var remainingTime = maxTime - DateTime.Now;
+             }
+            <div id="time" style="display:none">@remainingTime</div>
 
             <div class="centered-btn-area">
                 <button id="submit-test-btn" type="submit">Submit</button>
@@ -72,5 +80,7 @@
 
         </form>
     </div>
+
+    <script src="~/js/TakeTest.js" asp-append-version="true"></script>
 
 </div>

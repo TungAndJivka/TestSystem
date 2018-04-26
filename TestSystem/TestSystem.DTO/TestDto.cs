@@ -16,6 +16,6 @@ namespace TestSystem.DTO
 
         public ICollection<QuestionDto> Questions { get; set; }
 
-        public ICollection<UserDto> UserTests { get; set; } //NP
+        //public ICollection<UserTestDto> UserTests { get; set; } //NP
     }
 }

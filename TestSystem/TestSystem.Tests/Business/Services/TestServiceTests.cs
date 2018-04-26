@@ -14,22 +14,37 @@ namespace TestSystem.Tests.Business.Services
     [TestClass]
     public class TestServiceTests
     {
+        Mock<IEfGenericRepository<Test>> testRepoMock;
+        Mock<IEfGenericRepository<User>> userRepoMock;
+        Mock<IEfGenericRepository<UserTest>> resultRepoMock;
+        Mock<IMappingProvider>  mapperMock;
+        Mock<ISaver> saverMock;
+        Mock<IRandomProvider> randomMock;
+        TestService testService;
+
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            testRepoMock = new Mock<IEfGenericRepository<Test>>();
+            userRepoMock = new Mock<IEfGenericRepository<User>>();
+            resultRepoMock = new Mock<IEfGenericRepository<UserTest>>();
+            mapperMock = new Mock<IMappingProvider>();
+            saverMock = new Mock<ISaver>();
+            randomMock = new Mock<IRandomProvider>();
+
+            testService = new TestService(testRepoMock.Object, userRepoMock.Object, mapperMock.Object, saverMock.Object, randomMock.Object, resultRepoMock.Object);
+        }
+
+
         // GetAll() TESTS:
         [TestMethod]
         public void GetAllMethod_Should_Call_TestRepo_All()
         {
-
             // Arrange
-            var testRepoMock = new Mock<IEfGenericRepository<Test>>();
-            var userRepoMock = new Mock<IEfGenericRepository<User>>();
-            var mapperMock = new Mock<IMappingProvider>();
-            var saverMock = new Mock<ISaver>();
-            var randomMock = new Mock<IRandomProvider>();
-
-            testRepoMock.Setup(x => x.All).Verifiable();
-
+            testRepoMock.Setup(x => x.All).Verifiable();           
+          
             // Act
-            var testService = new TestService(testRepoMock.Object, userRepoMock.Object, mapperMock.Object, saverMock.Object, randomMock.Object);
+            var tests = testService.GetAll();
 
             // Assert
             testRepoMock.Verify(x => x.All, Times.Once);
@@ -39,16 +54,10 @@ namespace TestSystem.Tests.Business.Services
         public void GetAllMethod_Should_Call_Mapper_ProjectTo()
         {
             // Arrange
-            var testRepoMock = new Mock<IEfGenericRepository<Test>>();
-            var userRepoMock = new Mock<IEfGenericRepository<User>>();
-            var mapperMock = new Mock<IMappingProvider>();
-            var saverMock = new Mock<ISaver>();
-            var randomMock = new Mock<IRandomProvider>();
-
             mapperMock.Setup(x => x.ProjectTo<TestDto>(It.IsAny<IQueryable<Test>>())).Verifiable();
 
             // Act
-            var testService = new TestService(testRepoMock.Object, userRepoMock.Object, mapperMock.Object, saverMock.Object, randomMock.Object);
+            var tests = testService.GetAll();
 
             // Assert
             mapperMock.Verify(x => x.ProjectTo<TestDto>(It.IsAny<IQueryable<Test>>()), Times.Once);
@@ -63,9 +72,10 @@ namespace TestSystem.Tests.Business.Services
             var mapperMock = new Mock<IMappingProvider>();
             var saverMock = new Mock<ISaver>();
             var randomMock = new Mock<IRandomProvider>();
+            var resultRepoMock = new Mock<IEfGenericRepository<UserTest>>();
 
             //Act & Assert
-            Assert.ThrowsException<ArgumentNullException>(() => new TestService(null, userRepoMock.Object, mapperMock.Object, saverMock.Object, randomMock.Object));
+            Assert.ThrowsException<ArgumentNullException>(() => new TestService(null, userRepoMock.Object, mapperMock.Object, saverMock.Object, randomMock.Object, resultRepoMock.Object));
         }
 
         [TestMethod]
@@ -78,7 +88,7 @@ namespace TestSystem.Tests.Business.Services
             var randomMock = new Mock<IRandomProvider>();
 
             //Act & Assert
-            Assert.ThrowsException<ArgumentNullException>(() => new TestService(testRepoMock.Object, null, mapperMock.Object, saverMock.Object, randomMock.Object));
+            Assert.ThrowsException<ArgumentNullException>(() => new TestService(testRepoMock.Object, null, mapperMock.Object, saverMock.Object, randomMock.Object, resultRepoMock.Object));
         }
 
         [TestMethod]
@@ -91,7 +101,7 @@ namespace TestSystem.Tests.Business.Services
             var randomMock = new Mock<IRandomProvider>();
 
             //Act & Assert
-            Assert.ThrowsException<ArgumentNullException>(() => new TestService(testRepoMock.Object, userRepoMock.Object, null, saverMock.Object, randomMock.Object));
+            Assert.ThrowsException<ArgumentNullException>(() => new TestService(testRepoMock.Object, userRepoMock.Object, null, saverMock.Object, randomMock.Object, resultRepoMock.Object));
         }
 
         [TestMethod]
@@ -104,7 +114,7 @@ namespace TestSystem.Tests.Business.Services
             var randomMock = new Mock<IRandomProvider>();
 
             //Act & Assert
-            Assert.ThrowsException<ArgumentNullException>(() => new TestService(testRepoMock.Object, userRepoMock.Object, mapperMock.Object, null, randomMock.Object));
+            Assert.ThrowsException<ArgumentNullException>(() => new TestService(testRepoMock.Object, userRepoMock.Object, mapperMock.Object, null, randomMock.Object, resultRepoMock.Object));
         }
 
         [TestMethod]
@@ -117,7 +127,7 @@ namespace TestSystem.Tests.Business.Services
             var saverMock = new Mock<ISaver>();
 
             //Act & Assert
-            Assert.ThrowsException<ArgumentNullException>(() => new TestService(testRepoMock.Object, userRepoMock.Object, mapperMock.Object, saverMock.Object, null));
+            Assert.ThrowsException<ArgumentNullException>(() => new TestService(testRepoMock.Object, userRepoMock.Object, mapperMock.Object, saverMock.Object, null, resultRepoMock.Object));
         }
 
 
