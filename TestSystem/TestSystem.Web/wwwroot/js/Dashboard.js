@@ -13,7 +13,7 @@ const categoryTabClickStart = (function (categoryName) {
 
     let row = $(`
             <div class="dash-area" id="areaStart">
-                <span id="categoryName"></span>
+                <span id="categoryName" style="color: black"></span>
                 <a href="${url}" class="StartTestBtn DashBtn">Start</a>
             </div>
         `);
@@ -38,7 +38,7 @@ const categoryTabClickSubmitted = (function (categoryName) {
             </div>
         `);
 
-    let testName = categoryName + ' Test';
+    let testName = categoryName ;
 
     $('#DashboardContent').append(row);
     $('#testName').html(testName);

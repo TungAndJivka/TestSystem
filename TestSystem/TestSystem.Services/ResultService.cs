@@ -35,7 +35,19 @@ namespace TestSystem.Services
                 .Where(x => x.UserId == userId && x.TestId.ToString() == testId)
                 .FirstOrDefault();
 
-            return Mapper.MapTo<UserTestDto>(entity);
+            UserTestDto result = new UserTestDto()
+            {
+                Id = entity.Id,
+                UserId = entity.UserId,
+                TestId = entity.TestId.ToString(),
+                Test = Mapper.MapTo<TestDto>(entity.Test),
+                Score = entity.Score,
+                StartTime = entity.CreatedOn,
+                SubmittedOn = entity.SubmittedOn,
+                AnsweredQuestions = Mapper.ProjectTo<AnsweredQuestionDto>(entity.AnsweredQuestions.AsQueryable()).ToList()
+            };
+
+            return result;
         }
 
         public void AddResult(UserTestDto result)
@@ -75,5 +87,6 @@ namespace TestSystem.Services
 
             return 3; // => RedirectToDashboard
         }
+
     }
 }

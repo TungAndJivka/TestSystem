@@ -70,7 +70,7 @@
             @{ 
                 var minutes = Model.Duration.Minutes;
                 var maxTime = Model.StartedOn.AddMinutes(minutes);
-                var remainingTime = maxTime - DateTime.Now;
+                var remainingTime = ((maxTime - DateTime.Now).TotalSeconds)/60;
              }
             <div id="time" style="display:none">@remainingTime</div>
 

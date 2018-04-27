@@ -16,9 +16,9 @@
             })
     })
 
-    window.onbeforeunload = function () {
-        return ""
-    }
+    //window.onbeforeunload = function () {
+    //    return ""
+    //}
 
     if (window.performance) {
         console.info("window.performance works fine on this browser");
@@ -27,9 +27,9 @@
 
 
 $(function () {
-    let mins = parseInt($('#time').html().trim());
+    let mins = parseFloat($('#time').html().trim());
 
-    var target_date = new Date().getTime() + (1000 * 3600 * mins / 60);
+    var target_date = new Date().getTime() + (1000 * 3600 * mins / 60.0);
     //var target_date = new Date().getTime() + (1000 * 3600 * 48); // set the countdown date
     var days, hours, minutes, seconds; // variables for time units
 

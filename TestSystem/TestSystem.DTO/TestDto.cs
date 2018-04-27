@@ -16,6 +16,8 @@ namespace TestSystem.DTO
 
         public ICollection<QuestionDto> Questions { get; set; }
 
+        public DateTime CreatedOn { get; set; }
+
         //public ICollection<UserTestDto> UserTests { get; set; } //NP
     }
 }

@@ -40,6 +40,7 @@ namespace TestSystem.Web.Controllers
             var user = await this.userManager.GetUserAsync(HttpContext.User);
             int check = resultService.CheckForTakenTest(user.Id, id);
             TestDto testDto = null;
+            var startTime = DateTime.Now;
 
             if (check == 3)
             {
@@ -49,6 +50,7 @@ namespace TestSystem.Web.Controllers
             if (check == 2)
             {
                 testDto = this.userService.GetTestFromCategory(user.Id, id);
+                startTime = (DateTime)resultService.GetUserTest(user.Id, testDto.Id).StartTime;
             }
             else
             {
@@ -65,7 +67,7 @@ namespace TestSystem.Web.Controllers
                 Duration = testDto.Duration,
                 CategoryName = id,
                 Questions = questions,
-                StartedOn = DateTime.Now
+                StartedOn = startTime
             };
 
             if (check == 1)
@@ -84,48 +86,68 @@ namespace TestSystem.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var test = testService.GetFullTestInfo(model.TestId);
-                Guid userTestId = Guid.NewGuid();
-                int correctAnswers = 0;
-
-                var answeredQuestions = new List<AnsweredQuestionDto>();
-                foreach (QuestionViewModel question in model.Questions)
+                if (!CheckForValidExecutionTime(model))
                 {
-                    if (question.SelectedAnswer == null) { continue; }
-
-                    AnswerDto answer = test.Questions
-                        .Where(q => q.Id == question.Id)
-                        .FirstOrDefault()
-                        .Answers
-                        .Where(a => a.Id == question.SelectedAnswer)
-                        .FirstOrDefault();
-
-                    if (answer.IsCorrect)
-                    {
-                        correctAnswers++;
-                    }
-
-                    var answeredQuestion = new AnsweredQuestionDto()
-                    {
-                        Id = Guid.NewGuid(),
-                        UserTestId = userTestId,
-                        AnswerId = new Guid(question.SelectedAnswer)
-                    };
-
-                    answeredQuestions.Add(answeredQuestion);
+                    return View("InvalidExecutionTime");
                 }
 
-                double score = (100.0*correctAnswers)/test.Questions.Count();
-
-                var userTest = resultService.GetUserTest(model.UserId, model.TestId);
-                userTest.Score = score;
-                userTest.SubmittedOn = DateTime.Now;
-                userTest.AnsweredQuestions = answeredQuestions;
+                var userTest = Evaluate(model);
 
                 this.resultService.Update(userTest);
             }
 
             return RedirectToAction("Index", "Dashboard");
+        }
+
+        private bool CheckForValidExecutionTime(IndexViewModel model)
+        {
+            if (model.StartedOn + model.Duration > DateTime.Now)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private UserTestDto Evaluate(IndexViewModel model)
+        {
+            var test = testService.GetFullTestInfo(model.TestId);
+            var answeredQuestions = new List<AnsweredQuestionDto>();
+            int correctAnswers = 0;
+
+            foreach (QuestionViewModel question in model.Questions)
+            {
+                if (question.SelectedAnswer == null) { continue; }
+
+                AnswerDto answer = test.Questions
+                    .Where(q => q.Id == question.Id)
+                    .FirstOrDefault()
+                    .Answers
+                    .Where(a => a.Id == question.SelectedAnswer)
+                    .FirstOrDefault();
+
+                if (answer.IsCorrect)
+                {
+                    correctAnswers++;
+                }
+
+                var answeredQuestion = new AnsweredQuestionDto()
+                {
+                    Id = Guid.NewGuid(),
+                    UserTestId = Guid.NewGuid(),
+                    AnswerId = new Guid(question.SelectedAnswer)
+                };
+
+                answeredQuestions.Add(answeredQuestion);
+            }
+
+            double score = (100.0 * correctAnswers) / test.Questions.Count();
+            var userTest = resultService.GetUserTest(model.UserId, model.TestId);
+            userTest.Score = score;
+            userTest.SubmittedOn = DateTime.Now;
+            userTest.AnsweredQuestions = answeredQuestions;
+
+            return userTest;
         }
     }
 }
