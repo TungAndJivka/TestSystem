@@ -25,6 +25,15 @@
     }
 });
 
+$(function () {
+
+    let time = ((parseFloat($('#time').html().trim())) * 60 * 1000.0);
+
+    setTimeout(
+        function () {
+            $('#submit-test-btn').click();
+        }, time);
+});
 
 $(function () {
     let mins = parseFloat($('#time').html().trim());

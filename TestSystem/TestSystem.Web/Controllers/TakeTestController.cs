@@ -86,13 +86,15 @@ namespace TestSystem.Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                UserTestDto userTest = null;
+
                 if (!CheckForValidExecutionTime(model))
                 {
+                    userTest = EvaluateInvalid(model);
                     return View("InvalidExecutionTime");
                 }
 
-                var userTest = Evaluate(model);
-
+                userTest = Evaluate(model);
                 this.resultService.Update(userTest);
             }
 
@@ -142,6 +144,19 @@ namespace TestSystem.Web.Controllers
             }
 
             double score = (100.0 * correctAnswers) / test.Questions.Count();
+            var userTest = resultService.GetUserTest(model.UserId, model.TestId);
+            userTest.Score = score;
+            userTest.SubmittedOn = DateTime.Now;
+            userTest.AnsweredQuestions = answeredQuestions;
+
+            return userTest;
+        }
+
+        private UserTestDto EvaluateInvalid(IndexViewModel model)
+        {
+            var test = testService.GetFullTestInfo(model.TestId);
+            var answeredQuestions = new List<AnsweredQuestionDto>();
+            double score = 0.0;
             var userTest = resultService.GetUserTest(model.UserId, model.TestId);
             userTest.Score = score;
             userTest.SubmittedOn = DateTime.Now;

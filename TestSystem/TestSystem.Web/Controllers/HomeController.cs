@@ -50,8 +50,20 @@ namespace TestSystem.Web.Controllers
             this.mapper = mapper;
         }
 
+        [HttpGet]
+        [AllowAnonymous]
         public IActionResult Index()
         {
+            if (User?.Identity.IsAuthenticated == true)
+            {
+                if (User.IsInRole("Admin"))
+                {
+                    return RedirectToAction("Index", "Administration/Dashboard");
+                }
+
+                return RedirectToAction("Index", "Dashboard");
+            }
+
             return View();
         }
 
@@ -71,7 +83,7 @@ namespace TestSystem.Web.Controllers
                     //result.
                     logger.LogInformation("User logged in.");
 
-                    return RedirectToAction("Index", "Dashboard");
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {

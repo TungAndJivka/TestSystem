@@ -34,11 +34,6 @@ namespace TestSystem.Web.Controllers
 
         public IActionResult Index()
         {
-            if (User.IsInRole("Admin"))
-            {
-                return RedirectToAction("Index", "Administration/Dashboard");
-            }
-
             var categoriesDto = this.categoryService.GetAllWithPublsihedTests();
             var userId = userManager.GetUserId(HttpContext.User);
             var testsSumbitted = testService.GetUserTests(userId);
