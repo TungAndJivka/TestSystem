@@ -9,5 +9,7 @@ namespace TestSystem.Services.Contracts
         IEnumerable<UserTestDto> GetAll();
 
         bool AddNewResult(string userId, Guid testId);
+
+        IEnumerable<TestResultDto> GetAllTestResults();
     }
 }

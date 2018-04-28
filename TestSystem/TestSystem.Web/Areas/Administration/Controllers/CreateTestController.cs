@@ -28,13 +28,8 @@ namespace TestSystem.Web.Areas.Administration.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Index(CreateTestViewModel model)
-        {
-            return View();
-        }
-        [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateTest(CreateTestViewModel createTestViewModel)
+        public IActionResult Index(AdministerTestViewModel createTestViewModel)
         {
             if (createTestViewModel == null)
             {
@@ -47,21 +42,22 @@ namespace TestSystem.Web.Areas.Administration.Controllers
                 return View(createTestViewModel);
             }
 
-            var createTestDto = this.mapper.MapTo<TestDto>(createTestViewModel);
+            var createTestDto = this.mapper.MapTo<AdministerTestDto>(createTestViewModel);
 
-            try
-            {
-                this.testService.CreateTest(createTestDto);
-            }
-            catch (Exception)
-            {
-                return View(createTestViewModel);
-            }
+            this.testService.CreateTest(createTestDto);
+            //try
+            //{
+                
+            //}
+            //catch (Exception)
+            //{
+            //    return View(createTestViewModel);
+            //}
 
             return RedirectToRoute(new
             {
-                area = "Admin",
-                controller = "Manage",
+                area = "Adminstration",
+                controller = "Dashboard",
                 action = "Index"
             });
         }

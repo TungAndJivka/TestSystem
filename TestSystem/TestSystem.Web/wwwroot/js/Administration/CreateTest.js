@@ -1,4 +1,4 @@
-﻿var questionTemplate = `
+﻿let questionTemplate = `
 <div id="question-{{q_id}}" class="question-container">
     <div class="panel-heading">
         <a id="questionNumber" data-toggle="collapse" href="#collapse-{{q_id}}">Question {{q_number}}</a>
@@ -8,7 +8,7 @@
     <div id="collapse-{{q_id}}" class="panel-collapse collapse">
         <div class="panel-body">
             <div>Description</div>
-            <input type="text" id="Questions_{{q_id}}__Body" name="Questions[{{q_id}}].Body" class="form-control input-lg value=""></input>
+            <input type="text" id="Questions_{{q_id}}__Description" name="Questions[{{q_id}}].Description" class="form-control input-lg value=""></input>
         </div>
         <div class="answers-container"></div>
         <div class="panel-body">
@@ -16,11 +16,11 @@
         </div>
     </div>
 </div>`;
-var answerTemplate = `
+let answerTemplate = `
 <div id="question-{{q_id}}-answer-{{a_id}}" class="answer-container">
     <div class="answer-heading">
         <div id="answerNumber">Answer {{a_number}}</div>
-        <input id="Questions_{{q_id}}__Answers_{{a_id}}__IsCorrect" name="radio-{{q_id}}" type="radio" value="true" autocomplete="off">
+        <input clas id="Questions_{{q_id}}__Answers_{{a_id}}__IsCorrect" class="answer-is-correct" name="radio-{{q_id}}" type="radio" value="true" autocomplete="off">
         <button class="delete-answer" type="button">Delete Answer</button>        
     </div>
     <div class="answer-body">        
@@ -144,6 +144,12 @@ $(function () {
     });
 
     var createTestClickEvent = $('.create-test').on('click', function (event) {
+        //event.preventDefault();
+        //var form = $(this).closest('form').serialize();
+
+        //console.log(form);
+
+        //debugger;
         $('#questions-container #questions-body .answer-is-correct')
             .toArray()
             .forEach(function (rButton) {

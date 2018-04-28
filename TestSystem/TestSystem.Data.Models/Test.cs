@@ -16,7 +16,7 @@ namespace TestSystem.Data.Models
         [Required]
         public string TestName { get; set; }
 
-        public TimeSpan? Duration { get; set; }
+        public TimeSpan Duration { get; set; }
 
         [Required]
         public Guid CategoryId { get; set; }

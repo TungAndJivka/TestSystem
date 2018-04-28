@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace TestSystem.Web.Areas.Administration.Models.Shared
+namespace TestSystem.Web.Areas.Administration.Models.DashboardViewModels
 {
-    public class ResultListModel
+    public class TestResultViewModel
     {
         public string UserName { get; set; }
         public string TestName { get; set; }
         public string Category { get; set; }
         public TimeSpan RequestedTime { get; set; }
         public TimeSpan ExecutionTime { get; set; }
-        public bool Result { get; set; }        
+        public double Result { get; set; }
     }
 }

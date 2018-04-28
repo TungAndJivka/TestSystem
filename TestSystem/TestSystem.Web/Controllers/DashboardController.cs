@@ -64,7 +64,7 @@ namespace TestSystem.Web.Controllers
             var model = new IndexViewModel()
             {
                 Title = "Dashboard",
-                Categories = (this.mapper.EnumerableProjectTo<CategoryViewModel>(categoriesDto).OrderBy(x => x.Name).ToList()),
+                Categories = (this.mapper.EnumerableProjectTo<CategoryDto,CategoryViewModel>(categoriesDto).OrderBy(x => x.Name).ToList()),
                 Tests = tests
             };
 

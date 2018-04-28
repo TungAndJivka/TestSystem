@@ -16,13 +16,15 @@ namespace TestSystem.Services
     {
         private IEfGenericRepository<Test> testRepo;
         private readonly IEfGenericRepository<User> userRepo;
+        private readonly IEfGenericRepository<Category> categoryRepo;
 
-        public TestService(IEfGenericRepository<Test> testRepo, IEfGenericRepository<User> userRepo, IMappingProvider mapper, ISaver saver, IRandomProvider random)
+        public TestService(IEfGenericRepository<Test> testRepo, IEfGenericRepository<User> userRepo,IEfGenericRepository<Category> categoryRepo, IMappingProvider mapper, ISaver saver, IRandomProvider random)
             : base(mapper, saver, random)
         {
             Guard.WhenArgument(testRepo, "testRepo").IsNull().Throw();
             this.testRepo = testRepo;
             this.userRepo = userRepo;
+            this.categoryRepo = categoryRepo;
         }
 
         public IEnumerable<TestDto> GetAll()
@@ -53,14 +55,28 @@ namespace TestSystem.Services
             var entities = testRepo.All.Where(t => t.Id.Equals(testId)).Include(t => t.Questions).ThenInclude(q => q.Answers).FirstOrDefault();
             var result = this.Mapper.MapTo<TestDto>(entities);
             return result;
-        }        
+        }
 
-        public void CreateTest(TestDto test)
+        public IEnumerable<ExistingTestDto> AllTestsForDashBoard()
         {
-            var testToBeSaved = this.Mapper.MapTo<Test>(test);
+            var tests = this.testRepo.All;
 
-            testRepo.Add(testToBeSaved);
+            return this.Mapper.EnumerableProjectTo<Test, ExistingTestDto>(tests);
+        }
 
+        public void CreateTest(AdministerTestDto testDto)
+        {
+            if (testDto == null)
+            {
+                throw new ArgumentNullException(nameof(testDto));
+            }
+
+            var testToBeAdded = this.Mapper.MapTo<Test>(testDto);
+
+            var category = this.categoryRepo.All.SingleOrDefault(c => c.Name == testDto.Category);
+            testToBeAdded.Category = category;
+
+            this.testRepo.Add(testToBeAdded);
             Saver.SaveChanges();
         }
     }

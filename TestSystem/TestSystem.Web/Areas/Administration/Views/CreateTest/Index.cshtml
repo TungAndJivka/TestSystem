@@ -1,17 +1,17 @@
-﻿@model TestSystem.Web.Areas.Administration.Models.CreateTestViewModels.CreateTestViewModel
+﻿@model TestSystem.Web.Areas.Administration.Models.CreateTestViewModels.AdministerTestViewModel
 
 
 <div>
 
     <h2 class="page-header">New Test</h2>
 
-    <form asp-area="Administration" asp-controller="CreateTest" asp-action="CreateTest" method="post">
+    <form asp-area="Administration" asp-controller="CreateTest" asp-action="Index" method="post">
 
         <div class="form-row">
             <div class="form-group col-md-5">
-                <label asp-for="Name"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="TestName"></label>
+                <input asp-for="TestName" class="form-control" />
+                <span asp-validation-for="TestName" class="text-danger"></span>
             </div>
             <div class="form-group col-md-2">
                 <label asp-for="Duration"></label>
@@ -34,7 +34,7 @@
         </div>
 
 
-        <button class="create-test btn btn-default" type="submit">Save as Draft</button>
+        <button class="create-test" type="submit">Save as Draft</button>
     </form>
 
 </div>

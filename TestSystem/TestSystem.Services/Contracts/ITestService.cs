@@ -18,6 +18,8 @@ namespace TestSystem.Services.Contracts
 
         TestDto GetRandomTestByCategory(string categoryName);
 
-        void CreateTest(TestDto test);
+        IEnumerable<ExistingTestDto> AllTestsForDashBoard();
+
+        void CreateTest(AdministerTestDto testDto);
     }
 }
