@@ -19,5 +19,8 @@ namespace TestSystem.Services.Contracts
         IEnumerable<TestDto> GetUserResults(string userId);
 
         TestDto GetTestFromCategory(string userId, string categoryName);
+        bool AddNewResult(string userId, Guid testId);
+
+        IEnumerable<TestResultDto> GetAllTestResults();
     }
 }

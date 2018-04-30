@@ -12,5 +12,9 @@ namespace TestSystem.Services.Contracts
         int GetQuestionsCount(string testId);
 
         TestDto GetRandomTestByCategory(string categoryName);
+
+        IEnumerable<ExistingTestDto> AllTestsForDashBoard();
+
+        void CreateTest(AdministerTestDto testDto);
     }
 }

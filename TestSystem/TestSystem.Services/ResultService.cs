@@ -1,5 +1,6 @@
 ﻿using Bytes2you.Validation;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TestSystem.Data.Data.Repositories;
@@ -115,6 +116,26 @@ namespace TestSystem.Services
 
             var testDto = Mapper.MapTo<TestDto>(testEntity);
             return testDto;
+        }
+
+        public IEnumerable<TestResultDto> GetAllResults()
+        {
+            var entities = this.userTestRepo.All;
+            var results = entities.Select(x => new TestResultDto
+            {
+                ExecutionTime = x.SubmittedOn.Value - x.StartTime.Value
+            });
+            return results;
+        }
+
+        public IEnumerable<TestResultDto> GetAllTestResults()
+        {
+            var results = this.userTestRepo.All
+                .Include(ut => ut.User)
+                .Include(ut => ut.Test)
+                .ThenInclude(t => t.Category);
+
+            return this.Mapper.ProjectTo<TestResultDto>(results);
         }
     }
 }

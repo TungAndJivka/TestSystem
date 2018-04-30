@@ -1,17 +1,17 @@
-﻿@model TestSystem.Web.Areas.Administration.Models.CreateTestViewModels.CreateTestViewModel
+﻿@model TestSystem.Web.Areas.Administration.Models.CreateTestViewModels.AdministerTestViewModel
 
 
 <div>
 
     <h2 class="page-header">New Test</h2>
 
-    <form asp-area="Administration" asp-controller="CreateTest" asp-action="CreateTest" method="post">
-        
+    <form asp-area="Administration" asp-controller="CreateTest" asp-action="Index" method="post">
+
         <div class="form-row">
             <div class="form-group col-md-5">
-                <label asp-for="Name"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="TestName"></label>
+                <input asp-for="TestName" class="form-control" />
+                <span asp-validation-for="TestName" class="text-danger"></span>
             </div>
             <div class="form-group col-md-2">
                 <label asp-for="Duration"></label>
@@ -23,6 +23,23 @@
                 <input asp-for="Category" class="form-control" />
                 <span asp-validation-for="Category" class="text-danger"></span>
             </div>
-        </form>
+        </div>
+
+        <div class="row col-md-12">
+            <div id="questions-container">
+                <div id="questions-body" class="row"></div>
+                <button id="add-question" class="btn btn-default" type="button">Add Question</button>
+
+            </div>
+        </div>
+
+
+        <button class="create-test" type="submit">Save as Draft</button>
+    </form>
 
 </div>
+
+@section Scripts {
+    <script type="text/javascript" src="~/js/Administration/CreateTest.js"></script>
+}
+

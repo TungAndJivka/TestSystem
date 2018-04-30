@@ -2,57 +2,8 @@
 
 
 
-<table id="example" class="table table-bordered tab-content" style="width:100%">
-    <thead class="table-header">
-        <tr>
-            <th class="col-md-4 text-center">Test Name</th>
-            <th class="col-md-2 text-center">Category</th>
-            <th class="col-md-2 text-center">Status</th>
-            <th class="col-md-5 text-center">Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr class="table-row">
-                <td>@item.TestName</td>
-                <td class="text-center">@item.Category</td>
-                <td class="text-center">
-                    @if (item.IsPusblished)
-                    {
-                        <text>Published</text>
-                    }
-                    else
-                    {
-                        <text>Draft</text>
-                    }
-                </td>
-                <td class="text-center">
-                    @if (item.IsPusblished)
-                    {
-                        <a asp-area="Administration" asp-controller="Dashboard" method="get" class="btn button disabled">Publish</a>
-                        <a asp-area="Administration" asp-controller="Dashboard" method="get" class="btn button disabled">Edit</a>
-                        <a asp-area="Administration" asp-controller="Dashboard" asp-action="Disable" method="get" class="btn btn-primary myButton">Disable</a>
-                    }
-                    else
-                    {
-                        <a asp-area="Administration" asp-controller="Dashboard" asp-action="Publish" method="get" class="btn btn-primary myButton">Publish</a>
-                        <a asp-area="Administration" asp-controller="Dashboard" asp-action="Edit" method="get" class="btn btn-primary myButton">Edit</a>
-                        <a asp-area="Administration" asp-controller="Dashboard" asp-action="Delete" method="get" class="btn btn-primary myButton">Delete</a>
-                    }
-
-
-                </td>
-            </tr>
-        }
-
-    </tbody>
-
-</table>
 
 
 @section Script {
-
-
-    <script src="~/js/Dashboard.js"></script>
+    <script src="~/js/Administration/Dashboard.js"></script>
 }

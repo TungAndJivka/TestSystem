@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
+using TestSystem.DTO;
 using TestSystem.Infrastructure.Providers;
 using TestSystem.Services.Contracts;
 using TestSystem.Web.Areas.Administration.Models.DashboardViewModels;
@@ -27,7 +30,18 @@ namespace TestSystem.Web.Areas.Administration.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return View();
+
+            var model = new DashboardViewModel();
+
+            var results = resultService.GetAllTestResults();
+            var TestResultViewModels = this.mapper.EnumerableProjectTo<TestResultDto, TestResultViewModel>(results).ToList();
+            model.TestResults = TestResultViewModels; 
+
+            var existingTestDtos = testService.AllTestsForDashBoard();
+            var existingTests = this.mapper.EnumerableProjectTo<ExistingTestDto,ExistingTestViewModel>(existingTestDtos).ToList();
+            model.ExistingTests = existingTests;           
+
+            return View(model);
         }       
         //[HttpPost]
         //public IActionResult CreateTest()
