@@ -19,16 +19,19 @@ namespace TestSystem.Web.Controllers
     {
         private readonly UserManager<User> userManager;
         private readonly ICategoryService categoryService;
-        private readonly ITestService testService;
+        private readonly IResultService resultService;
         private readonly IMappingProvider mapper;
-        private readonly IUserService userService;
 
-        public DashboardController(UserManager<User> userManager, ICategoryService categoryService, ITestService testService, IMappingProvider mapper, IUserService userService)
+        public DashboardController(
+            UserManager<User> userManager, 
+            ICategoryService categoryService,
+            IResultService resultService, 
+            IMappingProvider mapper, 
+            IUserService userService)
         {
             this.userManager = userManager;
             this.categoryService = categoryService;
-            this.testService = testService;
-            this.userService = userService;
+            this.resultService = resultService;
             this.mapper = mapper;
         }
 
@@ -36,7 +39,7 @@ namespace TestSystem.Web.Controllers
         {
             var categoriesDto = this.categoryService.GetAllWithPublsihedTests();
             var userId = userManager.GetUserId(HttpContext.User);
-            var testsSumbitted = testService.GetUserTests(userId);
+            var testsSumbitted = resultService.GetUserResults(userId);
             var tests = new List<TestViewModel>();
 
             foreach (var c in categoriesDto)

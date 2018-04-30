@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using TestSystem.Data.Models;
-using TestSystem.DTO;
 using TestSystem.Infrastructure.Providers;
-using TestSystem.Services.Contracts;
 using TestSystem.Web.Models;
 using TestSystem.Web.Models.HomeViewModels;
-using TestSystem.Web.Services;
 
 namespace TestSystem.Web.Controllers
 {
@@ -21,33 +16,15 @@ namespace TestSystem.Web.Controllers
     {
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
-        private readonly IEmailSender emailSender;
         private readonly ILogger<HomeController> logger;
-        private readonly RoleManager<IdentityRole> roleManager;
-        private readonly ITestService testService;
-        private readonly ICategoryService categoryService;
-        private readonly IResultService resultService;
-        private readonly IMappingProvider mapper;
 
         public HomeController(UserManager<User> userManager,
             SignInManager<User> signInManager,
-            IEmailSender emailSender,
-            ILogger<HomeController> logger,
-            RoleManager<IdentityRole> roleManager,
-            ITestService testService, 
-            ICategoryService categoryService,
-            IMappingProvider mapper,
-            IResultService resultService)
+            ILogger<HomeController> logger)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
-            this.emailSender = emailSender;
             this.logger = logger;
-            this.roleManager = roleManager;
-            this.testService = testService;
-            this.categoryService = categoryService;
-            this.resultService = resultService;
-            this.mapper = mapper;
         }
 
         [HttpGet]
@@ -75,12 +52,9 @@ namespace TestSystem.Web.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    //result.
                     logger.LogInformation("User logged in.");
 
                     return RedirectToAction("Index", "Home");
@@ -157,17 +131,19 @@ namespace TestSystem.Web.Controllers
             {
                 return View(model);
             }
+
             var user = await userManager.FindByEmailAsync(model.Email);
             if (user == null)
             {
-                // Don't reveal that the user does not exist
                 return RedirectToAction(nameof(ResetPasswordConfirmation));
             }
+
             var result = await userManager.ResetPasswordAsync(user, model.Code, model.Password);
             if (result.Succeeded)
             {
                 return RedirectToAction(nameof(ResetPasswordConfirmation));
             }
+
             AddErrors(result);
             return View();
         }
@@ -187,11 +163,13 @@ namespace TestSystem.Web.Controllers
             {
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
+
             var user = await userManager.FindByIdAsync(userId);
             if (user == null)
             {
                 throw new ApplicationException($"Unable to load user with ID '{userId}'.");
             }
+
             var result = await userManager.ConfirmEmailAsync(user, code);
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }

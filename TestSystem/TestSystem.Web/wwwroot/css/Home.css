@@ -1,1 +1,21 @@
-﻿
+﻿.home-button {
+    background: #f9672e;
+    background-image: -webkit-linear-gradient(top, #f9672e, #d44b1a);
+    background-image: -moz-linear-gradient(top, #f9672e, #d44b1a);
+    background-image: -ms-linear-gradient(top, #f9672e, #d44b1a);
+    background-image: -o-linear-gradient(top, #f9672e, #d44b1a);
+    background-image: linear-gradient(to bottom, #f9672e, #d44b1a);
+    -webkit-border-radius: 28;
+    -moz-border-radius: 28;
+    border-radius: 28px;
+    font-family: Arial;
+    color: #ffffff;
+    font-size: 16px;
+    padding: 8px 18px 8px 18px;
+    border: none;
+    font-weight: bold;
+}
+
+    .home-button:hover {
+        background: #fc893c;
+    }

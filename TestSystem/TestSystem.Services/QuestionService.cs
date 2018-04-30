@@ -24,7 +24,7 @@ namespace TestSystem.Services
 
         public IEnumerable<QuestionDto> GetAllQuestionsByTestId(string testId)
         {
-            var entities = questionRepo.All.Where(q => q.TestId.Equals(testId)).Include(q => q.Answers);
+            var entities = questionRepo.All.Where(q => q.TestId.ToString().Equals(testId)).Include(q => q.Answers);
             var result = this.Mapper.ProjectTo<QuestionDto>(entities);
             return result;
         }

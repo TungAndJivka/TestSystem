@@ -1,5 +1,5 @@
 ﻿using Bytes2you.Validation;
-using System;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using TestSystem.Data.Data.Repositories;
@@ -88,5 +88,33 @@ namespace TestSystem.Services
             return 3; // => RedirectToDashboard
         }
 
+        public IEnumerable<TestDto> GetUserResults(string userId)
+        {
+            var results = userTestRepo.All.Where(r => r.UserId == userId).Include(r => r.Test).ThenInclude(t => t.Category);
+
+            var entities = new List<Test>();
+            foreach (var r in results)
+            {
+                entities.Add(r.Test);
+            }
+
+            var result = this.Mapper.ProjectTo<TestDto>(entities.AsQueryable());
+            return result;
+        }
+
+        public TestDto GetTestFromCategory(string userId, string categoryName)
+        {
+            Test testEntity = userTestRepo.All
+                .Where(r => r.UserId == userId)
+                .Include(r => r.Test)
+                .ThenInclude(t => t.Questions)
+                .ThenInclude(q => q.Answers)
+                .Where(r => r.Test.Category.Name == categoryName)
+                .FirstOrDefault()
+                .Test;
+
+            var testDto = Mapper.MapTo<TestDto>(testEntity);
+            return testDto;
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Bytes2you.Validation;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,6 +12,7 @@ namespace TestSystem.Infrastructure.Providers
 
         public MappingProvider(IMapper mapper)
         {
+            Guard.WhenArgument(mapper, "mapper").IsNull().Throw();
             this.mapper = mapper;
         }
 

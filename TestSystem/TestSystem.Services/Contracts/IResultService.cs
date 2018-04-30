@@ -15,5 +15,9 @@ namespace TestSystem.Services.Contracts
         int CheckForTakenTest(string userId, string testId);
 
         UserTestDto GetUserTest(string userId, string testId);
+
+        IEnumerable<TestDto> GetUserResults(string userId);
+
+        TestDto GetTestFromCategory(string userId, string categoryName);
     }
 }

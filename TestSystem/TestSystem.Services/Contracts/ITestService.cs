@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TestSystem.Data.Models;
+﻿using System.Collections.Generic;
 using TestSystem.DTO;
 
 namespace TestSystem.Services.Contracts
@@ -9,8 +6,6 @@ namespace TestSystem.Services.Contracts
     public interface ITestService
     {
         IEnumerable<TestDto> GetAll();
-
-        IEnumerable<TestDto> GetUserTests(string Id);
 
         TestDto GetFullTestInfo(string testId);
 

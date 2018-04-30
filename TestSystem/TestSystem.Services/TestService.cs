@@ -14,25 +14,17 @@ namespace TestSystem.Services
     public class TestService : AbstractService, ITestService
     {
         private readonly IEfGenericRepository<Test> testRepo;
-        private readonly IEfGenericRepository<User> userRepo;
-        private readonly IEfGenericRepository<UserTest> resultRepo;
 
         public TestService(
             IEfGenericRepository<Test> testRepo, 
-            IEfGenericRepository<User> userRepo, 
             IMappingProvider mapper,
             ISaver saver, 
-            IRandomProvider random,
-            IEfGenericRepository<UserTest> resultRepo)
+            IRandomProvider random)
 
             : base(mapper, saver, random)
         {
             Guard.WhenArgument(testRepo, "testRepo").IsNull().Throw();
-            Guard.WhenArgument(userRepo, "userRepo").IsNull().Throw();
-            Guard.WhenArgument(resultRepo, "resultRepo").IsNull().Throw();
             this.testRepo = testRepo;
-            this.userRepo = userRepo;
-            this.resultRepo = resultRepo;
         }
 
         public IEnumerable<TestDto> GetAll()
@@ -40,20 +32,6 @@ namespace TestSystem.Services
             var entities = this.testRepo.All;
             var tests = this.Mapper.ProjectTo<TestDto>(entities);
             return tests;
-        }
-
-        public IEnumerable<TestDto> GetUserTests(string id)
-        {
-            var results = resultRepo.All.Where(r => r.UserId == id).Include(r => r.Test).ThenInclude(t => t.Category);
-
-            var entities = new List<Test>();
-            foreach (var r in results)
-            {
-                entities.Add(r.Test);
-            }
-
-            var result = this.Mapper.ProjectTo<TestDto>(entities.AsQueryable());
-            return result;
         }
 
         public TestDto GetRandomTestByCategory(string categoryName)
@@ -96,7 +74,6 @@ namespace TestSystem.Services
 
             return 0;
         }
-
 
     }
 }

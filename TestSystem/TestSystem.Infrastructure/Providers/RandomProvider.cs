@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bytes2you.Validation;
+using System;
 
 namespace TestSystem.Infrastructure.Providers
 {
@@ -8,6 +9,7 @@ namespace TestSystem.Infrastructure.Providers
 
         public RandomProvider(Random random)
         {
+            Guard.WhenArgument(random, "random").IsNull().Throw();
             this.random = random;
         }
 

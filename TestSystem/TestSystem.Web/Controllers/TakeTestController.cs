@@ -17,7 +17,6 @@ namespace TestSystem.Web.Controllers
     {
         private readonly UserManager<User> userManager;
         private readonly ITestService testService;
-        private readonly IAnswerService answerService;
         private readonly IMappingProvider mapper;
         private readonly IResultService resultService;
         private readonly IUserService userService;
@@ -27,7 +26,6 @@ namespace TestSystem.Web.Controllers
         {
             this.userManager = userManager;
             this.testService = testService;
-            this.answerService = answerService;
             this.resultService = resultService;
             this.userService = userService;
             this.mapper = mapper;
@@ -49,7 +47,7 @@ namespace TestSystem.Web.Controllers
 
             if (check == 2)
             {
-                testDto = this.userService.GetTestFromCategory(user.Id, id);
+                testDto = this.resultService.GetTestFromCategory(user.Id, id);
                 startTime = (DateTime)resultService.GetUserTest(user.Id, testDto.Id).StartTime;
             }
             else
@@ -91,6 +89,7 @@ namespace TestSystem.Web.Controllers
                 if (!CheckForValidExecutionTime(model))
                 {
                     userTest = EvaluateInvalid(model);
+                    this.resultService.Update(userTest);
                     return View("InvalidExecutionTime");
                 }
 
@@ -156,9 +155,9 @@ namespace TestSystem.Web.Controllers
         {
             var test = testService.GetFullTestInfo(model.TestId);
             var answeredQuestions = new List<AnsweredQuestionDto>();
-            double score = 0.0;
             var userTest = resultService.GetUserTest(model.UserId, model.TestId);
-            userTest.Score = score;
+
+            userTest.Score = 0.0;
             userTest.SubmittedOn = DateTime.Now;
             userTest.AnsweredQuestions = answeredQuestions;
 

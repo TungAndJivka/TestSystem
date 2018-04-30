@@ -120,8 +120,8 @@
     background: -o-linear-gradient(top, #597517 5%, #89c403 100%);
     background: -ms-linear-gradient(top, #597517 5%, #89c403 100%);
     background: linear-gradient(to bottom, #597517 5%, #89c403 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#597517', endColorstr='#89c403',GradientType=0);
     background-color: #597517;
+    color: white;
 }
 
 .StartTestBtn:active {
@@ -151,17 +151,6 @@
     text-decoration: none;
     text-shadow: 0px 1px 0px #ffffff;
     float: right;
-}
-
-.SubmittedTestBtn:hover {
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed));
-    background: -moz-linear-gradient(top, #dfdfdf 5%, #ededed 100%);
-    background: -webkit-linear-gradient(top, #dfdfdf 5%, #ededed 100%);
-    background: -o-linear-gradient(top, #dfdfdf 5%, #ededed 100%);
-    background: -ms-linear-gradient(top, #dfdfdf 5%, #ededed 100%);
-    background: linear-gradient(to bottom, #dfdfdf 5%, #ededed 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#dfdfdf', endColorstr='#ededed',GradientType=0);
-    background-color: #dfdfdf;
 }
 
 .SubmittedTestBtn:active {
