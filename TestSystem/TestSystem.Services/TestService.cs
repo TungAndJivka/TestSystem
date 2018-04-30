@@ -1,5 +1,6 @@
 ﻿using Bytes2you.Validation;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TestSystem.Data.Data.Repositories;
@@ -13,16 +14,14 @@ namespace TestSystem.Services
 {
     public class TestService : AbstractService, ITestService
     {
-        private readonly IEfGenericRepository<User> userRepo;
         private readonly IEfGenericRepository<Category> categoryRepo;
         private readonly IEfGenericRepository<Test> testRepo;
 
-        public TestService(IEfGenericRepository<Test> testRepo, IEfGenericRepository<User> userRepo,IEfGenericRepository<Category> categoryRepo, IMappingProvider mapper, ISaver saver, IRandomProvider random)
+        public TestService(IEfGenericRepository<Test> testRepo, IEfGenericRepository<Category> categoryRepo, IMappingProvider mapper, ISaver saver, IRandomProvider random)
             : base(mapper, saver, random)
         {
             Guard.WhenArgument(testRepo, "testRepo").IsNull().Throw();
             this.testRepo = testRepo;
-            this.userRepo = userRepo;
             this.categoryRepo = categoryRepo;
         }
 
@@ -91,7 +90,6 @@ namespace TestSystem.Services
             };   
             this.testRepo.Add(testToBeAdded);
             Saver.SaveChanges();
-        }
         }
 
         public int GetQuestionsCount(string testId)

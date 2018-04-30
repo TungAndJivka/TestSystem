@@ -32,7 +32,7 @@ namespace TestSystem.Services
 
         public IEnumerable<CategoryDto> GetAllWithPublsihedTests()
         {
-            var entities = this.categoryRepo.All.Include(c => c.Tests).Where(c => c.Tests.Any<Test>(t => t.IsPusblished));
+            var entities = this.categoryRepo.All.Include(c => c.Tests).Where(c => c.Tests.Any<Test>(t => t.IsPusblished));            
             var categories = this.Mapper.ProjectTo<CategoryDto>(entities);
             return categories;
         }

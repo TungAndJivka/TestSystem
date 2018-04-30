@@ -38,6 +38,7 @@ namespace TestSystem.Web.Controllers
         public IActionResult Index()
         {
             var categoriesDto = this.categoryService.GetAllWithPublsihedTests();
+
             var userId = userManager.GetUserId(HttpContext.User);
             var testsSumbitted = resultService.GetUserResults(userId);
             var tests = new List<TestViewModel>();

@@ -121,9 +121,10 @@ namespace TestSystem.Services
         public IEnumerable<TestResultDto> GetAllResults()
         {
             var entities = this.userTestRepo.All;
-            var results = entities.Select(x => new TestResultDto
+            var results = entities
+                .Select(x => new TestResultDto
             {
-                ExecutionTime = x.SubmittedOn.Value - x.StartTime.Value
+                ExecutionTime = (x.SubmittedOn.Value - x.StartTime)
             });
             return results;
         }
