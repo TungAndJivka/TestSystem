@@ -78,12 +78,15 @@ namespace TestSystem.Web
         private void DtoToDataModelMapping()
         {
             this.CreateMap<AdministerTestDto, Test>()
-                .ForMember(t => t.TestName, o => o.MapFrom(t => t.TestName))
-                .ForMember(t => t.Duration, o => o.MapFrom(t => TimeSpan.FromMinutes(t.Duration)))
-                .ForMember(t => t.Questions, o => o.MapFrom(t => t.Questions))
-                .ReverseMap()
-                .ForMember(t => t.Category, o => o.MapFrom(t => t.Category.Name));
+                .ForMember(t => t.Questions, o => o.MapFrom(t => t.Questions));
+
+            this.CreateMap<AdministerQuestionDto, Question>();
+
+
+            this.CreateMap<AdministerAnswerDto, Answer>();
+
         }
+
 
         private void DataModelToDtoMapping()
         {

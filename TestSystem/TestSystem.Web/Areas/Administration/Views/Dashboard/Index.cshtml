@@ -30,26 +30,27 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model.ExistingTests)
+                    @foreach (var test in Model.ExistingTests)
                     {
                         <tr class="table-row">
-                            <td>@item.TestName</td>
-                            <td class="text-center">@item.Category</td>
-                            <td class="text-center">
-                                @if (item.IsPusblished)
-                                {
-                                    <text>Published</text>
-                                }
-                                else
-                                {
-                                    <text>Draft</text>
-                                }
-                            </td>
-                            <td class="text-center">
+                            <td>@test.TestName</td>
+                            <td class="text-center">@test.Category</td>
+
+                            @if (test.IsPusblished)
+                            {
+                                <td>Draft</td>
+                                <td></td>
+                            }
+                            else
+                            {
+                                <td>Publlished</td>
+                                <td></td>
+                            }
+                            @*<td class="text-center">
                                 <a asp-area="Administration" asp-controller="Dashboard" asp-action="Publish" method="get" class="btn btn-primary myButton">Publish</a>
                                 <a asp-area="Administration" asp-controller="Dashboard" asp-action="Edit" method="get" class="btn btn-primary myButton">Edit</a>
                                 <a asp-area="Administration" asp-controller="Dashboard" asp-action="Delete" method="get" class="btn btn-primary myButton">Delete</a>
-                            </td>
+                            </td>*@
                         </tr>
                     }
 

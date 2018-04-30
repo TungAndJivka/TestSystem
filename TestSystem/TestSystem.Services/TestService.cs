@@ -70,12 +70,19 @@ namespace TestSystem.Services
             {
                 throw new ArgumentNullException(nameof(testDto));
             }
+            var category = this.categoryRepo.All.Where(c => c.Name == testDto.Category).Select(c => c.Id).SingleOrDefault();
+            if( category == default(Guid))
+            {
 
-            var testToBeAdded = this.Mapper.MapTo<Test>(testDto);
-
-            var category = this.categoryRepo.All.SingleOrDefault(c => c.Name == testDto.Category);
-            testToBeAdded.Category = category;
-
+            }
+            Test testToBeAdded = new Test()
+            {
+                TestName = testDto.TestName,
+                CategoryId = category,
+                Duration = TimeSpan.FromMinutes(testDto.Duration),
+                IsPusblished = testDto.IsPusblished,
+                Questions = this.Mapper.EnumerableProjectTo<AdministerQuestionDto, Question>(testDto.Questions).ToList()
+            };   
             this.testRepo.Add(testToBeAdded);
             Saver.SaveChanges();
         }
