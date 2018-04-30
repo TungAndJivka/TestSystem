@@ -33,11 +33,11 @@ namespace TestSystem.Web
 
 
 
-            this.CreateMap<UserTest, TestResultDto>(MemberList.Source)
-                .ForMember(db => db.UserName, option => option.MapFrom(x => x.User.UserName))
-                .ForMember(db => db.TestName, option => option.MapFrom(x => x.Test.TestName))
-                .ForMember(db => db.Category, option => option.MapFrom(x => x.Test.Category.Name))
-                .ForMember(db => db.RequestedTime, option => option.MapFrom(x => x.Test.Duration));
+            //this.CreateMap<UserTest, TestResultDto>(MemberList.Source)
+            //    .ForMember(db => db.UserName, option => option.MapFrom(x => x.User.UserName))
+            //    .ForMember(db => db.TestName, option => option.MapFrom(x => x.Test.TestName))
+            //    .ForMember(db => db.Category, option => option.MapFrom(x => x.Test.Category.Name))
+            //    .ForMember(db => db.RequestedTime, option => option.MapFrom(x => x.Test.Duration));
 
 
 
@@ -145,7 +145,18 @@ namespace TestSystem.Web
         {
             this.CreateMap<Test, ExistingTestDto>()
                 .ForMember(t => t.Category, o => o.MapFrom(t => t.Category.Name))
-                .ForMember(t => t.TestName, o => o.MapFrom(t => t.Category.Name));
+                .ForMember(t => t.TestName, o => o.MapFrom(t => t.TestName));
+
+            this.CreateMap<UserTest, TestResultDto>()
+                .ForMember(dto => dto.UserId, o => o.MapFrom(dm => dm.UserId))
+                .ForMember(dto => dto.TestId, o => o.MapFrom(dm => dm.TestId))
+                .ForMember(dto => dto.UserName, o => o.MapFrom(dm => dm.User.UserName))
+                .ForMember(dto => dto.TestName, o => o.MapFrom(dm => dm.Test.TestName))
+                .ForMember(dto => dto.CategoryName, o => o.MapFrom(dm => dm.Test.Category.Name))
+                .ForMember(dto => dto.RequestedTime, o => o.MapFrom(dm => dm.Test.Duration))
+                .ForMember(dto => dto.ExecutionTime, o => o.MapFrom(dm => dm.SubmittedOn.Value.Subtract(dm.StartTime)))
+                .ForMember(dto => dto.Result, o => o.MapFrom(dm => dm.Score));
+
 
             //this.CreateMap<UserTest, TestResultDto>(MemberList.Destination)
             //   .ForMember(ut => ut.UserName, o => o.MapFrom(ut => ut.User.UserName))

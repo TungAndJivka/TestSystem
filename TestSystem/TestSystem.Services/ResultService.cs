@@ -129,7 +129,7 @@ namespace TestSystem.Services
             return results;
         }
 
-        public IEnumerable<TestResultDto> GetAllTestResults()
+        public IEnumerable<TestResultDto> GetTestResultsForDashBoard()
         {
             var results = this.userTestRepo.All
                 .Include(ut => ut.User)

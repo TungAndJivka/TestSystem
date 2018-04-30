@@ -1,0 +1,53 @@
+﻿@model IEnumerable<TestResultViewModel>
+@using TestSystem.Web.Areas.Administration.Models.DashboardViewModels
+
+
+
+<table id="resultstable" class="table table-bordered tab-content" >
+    <thead class="table-header">
+        <tr>
+            <th class="col-md-4 text-center">UserName</th>
+            <th class="col-md-2 text-center">Test Name</th>
+            <th class="col-md-2 text-center">Category</th>
+            <th class="col-md-5 text-center">Requested Time</th>
+            <th class="col-md-5 text-center">Execution Time</th>
+            <th class="col-md-5 text-center">Result</th>
+        </tr>
+    </thead>
+    @if (Model.Any())
+    {
+        <tbody>
+            @foreach (var result in Model)
+            {
+                <tr>
+                    <td>@result.UserName</td>
+                    <td>@result.TestName</td>
+                    <td>@result.CategoryName</td>
+                    <td>@result.RequestedTime</td>
+                    <td>@result.ExecutionTime</td>
+                    @if (result.Result >= 80)
+                    {
+                        <td>Passed</td>
+                    }
+                    else
+                    {
+
+                        <td>Failed</td>
+                    }
+                </tr>
+
+            }
+        </tbody>
+
+    }
+    else
+    {
+        <tr>
+            <td>
+                No Results
+            </td>
+        </tr>
+    }
+
+
+</table>

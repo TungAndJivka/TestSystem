@@ -21,6 +21,6 @@ namespace TestSystem.Services.Contracts
         TestDto GetTestFromCategory(string userId, string categoryName);
         //bool AddNewResult(string userId, Guid testId);
 
-        IEnumerable<TestResultDto> GetAllTestResults();
+        IEnumerable<TestResultDto> GetTestResultsForDashBoard();
     }
 }

@@ -28,12 +28,9 @@ namespace TestSystem.Web.Areas.Administration.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(DashboardViewModel model)
         {
-
-            var model = new DashboardViewModel();
-
-            var results = resultService.GetAllTestResults();
+            var results = resultService.GetTestResultsForDashBoard();
             var TestResultViewModels = this.mapper.EnumerableProjectTo<TestResultDto, TestResultViewModel>(results).ToList();
             model.TestResults = TestResultViewModels; 
 

@@ -7,6 +7,5 @@ namespace TestSystem.Web.Areas.Administration.Models.CreateTestViewModels
     {
         public IEnumerable<CategoryDto> Categories { get; set; }
 
-
     }
 }
