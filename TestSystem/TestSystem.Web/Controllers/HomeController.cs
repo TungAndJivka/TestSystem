@@ -6,7 +6,6 @@ using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using TestSystem.Data.Models;
-using TestSystem.Infrastructure.Providers;
 using TestSystem.Web.Models;
 using TestSystem.Web.Models.HomeViewModels;
 
