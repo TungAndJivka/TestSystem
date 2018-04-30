@@ -8,7 +8,7 @@ namespace TestSystem.DTO
     {
         public string Id { get; set; }
         public string TestName { get; set; } 
-        public TimeSpan Duration { get; set; }
+        public int Duration { get; set; }
         public bool IsPusblished { get; set; }
 
         public string CategoryId { get; set; }

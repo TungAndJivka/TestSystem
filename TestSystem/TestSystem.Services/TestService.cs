@@ -13,18 +13,17 @@ namespace TestSystem.Services
 {
     public class TestService : AbstractService, ITestService
     {
+        private readonly IEfGenericRepository<User> userRepo;
+        private readonly IEfGenericRepository<Category> categoryRepo;
         private readonly IEfGenericRepository<Test> testRepo;
 
-        public TestService(
-            IEfGenericRepository<Test> testRepo, 
-            IMappingProvider mapper,
-            ISaver saver, 
-            IRandomProvider random)
-
+        public TestService(IEfGenericRepository<Test> testRepo, IEfGenericRepository<User> userRepo,IEfGenericRepository<Category> categoryRepo, IMappingProvider mapper, ISaver saver, IRandomProvider random)
             : base(mapper, saver, random)
         {
             Guard.WhenArgument(testRepo, "testRepo").IsNull().Throw();
             this.testRepo = testRepo;
+            this.userRepo = userRepo;
+            this.categoryRepo = categoryRepo;
         }
 
         public IEnumerable<TestDto> GetAll()
@@ -62,6 +61,37 @@ namespace TestSystem.Services
 
             var result = this.Mapper.MapTo<TestDto>(entities);
             return result;
+        }
+
+        public IEnumerable<ExistingTestDto> AllTestsForDashBoard()
+        {
+            var tests = this.testRepo.All;
+
+            return this.Mapper.EnumerableProjectTo<Test, ExistingTestDto>(tests);
+        }
+
+        public void CreateTest(AdministerTestDto testDto)
+        {
+            if (testDto == null)
+            {
+                throw new ArgumentNullException(nameof(testDto));
+            }
+            var category = this.categoryRepo.All.Where(c => c.Name == testDto.Category).Select(c => c.Id).SingleOrDefault();
+            if( category == default(Guid))
+            {
+
+            }
+            Test testToBeAdded = new Test()
+            {
+                TestName = testDto.TestName,
+                CategoryId = category,
+                Duration = TimeSpan.FromMinutes(testDto.Duration),
+                IsPusblished = testDto.IsPusblished,
+                Questions = this.Mapper.EnumerableProjectTo<AdministerQuestionDto, Question>(testDto.Questions).ToList()
+            };   
+            this.testRepo.Add(testToBeAdded);
+            Saver.SaveChanges();
+        }
         }
 
         public int GetQuestionsCount(string testId)
