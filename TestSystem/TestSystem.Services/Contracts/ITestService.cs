@@ -18,5 +18,6 @@ namespace TestSystem.Services.Contracts
         void CreateTest(AdministerTestDto testDto);
 
         void PublishTest(string testName, string categoryName);
+        void DeleteTest(string testName, string categoryName);
     }
 }

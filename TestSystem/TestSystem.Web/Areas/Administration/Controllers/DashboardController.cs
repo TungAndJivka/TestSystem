@@ -62,5 +62,25 @@ namespace TestSystem.Web.Areas.Administration.Controllers
             return RedirectToAction("Index", "Dashboard");
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteTest(string testName, string categoryName)
+        {
+            if (string.IsNullOrEmpty(testName))
+            {
+                return this.View();
+            }
+
+            if (string.IsNullOrEmpty(categoryName))
+            {
+                return this.View();
+            }
+
+            this.testService.DeleteTest(testName, categoryName);
+
+
+            return RedirectToAction("Index", "Dashboard");
+        }
+
     }
 }
