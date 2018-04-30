@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TestSystem.DTO;
@@ -11,7 +12,7 @@ namespace TestSystem.Web.Areas.Administration.Controllers
 {
     [Authorize(Roles = "Admin")]
     [Area("Administration")]
-    public class DashboardController: Controller
+    public class DashboardController : Controller
     {
         private readonly ITestService testService;
         private readonly IResultService resultService;
@@ -32,19 +33,34 @@ namespace TestSystem.Web.Areas.Administration.Controllers
         {
             var results = resultService.GetTestResultsForDashBoard();
             var TestResultViewModels = this.mapper.EnumerableProjectTo<TestResultDto, TestResultViewModel>(results).ToList();
-            model.TestResults = TestResultViewModels; 
+            model.TestResults = TestResultViewModels;
 
             var existingTestDtos = testService.AllTestsForDashBoard();
-            var existingTests = this.mapper.EnumerableProjectTo<ExistingTestDto,ExistingTestViewModel>(existingTestDtos).ToList();
-            model.ExistingTests = existingTests;           
+            var existingTests = this.mapper.EnumerableProjectTo<ExistingTestDto, ExistingTestViewModel>(existingTestDtos).ToList();
+            model.ExistingTests = existingTests;
 
             return View(model);
-        }       
-        //[HttpPost]
-        //public IActionResult CreateTest()
-        //{
-        //    return View();
-        //}
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult PublishTest(string testName, string categoryName)
+        {
+            if (string.IsNullOrEmpty(testName))
+            {
+                return this.View();
+            }
+
+            if (string.IsNullOrEmpty(categoryName))
+            {
+                return this.View();
+            }
+
+            this.testService.PublishTest(testName, categoryName);
+
+
+            return RedirectToAction("Index", "Dashboard");
+        }
 
     }
 }

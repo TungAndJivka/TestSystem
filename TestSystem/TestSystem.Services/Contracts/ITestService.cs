@@ -16,5 +16,7 @@ namespace TestSystem.Services.Contracts
         IEnumerable<ExistingTestDto> AllTestsForDashBoard();
 
         void CreateTest(AdministerTestDto testDto);
+
+        void PublishTest(string testName, string categoryName);
     }
 }
