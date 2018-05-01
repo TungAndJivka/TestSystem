@@ -5,7 +5,7 @@
         <button type="button" class="delete-question">X</button>
     </div>
 
-    <div id="collapse-{{q_id}}" class="panel-collapse collapse">
+    <div id="collapse-{{q_id}}" class="panel-collapse collapse in">
         <div class="panel-body">
             <div>Description</div>
             <textarea id="Questions_{{q_id}}__Description" name="Questions[{{q_id}}].Description" class="summernote form-control input-lg value=""></textarea>
