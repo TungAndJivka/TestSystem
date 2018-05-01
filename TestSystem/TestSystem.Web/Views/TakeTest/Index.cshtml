@@ -5,11 +5,18 @@
     int j = 0; // answer counter
 }
 
+@{
+    var minutes = Model.Duration.Minutes;
+    var maxTime = Model.StartedOn.AddMinutes(minutes);
+    var remainingTime = ((maxTime - DateTime.Now).TotalSeconds);
+}
+
+
 <div id="page">
 
     <div class="take-test-content" style="width:100%">
         <form asp-controller="TakeTest" asp-action="Index" method="POST">
-            <div id="test-name" class="page-header table-header">@Model.TestName</div>
+            <div id="test-name" class="page-header">@Model.TestName</div>
 
             <input asp-for="@Model.CategoryName" type="hidden" value="@Model.CategoryName">
             <input asp-for="@Model.TestName" type="hidden" value="@Model.TestName">
@@ -22,65 +29,94 @@
                 <div id="ctg-name" class="col inline">
                     <div class="ctg" id="category-name"> Category: @Model.CategoryName</div>
                 </div>
+
                 <div id="timer" class="col inline ctg set-right">
-                    <div id="countdown" class="inline">
-                        <div id='tiles'></div>
-                        <div class="labels">
-                            <li>Hours</li>
-                            <li>Mins</li>
-                            <li>Secs</li>
-                        </div>
-                    </div>
+                    <div class="example" data-timer="@remainingTime"></div>
                 </div>
+
                 <br />
             </div>
+
+
 
             <div id="center-area">
                 @*Questions*@
                 @foreach (var question in Model.Questions)
-        {
-            <input asp-for="@Model.Questions[i].Id" type="hidden" value="@question.Id">
-            <div class="form-row title">
-                <div class="col col-sm-1 inline right">
-                    @(i + 1).
-                </div>
-                <div class="col col-lg-11 title">
-                    @question.Description
-                </div>
+                {
+                    <div style="height: 50px; margin-bottom: 20px;"></div>
+
+                    <input asp-for="@Model.Questions[i].Id" type="hidden" value="@question.Id">
+                    <div class="form-row title">
+                        <div class="col col-sm-1 inline right title">
+                            @(i + 1).
+                        </div>
+                        <div class="col col-lg-11 title">
+                            @question.Description
+                        </div>
+                    </div>
+
+                    <div class="area-answers">
+                        @*//Answers*@
+                        @foreach (var answer in question.Answers)
+                        {
+                        <div class="li">
+
+                            <input asp-for="@Model.Questions[i].SelectedAnswer" type="radio" value="@answer.Id" id="@answer.Id" class="radioBtn">
+                            <label for="@answer.Id">@answer.Content</label>
+
+                            <div class="check"><div class="inside"></div></div>
+                        </div>
+                            j++;
+                        }
+                    </div>
+
+                    i++;
+                }
             </div>
 
-            <div class="area-answers">
-                @*//Answers*@
-                @foreach (var answer in question.Answers)
-        {
-            <div>
-                <label>
-                    <input asp-for="@Model.Questions[i].SelectedAnswer" type="radio" value="@answer.Id">
-                    @answer.Content
-                </label>
-            </div>
-    j++;
-}
-            </div>
-            <br />
-    i++;
-}
-            </div>
 
-            @{ 
-                var minutes = Model.Duration.Minutes;
-                var maxTime = Model.StartedOn.AddMinutes(minutes);
-                var remainingTime = ((maxTime - DateTime.Now).TotalSeconds)/60;
-             }
-            <div id="time" style="display:none">@remainingTime</div>
+            <div id="time" style="display:none;">@remainingTime</div>
+
 
             <div class="centered-btn-area">
-                <button id="submit-test-btn" type="submit">Submit</button>
+                @*<button id="submit-test-btn" type="submit">Submit</button>*@
+                <!-- Button trigger modal -->
+                <button type="button" id="submitBtn" onclick="" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                    Submit
+                </button>
             </div>
+
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="ModalTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header" id="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" id="modal-body">
+                            <h3 style="text-align:center">Are you sure you want to submit your test?</h3>
+                        </div>
+                        <div class="modal-footer" id="modal-footer">
+                            <button id="modal-no-btn" type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                            <button id="submit-test-btn" type="submit" class="btn btn-primary">Yes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
         </form>
     </div>
 
+
+    <script type="text/javascript" src="~/js/TimeCircles.js"></script>
     <script src="~/js/TakeTest.js" asp-append-version="true"></script>
+    <script>
+
+    </script>
+
 
 </div>

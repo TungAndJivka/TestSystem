@@ -5,29 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - TestSystem.Web</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/Home.css" />
+    <link rel="stylesheet" href="~/css/Dashboard.css" />
+    <link rel="stylesheet" href="~/css/CreateTest.css" />
+    <link rel="stylesheet" href="~/css/TakeTest.css" />
+    <link rel="stylesheet" href="~/css/TimeCircles.css">
+    <link rel="stylesheet" href="~/css/RadioButtons.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
+
+
     <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/css/site.css" />
-        <link rel="stylesheet" href="~/css/Home.css" />
 
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
-        
-        <link rel="stylesheet" href="~/css/Dashboard.css" />
-        <link rel="stylesheet" href="~/css/CreateTest.css" />
-        <link rel="stylesheet" href="~/css/TakeTest.css" />
         <link rel="stylesheet" href="~/css/Home.css" />
         <link rel="stylesheet" href="~/css/summernote.css" />
-
-
-
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-        <link rel="stylesheet" href="~/css/Home.css" />
-        <link rel="stylesheet" href="~/css/Dashboard.css" />
+
     </environment>
 
 </head>
@@ -62,10 +63,9 @@
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
         <script src="~/js/Dashboard.js" asp-append-version="true"></script>
-
+        <script type="text/javascript" src="~/js/TimeCircles.js"></script>
         <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
 
-        <script src="~/js/summernote.js"></script>
 
         @*for Admin*@
         <script src="~/js/Administration/Dashboard.js"></script>
@@ -87,6 +87,8 @@
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="~/js/TimeCircles.js"></script>
 
     @RenderSection("Scripts", required: false)
 </body>
