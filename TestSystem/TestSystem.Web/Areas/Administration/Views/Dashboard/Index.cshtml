@@ -19,49 +19,13 @@
     </ul>
 
     <div id="myTabContent">
-        <div class="tab-pane fade show active" id="tests" role="tabpanel" aria-labelledby="tests-tab">
-            <table id="example" class="table table-bordered tab-content" style="width:100%">
-                <thead class="table-header">
-                    <tr>
-                        <th class="col-md-4 text-center">Test Name</th>
-                        <th class="col-md-2 text-center">Category</th>
-                        <th class="col-md-2 text-center">Status</th>
-                        <th class="col-md-5 text-center">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var test in Model.ExistingTests)
-                    {
-                        <tr class="table-row">
-                            <td>@test.TestName</td>
-                            <td class="text-center">@test.Category</td>
-
-                            @if (test.IsPusblished)
-                            {
-                                <td>Draft</td>
-                                <td></td>
-                            }
-                            else
-                            {
-                                <td>Publlished</td>
-                                <td></td>
-                            }
-                            @*<td class="text-center">
-                                <a asp-area="Administration" asp-controller="Dashboard" asp-action="Publish" method="get" class="btn btn-primary myButton">Publish</a>
-                                <a asp-area="Administration" asp-controller="Dashboard" asp-action="Edit" method="get" class="btn btn-primary myButton">Edit</a>
-                                <a asp-area="Administration" asp-controller="Dashboard" asp-action="Delete" method="get" class="btn btn-primary myButton">Delete</a>
-                            </td>*@
-                        </tr>
-                    }
-
-                </tbody>
-
-            </table>
+        <div class="tab-pane fade in active" id="tests" role="tabpanel" aria-labelledby="tests-tab">
+            @Html.Partial("_ExistingTests", Model.ExistingTests)
 
         </div>
 
         <div class="tab-pane fade" id="results" role="tabpanel" aria-labelledby="results-tab">
-            Results
+            @Html.Partial("_TestResults", Model.TestResults)
         </div>
     </div>
 </div>

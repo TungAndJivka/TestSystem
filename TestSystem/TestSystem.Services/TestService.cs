@@ -103,5 +103,48 @@ namespace TestSystem.Services
             return 0;
         }
 
+        public void PublishTest(string testName, string categoryName)
+        {
+            if (string.IsNullOrEmpty(testName))
+            {
+                throw new ArgumentNullException("Name cannot be null!");
+            }
+
+            if (string.IsNullOrEmpty(categoryName))
+            {
+                throw new ArgumentNullException("Category Name cannot be null!");
+            }
+
+            var test = this.testRepo.All
+               .Include(t => t.Category)
+               .Where(t => t.TestName == testName && t.Category.Name == categoryName)
+               .FirstOrDefault();
+
+            test.IsPusblished = true;
+            this.testRepo.Update(test);
+            this.Saver.SaveChanges();
+        }
+
+        public void DeleteTest(string testName, string categoryName)
+        {
+            if (string.IsNullOrEmpty(testName))
+            {
+                throw new ArgumentNullException("Name cannot be null!");
+            }
+
+            if (string.IsNullOrEmpty(categoryName))
+            {
+                throw new ArgumentNullException("Category Name cannot be null!");
+            }
+
+            var test = this.testRepo.All
+               .Include(t => t.Category)
+               .Where(t => t.TestName == testName && t.Category.Name == categoryName)
+               .FirstOrDefault();
+
+            test.IsDeleted = true;
+            this.testRepo.Update(test);
+            this.Saver.SaveChanges();
+        }
     }
 }
