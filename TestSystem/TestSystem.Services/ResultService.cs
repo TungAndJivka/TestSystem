@@ -91,7 +91,11 @@ namespace TestSystem.Services
 
         public IEnumerable<TestDto> GetUserResults(string userId)
         {
-            var results = userTestRepo.All.Where(r => r.UserId == userId).Include(r => r.Test).ThenInclude(t => t.Category);
+            var results = userTestRepo.All
+                .Where(r => r.UserId == userId)
+                .Include(r => r.Test)
+                .ThenInclude(t => t.Category)
+                .Where(t => t.SubmittedOn != null);
 
             var entities = new List<Test>();
             foreach (var r in results)

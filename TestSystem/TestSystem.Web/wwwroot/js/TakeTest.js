@@ -68,6 +68,13 @@ $(function () {
 });
 
 
+const showModal = (function () {
+    $('#exampleModalCenter').on('shown.bs.modal', function () {
+        $('#myInput').trigger('focus')
+    })
+});
+
+
 
 
 
