@@ -8,9 +8,31 @@
     <div id="collapse-{{q_id}}" class="panel-collapse collapse">
         <div class="panel-body">
             <div>Description</div>
-            <input type="text" id="Questions_{{q_id}}__Description" name="Questions[{{q_id}}].Description" class="form-control input-lg value=""></input>
+            <textarea id="Questions_{{q_id}}__Description" name="Questions[{{q_id}}].Description" class="summernote form-control input-lg value=""></textarea>
         </div>
-        <div class="answers-container"></div>
+        <div class="answers-container">
+            <div id="question-{{q_id}}-answer-0" class="answer-container">
+                <div class="answer-heading">
+                    <div id="answerNumber">Answer 1</div>
+                    <input clas id="Questions_{{q_id}}__Answers_0__IsCorrect" class="answer-is-correct" name="radio-{{q_id}}" type="radio" value="true" autocomplete="off">
+                    <button class="delete-answer" type="button">Delete Answer</button>        
+                </div>
+                <div class="answer-body">        
+                    <textarea id="Questions_{{q_id}}__Answers_0__Content" name="Questions[{{q_id}}].Answers[0].Content" class="summernote answer-content"></textarea>
+                </div>    
+            </div>
+
+            <div id="question-{{q_id}}-answer-1" class="answer-container">
+                <div class="answer-heading">
+                    <div id="answerNumber">Answer 2</div>
+                    <input clas id="Questions_{{q_id}}__Answers_1__IsCorrect" class="answer-is-correct" name="radio-{{q_id}}" type="radio" value="true" autocomplete="off">
+                    <button class="delete-answer" type="button">Delete Answer</button>        
+                </div>
+                <div class="answer-body">        
+                    <textarea id="Questions_{{q_id}}__Answers_1__Content" name="Questions[{{q_id}}].Answers[1].Content" class="summernote answer-content"></textarea>
+                </div>    
+            </div>
+        </div>
         <div class="panel-body">
             <button class="add-answer" name="collapse-{{q_id}}" type="button">Add New Answer</button>
         </div>
@@ -24,9 +46,11 @@ let answerTemplate = `
         <button class="delete-answer" type="button">Delete Answer</button>        
     </div>
     <div class="answer-body">        
-        <input id="Questions_{{q_id}}__Answers_{{a_id}}__Content" name="Questions[{{q_id}}].Answers[{{a_id}}].Content" class="answer-content"></input>
+        <textarea id="Questions_{{q_id}}__Answers_{{a_id}}__Content" name="Questions[{{q_id}}].Answers[{{a_id}}].Content" class="summernote answer-content"></textarea>
     </div>    
 </div>`;
+
+
 
 $(function () {
 
@@ -67,12 +91,16 @@ $(function () {
     });
 
     var addQuestionClickEvent = $('#questions-container #add-question').on('click', function () {
-        var newQuestionId = $('#questions-body .panel-heading').length;
+        var newQuestionId = $('#questions-body .question-container').length;
 
         $('#questions-container #questions-body')
             .append(questionTemplate
                 .replace(/\{\{\q_id\}\}/g, newQuestionId)
                 .replace(/\{\{\q_number\}\}/g, newQuestionId + 1));
+
+
+        $(`#Questions_${newQuestionId}__Description`).summernote(questionSummernoteConfig);
+        $(`#question-${newQuestionId} .answer-content`).summernote(answerSummernoteConfig);
     });
 
 
@@ -98,9 +126,11 @@ $(function () {
                 return $(this).prop('checked') === true;
             });
 
-        if (!hasCheckedRadioButton) {
+        if (!hasCheckedRadioButton) {   
             answerRadioButtons.first().prop('checked', true);
         }
+
+        $(`#Questions_${questionNumber}__Answers_${newAnswerNumber}__Content`).summernote(answerSummernoteConfig);
     });
 
 
@@ -161,4 +191,45 @@ $(function () {
             });
     });
 
+
+    var questionSummernoteConfig = {
+        placeholder: 'Add your description here...',
+        height: 200,
+        toolbar: [
+            ['style', ['bold', 'italic', 'underline', 'clear']],
+            ['font', ['strikethrough', 'superscript', 'subscript']],
+            ['fontsize', ['fontsize']],
+            ['para', ['ul', 'ol', 'paragraph']]
+        ],
+        disableResizeEditor: true
+    };
+
+    var answerSummernoteConfig = {
+        height: 200,
+        toolbar: [
+            ['style', ['bold', 'italic', 'underline', 'clear']],
+            ['font', ['strikethrough', 'superscript', 'subscript']],
+            ['fontsize', ['fontsize']],
+            ['para', ['ul', 'ol', 'paragraph']]
+        ],
+        disableResizeEditor: true
+    };
+
+    var initializeSummernote = function () {
+        $('.summernote')
+            .toArray()
+            .forEach(function (textarea) {
+                var text = textarea.textContent;
+                $(textarea).summernote(answerSummernoteConfig);
+                textarea.textContent = text;
+            });
+    };
+
+    initializeSummernote();
 });
+
+
+$(document).ready(function () {
+    $('#summernote').summernote();
+});
+
