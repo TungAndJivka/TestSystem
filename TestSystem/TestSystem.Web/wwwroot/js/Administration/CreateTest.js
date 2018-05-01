@@ -93,6 +93,8 @@ $(function () {
     var addQuestionClickEvent = $('#questions-container #add-question').on('click', function () {
         var newQuestionId = $('#questions-body .question-container').length;
 
+        collapseQuestions();
+
         $('#questions-container #questions-body')
             .append(questionTemplate
                 .replace(/\{\{\q_id\}\}/g, newQuestionId)
@@ -226,7 +228,13 @@ $(function () {
     };
 
     initializeSummernote();
+
+    var collapseQuestions = function collapse() {
+        $('.collapse').collapse('hide');
+    }
 });
+
+
 
 
 $(document).ready(function () {
