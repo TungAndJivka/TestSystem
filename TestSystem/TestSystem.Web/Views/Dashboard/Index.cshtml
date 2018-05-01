@@ -15,7 +15,7 @@
 
             @if (!Model.Tests.Where(t => t.IsSubmitted).Any(x => x.CategoryName == categoryName))
             {
-                <li  class="nav-item">
+                <li class="nav-item">
                     <a class="nav-link"
                        title="@i-tab"
                        id="@categoryName"
@@ -38,7 +38,7 @@
                        role="tab"
                        aria-controls="@i-content"
                        aria-selected="true"
-                       onclick="categoryTabClickSubmitted('@categoryName Test')">
+                       onclick="categoryTabClickSubmitted('@categoryName)">
                         @Model.Categories[i].Name
                     </a>
                 </li>
@@ -50,5 +50,12 @@
     <div class="user-dash-content" id="DashboardContent">
 
     </div>
+
+    @section scripts
+    {
+        <script src="~/js/Dashboard.js" asp-append-version="true"></script>
+    }
+
+
 
 </div>
