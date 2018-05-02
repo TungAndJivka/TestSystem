@@ -39,7 +39,7 @@
 
 .answer-body {
     padding-left: 10%;
-    padding-right: 10%;
+    padding-right: 15%;
 }
 
 #save-draft-test {
@@ -56,11 +56,8 @@
     background: #fc714e;
     background-image: -webkit-linear-gradient(top, #fc714e, #c2410e);
     background-image: -moz-linear-gradient(top, #fc714e, #c2410e);
-    background-image: -ms-linear-gradient(top, #fc714e, #c2410e);
     background-image: -o-linear-gradient(top, #fc714e, #c2410e);
     background-image: linear-gradient(to bottom, #fc714e, #c2410e);
-    -webkit-border-radius: 17;
-    -moz-border-radius: 17;
     border-radius: 17px;
     font-family: Arial;
     color: #ffffff;
@@ -74,8 +71,71 @@
         background: #c2410e;
         background-image: -webkit-linear-gradient(top, #c2410e, #fc714e);
         background-image: -moz-linear-gradient(top, #c2410e, #fc714e);
-        background-image: -ms-linear-gradient(top, #c2410e, #fc714e);
         background-image: -o-linear-gradient(top, #c2410e, #fc714e);
         background-image: linear-gradient(to bottom, #c2410e, #fc714e);
         text-decoration: none;
     }
+
+.create-test-btn-red {
+    background: #fa6161;
+    background-image: -webkit-linear-gradient(top, #fa6161, #c90404);
+    background-image: -moz-linear-gradient(top, #fa6161, #c90404);
+    background-image: -o-linear-gradient(top, #fa6161, #c90404);
+    background-image: linear-gradient(to bottom, #fa6161, #c90404);
+    border-radius: 20px;
+    font-family: Arial;
+    color: #ffffff;
+    font-size: 14px;
+    padding: 6px 12px 6px 12px;
+    text-decoration: none;
+    border: none;
+}
+
+    .create-test-btn-red:hover {
+        background: #f24848;
+        color: white;
+    }
+
+.create-test-btn-green {
+    background: #51d613;
+    background-image: -webkit-linear-gradient(top, #51d613, #3a990b);
+    background-image: -moz-linear-gradient(top, #51d613, #3a990b);
+    background-image: -o-linear-gradient(top, #51d613, #3a990b);
+    background-image: linear-gradient(to bottom, #51d613, #3a990b);
+    border-radius: 17px;
+    font-family: Arial;
+    color: #ffffff;
+    font-size: 14px;
+    padding: 6px 12px 6px 12px;
+    text-decoration: none;
+    border: none;
+
+}
+
+    .create-test-btn-green:hover {
+        background: #51d613;
+        color: white;
+    }
+
+.questionNumber {
+    color: dimgray;
+    font-weight: bolder;
+    font-size: 22px;
+}
+
+.answerNumber {
+    color: dimgray;
+    font-weight: bolder;
+    font-size: 18px;
+    text-align: center;
+}
+
+.create-test-radio{
+    transform: scale(2);
+}
+
+.add-answer {
+    margin-left: 47%;
+    margin-bottom: 70px;
+}
+
