@@ -6,6 +6,7 @@ using System.Linq;
 using TestSystem.DTO;
 using TestSystem.Infrastructure.Providers;
 using TestSystem.Services.Contracts;
+using TestSystem.Web.Areas.Administration.Models.CreateTestViewModels;
 using TestSystem.Web.Areas.Administration.Models.DashboardViewModels;
 
 namespace TestSystem.Web.Areas.Administration.Controllers
@@ -60,6 +61,26 @@ namespace TestSystem.Web.Areas.Administration.Controllers
 
 
             return RedirectToAction("Index", "Dashboard");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditTest(string testName, string categoryName)
+        {
+            if (string.IsNullOrEmpty(testName))
+            {
+                return this.View();
+            }
+
+            if (string.IsNullOrEmpty(categoryName))
+            {
+                return this.View();
+            }
+
+            var testDto = testService.GetTest(testName, categoryName);
+            var testViewModel = this.mapper.MapTo<AdministerTestViewModel>(testDto);
+
+            return this.View(testViewModel);
         }
 
         [HttpPost]

@@ -38,7 +38,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Administration\Views\NewFolder\" />
     <Folder Include="Configuration\" />
+    <Folder Include="wwwroot\css\font\" />
   </ItemGroup>
 
 </Project>

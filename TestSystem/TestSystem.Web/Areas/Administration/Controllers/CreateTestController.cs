@@ -56,7 +56,7 @@ namespace TestSystem.Web.Areas.Administration.Controllers
 
             return RedirectToRoute(new
             {
-                area = "Adminstration",
+                area = "Administration",
                 controller = "Dashboard",
                 action = "Index"
             });
