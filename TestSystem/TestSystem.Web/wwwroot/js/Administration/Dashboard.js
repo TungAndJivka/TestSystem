@@ -1,6 +1,7 @@
 ﻿$(document).ready(function () {
     $('#existingTestsTable').DataTable(
         {
+            retrieve: true,
             "pagingType": "full_numbers",
             "fnDrawCallback": function () {
                 var $paginate = this.siblings('.dataTables_paginate');
@@ -19,6 +20,7 @@
 $(document).ready(function () {
     $('#resultstable').DataTable(
         {
+            retrieve: true,
             "pagingType": "full_numbers",
             "fnDrawCallback": function () {
                 var $paginate = this.siblings('.dataTables_paginate');
