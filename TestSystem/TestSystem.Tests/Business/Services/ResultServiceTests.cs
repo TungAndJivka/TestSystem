@@ -216,7 +216,7 @@ namespace TestSystem.Tests.Business.Services
             var actual = resultService.CheckForTakenTest(userId, "Java");
 
             // Assert
-            Assert.AreEqual(1, actual);
+            Assert.AreEqual(StatusType.TestNotStarted, actual);
         }
 
         [TestMethod]
@@ -235,7 +235,7 @@ namespace TestSystem.Tests.Business.Services
             var actual = resultService.CheckForTakenTest(userId, "Java");
 
             // Assert
-            Assert.AreEqual(2, actual);
+            Assert.AreEqual(StatusType.TestNotSubmitted, actual);
         }
 
 
@@ -255,7 +255,7 @@ namespace TestSystem.Tests.Business.Services
             var actual = resultService.CheckForTakenTest(userId, "Java");
 
             // Assert
-            Assert.AreEqual(3, actual);
+            Assert.AreEqual(StatusType.TestSubmitted, actual);
         }
 
         // GetTestFromCategory() Tests:
