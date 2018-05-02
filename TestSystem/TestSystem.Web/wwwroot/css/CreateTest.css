@@ -22,3 +22,60 @@
 .col {
     display:inline-block;
 }
+
+#createTestPage {
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+#add-question {
+    float: right;
+}
+
+.delete-answer {
+    float: right;
+    border: 5px 5px 5px 5px;
+}
+
+.answer-body {
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+#save-draft-test {
+    float: right;
+    margin-right: 10px;
+}
+
+#save-published-test {
+    float: left;
+    margin-left: 10px;
+}
+
+.create-test {
+    background: #fc714e;
+    background-image: -webkit-linear-gradient(top, #fc714e, #c2410e);
+    background-image: -moz-linear-gradient(top, #fc714e, #c2410e);
+    background-image: -ms-linear-gradient(top, #fc714e, #c2410e);
+    background-image: -o-linear-gradient(top, #fc714e, #c2410e);
+    background-image: linear-gradient(to bottom, #fc714e, #c2410e);
+    -webkit-border-radius: 17;
+    -moz-border-radius: 17;
+    border-radius: 17px;
+    font-family: Arial;
+    color: #ffffff;
+    font-size: 16px;
+    padding: 8px 15px 8px 15px;
+    text-decoration: none;
+    border: none;
+}
+
+    .create-test:hover {
+        background: #c2410e;
+        background-image: -webkit-linear-gradient(top, #c2410e, #fc714e);
+        background-image: -moz-linear-gradient(top, #c2410e, #fc714e);
+        background-image: -ms-linear-gradient(top, #c2410e, #fc714e);
+        background-image: -o-linear-gradient(top, #c2410e, #fc714e);
+        background-image: linear-gradient(to bottom, #c2410e, #fc714e);
+        text-decoration: none;
+    }

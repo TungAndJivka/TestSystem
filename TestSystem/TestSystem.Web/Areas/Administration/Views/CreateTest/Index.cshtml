@@ -1,5 +1,7 @@
 ﻿@model TestSystem.Web.Areas.Administration.Models.CreateTestViewModels.AdministerTestViewModel
-<div>
+
+<div id="createTestPage">
+
     <h2 class="page-header">New Test</h2>
 
     <form asp-area="Administration" asp-controller="CreateTest" asp-action="Index" method="post">
@@ -16,11 +18,12 @@
                 <span asp-validation-for="Duration" class="text-danger"></span>
             </div>
             <div class="form-group col-md-4">
+                <label asp-for="Category"></label>
                 <select asp-for="Category" class="selectpicker form-control">
                     <option disabled selected>Select category</option>
                     <option>Java</option>
                     <option>SQL</option>
-                    <option>JavaScript</option>    
+                    <option>JavaScript</option>
                     <option>.NET</option>
                 </select>
                 <span asp-validation-for="Category" class="text-danger"></span>
@@ -29,17 +32,35 @@
 
         <div class="row col-md-12">
             <div id="questions-container">
-                <button id="add-question" class="btn btn-default" type="button">Add Question</button>
+                <button id="add-question" class="btn btn-default create-test-btn" type="button">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    Question
+                </button>
                 <div id="questions-body" class="row">
                     <div>
-                        <h4 class="w-100 p-3">You need to add Questions to your Test</h4>
+                        <h4 class="w-100 p-3">Please add queations to your test.</h4>
                     </div>
                 </div>
 
             </div>
-            
+
         </div>
-        <button class="create-test" type="submit">Save as Draft</button>
+
+        <div>
+            <div class="col col-lg-6">
+                <button class="create-test" type="submit" id="save-draft-test">
+                    Save Draft
+                </button>
+            </div>
+            <div class="col col-lg-6">
+                <button class="create-test" type="submit" id="save-published-test">
+                    <span class="glyphicon glyphicon-ok"></span>
+                    Publish
+                </button>
+            </div>
+        </div>
+
+
     </form>
 
 </div>

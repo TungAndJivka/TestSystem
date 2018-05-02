@@ -2,7 +2,7 @@
 <div id="question-{{q_id}}" class="question-container">
     <div class="panel-heading">
         <a id="questionNumber" data-toggle="collapse" href="#collapse-{{q_id}}">Question {{q_number}}</a>
-        <button type="button" class="delete-question">X</button>
+        <button type="button" class="delete-question"><span class="glyphicon glyphicon-remove"></span></button>
     </div>
 
     <div id="collapse-{{q_id}}" class="panel-collapse collapse in">
@@ -15,7 +15,10 @@
                 <div class="answer-heading">
                     <div id="answerNumber">Answer 1</div>
                     <input clas id="Questions_{{q_id}}__Answers_0__IsCorrect" class="answer-is-correct" name="radio-{{q_id}}" type="radio" value="true" autocomplete="off">
-                    <button class="delete-answer" type="button">Delete Answer</button>        
+                    <button class="delete-answer" type="button">
+                        <span class="glyphicon glyphicon-minus"></span> 
+                        Answer
+                    </button>        
                 </div>
                 <div class="answer-body">        
                     <textarea id="Questions_{{q_id}}__Answers_0__Content" name="Questions[{{q_id}}].Answers[0].Content" class="summernote answer-content"></textarea>
@@ -26,7 +29,10 @@
                 <div class="answer-heading">
                     <div id="answerNumber">Answer 2</div>
                     <input clas id="Questions_{{q_id}}__Answers_1__IsCorrect" class="answer-is-correct" name="radio-{{q_id}}" type="radio" value="true" autocomplete="off">
-                    <button class="delete-answer" type="button">Delete Answer</button>        
+                    <button class="delete-answer" type="button">
+                        <span class="glyphicon glyphicon-minus"></span> 
+                        Answer
+                    </button>        
                 </div>
                 <div class="answer-body">        
                     <textarea id="Questions_{{q_id}}__Answers_1__Content" name="Questions[{{q_id}}].Answers[1].Content" class="summernote answer-content"></textarea>
@@ -34,7 +40,10 @@
             </div>
         </div>
         <div class="panel-body">
-            <button class="add-answer" name="collapse-{{q_id}}" type="button">Add New Answer</button>
+            <button class="add-answer" name="collapse-{{q_id}}" type="button">
+                <span class="glyphicon glyphicon-plus"></span>
+                Answer
+            </button>
         </div>
     </div>
 </div>`;
@@ -43,7 +52,10 @@ let answerTemplate = `
     <div class="answer-heading">
         <div id="answerNumber">Answer {{a_number}}</div>
         <input clas id="Questions_{{q_id}}__Answers_{{a_id}}__IsCorrect" class="answer-is-correct" name="radio-{{q_id}}" type="radio" value="true" autocomplete="off">
-        <button class="delete-answer" type="button">Delete Answer</button>        
+        <button class="delete-answer" type="button">
+            <span class="glyphicon glyphicon-minus"></span> 
+             Answer
+        </button>        
     </div>
     <div class="answer-body">        
         <textarea id="Questions_{{q_id}}__Answers_{{a_id}}__Content" name="Questions[{{q_id}}].Answers[{{a_id}}].Content" class="summernote answer-content"></textarea>
@@ -195,7 +207,7 @@ $(function () {
 
 
     var questionSummernoteConfig = {
-        placeholder: 'Add your description here...',
+        placeholder: 'Add question description here...',
         height: 200,
         toolbar: [
             ['style', ['bold', 'italic', 'underline', 'clear']],
@@ -207,7 +219,8 @@ $(function () {
     };
 
     var answerSummernoteConfig = {
-        height: 200,
+        placeholder: 'Add answer content here...',
+        height: 150,
         toolbar: [
             ['style', ['bold', 'italic', 'underline', 'clear']],
             ['font', ['strikethrough', 'superscript', 'subscript']],

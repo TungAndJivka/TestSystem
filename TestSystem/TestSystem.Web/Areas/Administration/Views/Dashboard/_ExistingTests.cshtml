@@ -5,10 +5,10 @@
 <table id="existingTestsTable" class="table table-bordered tab-content" style="width:100%">
     <thead class="table-header">
         <tr>
-            <th class="col-md-4 text-center">Test Name</th>
+            <th class="col-md-3 text-center">Test Name</th>
             <th class="col-md-2 text-center">Category</th>
             <th class="col-md-2 text-center">Status</th>
-            <th class="col-md-5 text-center">Actions</th>
+            <th class="col-md-6 text-center">Actions</th>
         </tr>
     </thead>
     @if (Model.Any())
@@ -24,14 +24,14 @@
                     {
                         <td>Publlished</td>
                         <td>
-                            <div class="col col-sm-4">
-                                <a class='btn btn-success btn-xs disabled'>
+                            <div class="col col-md-4">
+                                <a class='btn btn-success btn-xs disabled dashBtn publishBtn'>
                                     <span class="glyphicon glyphicon-ok"></span>
                                     Published
                                 </a>
                             </div>
                             <div class="col col-sm-4">
-                                <a class='btn btn-warning btn-xs disabled'>
+                                <a class='btn btn-warning btn-xs disabled dashBtn'>
                                     <span class="glyphicon glyphicon-edit"></span>
                                     Edit
                                 </a>
@@ -40,51 +40,53 @@
                                 <form asp-area="Administration" asp-controller="Dashboard" asp-action="DisableTest" method="get">
                                     <input id="testName" name="testName" type="hidden" value="@test.TestName" />
                                     <input id="categoryName" name="categoryName" type="hidden" value="@test.Category" />
-
-                                    <button type="submit" class="btn">
+                                    <button type="submit" class="btn dashBtn">
+                                        <span class="glyphicon glyphicon-remove" style="color:crimson"></span>
                                         Disable
                                     </button>
                                 </form>
                             </div>
-
                         </td>
-
                     }
                     else
                     {
                         <td>Draft</td>
                         <td>
-                            <form asp-area="Administration" asp-controller="Dashboard" asp-action="PublishTest" method="post">
-                                <input id="testName" name="testName" type="hidden" value="@test.TestName" />
-                                <input id="categoryName" name="categoryName" type="hidden" value="@test.Category" />
-                                <button type="submit" class="btn">
-                                    Publish
-                                </button>
-                            </form>
-
-                            <form asp-area="Administration" asp-controller="Dashboard" asp-action="EditTest" method="get">
-                                <input id="testName" name="testName" type="hidden" value="@test.TestName" />
-                                <input id="categoryName" name="categoryName" type="hidden" value="@test.Category" />
-                                <button type="submit" class='btn'>
-                                    Edit
-                                </button>
-                            </form>
-
-                            <form asp-area="Administration" asp-controller="Dashboard" asp-action="DeleteTest" method="post">
-                                <input id="testName" name="testName" type="hidden" value="@test.TestName" />
-                                <input id="categoryName" name="categoryName" type="hidden" value="@test.Category" />
-                                <button type="submit" class="btn">                                    
-                                    Delete
-                                </button>
-                            </form>
+                            <div class="col col-sm-4">
+                                <form asp-area="Administration" asp-controller="Dashboard" asp-action="PublishTest" method="post">
+                                    <input id="testName" name="testName" type="hidden" value="@test.TestName" />
+                                    <input id="categoryName" name="categoryName" type="hidden" value="@test.Category" />
+                                    <button type="submit" class="btn dashBtn publishBtn">
+                                        <span class="glyphicon glyphicon-ok" style="color:green"></span>
+                                        Publish
+                                    </button>
+                                </form>
+                            </div>
+                            <div class="col col-sm-4">
+                                <form asp-area="Administration" asp-controller="Dashboard" asp-action="EditTest" method="get">
+                                    <input id="testName" name="testName" type="hidden" value="@test.TestName" />
+                                    <input id="categoryName" name="categoryName" type="hidden" value="@test.Category" />
+                                    <button type="submit" class='btn dashBtn'>
+                                        <span class="glyphicon glyphicon-edit" style="color:black"></span>
+                                        Edit
+                                    </button>
+                                </form>
+                            </div>
+                            <div class="col col-sm-4">
+                                <form asp-area="Administration" asp-controller="Dashboard" asp-action="DeleteTest" method="post">
+                                    <input id="testName" name="testName" type="hidden" value="@test.TestName" />
+                                    <input id="categoryName" name="categoryName" type="hidden" value="@test.Category" />
+                                    <button type="submit" class="btn dashBtn">
+                                        <span class="glyphicon glyphicon-trash" style="color:crimson"></span>
+                                        Delete
+                                    </button>
+                                </form>
+                            </div>
                         </td>
                     }
-
                 </tr>
-
             }
         </tbody>
-
     }
     else
     {
@@ -94,6 +96,4 @@
             </td>
         </tr>
     }
-
-
 </table>
