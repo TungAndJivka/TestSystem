@@ -83,7 +83,7 @@
                                                         </button>
                                                 </div>
                                                 <div class="answer-body">
-                                                    <textarea id="@string.Format("Questions_{0}__Answers_{1}__Content", q, a)" name="Questions[@q].Answers[@a].Content" class="summernote answer-content"></textarea>
+                                                    <textarea id="@string.Format("Questions_{0}__Answers_{1}__Content", q, a)" name="Questions[@q].Answers[@a].Content" class="summernote answer-content">@Model.Questions[q].Answers[a].Content</textarea>
                                                     <span asp-validation-for="Questions[q].Answers[a].Content" class="text-danger"></span>
                                                 </div>
                                             </div>
@@ -107,7 +107,6 @@
         </div>
 
 
-
         <div>
             <div class="col col-lg-6">
                 <button class="create-test" type="submit" id="save-draft-test">
@@ -128,6 +127,5 @@
 </div>
 
 @section Scripts {
-    @await Html.PartialAsync("_ValidationScriptsPartial")
-    <script src="~/js/manage-test-async-operations.js"></script>
+    <script type="text/javascript" src="~/js/Administration/CreateTest.js"></script>
 }
