@@ -1,9 +1,9 @@
 ﻿
 $(document).ready(function () {
-    //$('#Java').click();
+    $('#Java').click();
     //$('#Java').attr("aria-expanded", true);
     //console.log('tab click');
-    $('.nav-item a').first().click();
+    //$('.nav-item a').first().click();
 });
 
 

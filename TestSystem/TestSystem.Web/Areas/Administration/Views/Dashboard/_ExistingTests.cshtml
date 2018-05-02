@@ -24,23 +24,29 @@
                     {
                         <td>Publlished</td>
                         <td>
-                            <a class='btn btn-success btn-xs disabled'>
-                                <span class="glyphicon glyphicon-ok"></span>
-                                Published
-                            </a>
+                            <div class="col col-sm-4">
+                                <a class='btn btn-success btn-xs disabled'>
+                                    <span class="glyphicon glyphicon-ok"></span>
+                                    Published
+                                </a>
+                            </div>
+                            <div class="col col-sm-4">
+                                <a class='btn btn-warning btn-xs disabled'>
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                    Edit
+                                </a>
+                            </div>
+                            <div class="col col-sm-4">
+                                <form asp-area="Administration" asp-controller="Dashboard" asp-action="DisableTest" method="get">
+                                    <input id="testName" name="testName" type="hidden" value="@test.TestName" />
+                                    <input id="categoryName" name="categoryName" type="hidden" value="@test.Category" />
 
-                            <a class='btn btn-warning btn-xs disabled'>
-                                <span class="glyphicon glyphicon-edit"></span>
-                                Edit
-                            </a>
-                            <form asp-area="Administration" asp-controller="Dashboard" asp-action="DisableTest" method="get">
-                                <input id="testName" name="testName" type="hidden" value="@test.TestName" />
-                                <input id="categoryName" name="categoryName" type="hidden" value="@test.Category" />
+                                    <button type="submit" class="btn">
+                                        Disable
+                                    </button>
+                                </form>
+                            </div>
 
-                                <button type="submit" class="btn">
-                                    Disable
-                                </button>
-                            </form>
                         </td>
 
                     }

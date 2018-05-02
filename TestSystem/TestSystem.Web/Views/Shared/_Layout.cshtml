@@ -56,6 +56,8 @@
         </footer>
     </div>
 
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
@@ -64,10 +66,8 @@
         <script type="text/javascript" src="~/js/TimeCircles.js"></script>
         <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
 
-
         @*for Admin*@
         <script src="~/js/Administration/Dashboard.js"></script>
-        <script src="~/js/summernote.js"></script>
 
 
     </environment>
@@ -86,9 +86,9 @@
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script type="text/javascript" src="~/js/TimeCircles.js"></script>
 
+    <script type="text/javascript" src="~/js/TimeCircles.js"></script>
+    <script src="~/js/summernote.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>
