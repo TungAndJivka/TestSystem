@@ -8,6 +8,7 @@ using TestSystem.Data.Data.Saver;
 using TestSystem.Data.Models;
 using TestSystem.DTO;
 using TestSystem.Infrastructure.Providers;
+using TestSystem.Services;
 using TestSystem.Services.Contracts;
 using TestSystem.Web.Models.TakeTestViewModels;
 
@@ -36,16 +37,16 @@ namespace TestSystem.Web.Controllers
         public async Task<IActionResult> Index(string id) // id => categoryName
         {
             var user = await this.userManager.GetUserAsync(HttpContext.User);
-            int check = resultService.CheckForTakenTest(user.Id, id);
+            StatusType check = resultService.CheckForTakenTest(user.Id, id);
             TestDto testDto = null;
             var startTime = DateTime.Now;
 
-            if (check == 3)
+            if (check == StatusType.TestSubmitted)
             {
                 return RedirectToAction("Index", "Dashboard");
             }
 
-            if (check == 2)
+            if (check == StatusType.TestNotStarted)
             {
                 testDto = this.resultService.GetTestFromCategory(user.Id, id);
                 startTime = (DateTime)resultService.GetUserTest(user.Id, testDto.Id).StartTime;
@@ -68,7 +69,7 @@ namespace TestSystem.Web.Controllers
                 StartedOn = startTime
             };
 
-            if (check == 1)
+            if (check == StatusType.TestNotStarted)
             {
                 var resultDto = mapper.MapTo<UserTestDto>(model);
                 resultDto.Id = Guid.NewGuid();

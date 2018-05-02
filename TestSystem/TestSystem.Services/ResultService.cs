@@ -72,21 +72,21 @@ namespace TestSystem.Services
             Saver.SaveChanges();
         }
 
-        public int CheckForTakenTest(string userId, string categoryName)
+        public StatusType CheckForTakenTest(string userId, string categoryName)
         {
             var userTest = userTestRepo.All.Where(x => x.UserId == userId && x.Test.Category.Name == categoryName).FirstOrDefault();
 
             if (userTest == null)
             {
-                return 1; // => GetRandomTest
+                return StatusType.TestsNotStarted; // => GetRandomTest
             }
 
             if (userTest != null && userTest.SubmittedOn == null)
             {
-                return 2; // => GetTheSameTest
+                return StatusType.TestNotSubmitted; // => GetTheSameTest
             }
 
-            return 3; // => RedirectToDashboard
+            return StatusType.TestSubmitted; // => RedirectToDashboard
         }
 
         public IEnumerable<TestDto> GetUserResults(string userId)

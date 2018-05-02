@@ -12,7 +12,7 @@ namespace TestSystem.Services.Contracts
 
         void Update(UserTestDto result);
 
-        int CheckForTakenTest(string userId, string testId);
+        StatusType CheckForTakenTest(string userId, string testId);
 
         UserTestDto GetUserTest(string userId, string testId);
 
