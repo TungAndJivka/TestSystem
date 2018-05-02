@@ -78,7 +78,7 @@ namespace TestSystem.Services
 
             if (userTest == null)
             {
-                return StatusType.TestsNotStarted; // => GetRandomTest
+                return StatusType.TestNotStarted; // => GetRandomTest
             }
 
             if (userTest != null && userTest.SubmittedOn == null)
