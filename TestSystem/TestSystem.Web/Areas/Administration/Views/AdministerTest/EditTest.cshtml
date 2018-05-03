@@ -1,0 +1,131 @@
+﻿@model TestSystem.Web.Areas.Administration.Models.CreateTestViewModels.AdministerTestViewModel
+
+@{
+    ViewData["Title"] = "Edit Test";
+}
+
+<div id="editTestPage">
+
+    <h2 class="page-header">New Test</h2>
+
+    <form asp-area="Administration" asp-controller="CreateTest" asp-action="Index" method="post">
+
+        <div class="form-row">
+            <div class="form-group col-md-5">
+                <label asp-for="TestName"></label>
+                <input asp-for="TestName" class="form-control" />
+                <span asp-validation-for="TestName" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-2">
+                <label asp-for="Duration"></label>
+                <input asp-for="Duration" class="form-control" />
+                <span asp-validation-for="Duration" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="Category"></label>
+                <select asp-for="Category" class="selectpicker form-control">
+                    <option disabled selected>Select category</option>
+                    <option>Java</option>
+                    <option>SQL</option>
+                    <option>JavaScript</option>
+                    <option>.NET</option>
+                </select>
+                <span asp-validation-for="Category" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row col-md-12">
+            <div id="questions-container">
+                <button id="add-question" class="btn btn-default create-test-btn-green" type="button">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    Question
+                </button>
+
+                <div id="questions-body" class="row">
+
+                    @if (Model.Questions != null && Model.Questions.Count != 0)
+                    {
+                        for (int q = 0; q < Model.Questions.Count; q++)
+                        {
+                            <div id="question-@q" class="question-container">
+                                <div class="panel-heading">
+                                    <a class="questionNumber" id="questionNumber" data-toggle="collapse" href="#collapse-@q">Question @string.Format("{0}", q + 1)</a>
+                                    <button type="button" class="delete-question create-test-btn-red">
+                                        <span class="glyphicon glyphicon-remove">
+                                        </span>
+                                    </button>
+                                </div>
+
+                                <div id="collapse-@q" class="panel-collapse collapse in">
+                                    <div class="panel-body">
+                                        <div>Description</div>
+                                        <textarea id="@string.Format("Questions_{0}__Description", q)" name="Questions[@q].Description" class="summernote form-control input-lg" value="">@Model.Questions[q].Description</textarea>
+                                        <span asp-validation-for="Questions[q].Description" class="text-danger"></span>
+                                    </div>
+                                    <div class="answers-container">
+                                        @for (int a = 0; a < Model.Questions[q].Answers.Count; a++)
+                                        {
+                                            <div id="question-@q-answer-@a" class="answer-container">
+                                                <div class="answer-heading">
+                                                    <div class="answerNumber" id="answerNumber">Answer @string.Format("{0}", a + 1)</div>
+                                                    <label class="btn btn-success pull-right">
+                                                        @if (Model.Questions[q].Answers[a].IsCorrect)
+                                                        {
+                                                            <input id="@string.Format("Questions_{0}__Answers_{1}__IsCorrect", q, a)" name="radio-@q" class="answer-is-correct" type="radio" value="true" autocomplete="off" checked>
+                                                        }
+                                                        else
+                                                        {
+                                                            <input id="@string.Format("Questions_{0}__Answers_{1}__IsCorrect", q, a)" name="radio-@q" class="answer-is-correct" type="radio" value="true" autocomplete="off">
+                                                        }
+                                                        <button class="delete-answer create-test-btn-red" type="button">
+                                                            <span class="glyphicon glyphicon-minus"></span>
+                                                            Answer
+                                                        </button>
+                                                </div>
+                                                <div class="answer-body">
+                                                    <textarea id="@string.Format("Questions_{0}__Answers_{1}__Content", q, a)" name="Questions[@q].Answers[@a].Content" class="summernote answer-content">@Model.Questions[q].Answers[a].Content</textarea>
+                                                    <span asp-validation-for="Questions[q].Answers[a].Content" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="panel-body">
+                                    <button class="add-answer btn btn-default pull-right" name="collapse-@q" type="button">Add Answer</button>
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div>
+                            <h4 class="w-100 p-3">You need to add Questions to your Test</h4>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+
+        <div>
+            <div class="col col-lg-6">
+                <button class="create-test" type="submit" id="save-draft-test">
+                    Save Draft
+                </button>
+            </div>
+            <div class="col col-lg-6">
+                <button class="create-test" type="submit" id="save-published-test">
+                    <span class="glyphicon glyphicon-ok"></span>
+                    Publish
+                </button>
+            </div>
+        </div>
+
+        <input asp-for="Id" type="hidden" value="@Model.Id" />
+    </form>
+
+</div>
+
+@section Scripts {
+    <script type="text/javascript" src="~/js/Administration/CreateTest.js"></script>
+}

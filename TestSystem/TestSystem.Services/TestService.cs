@@ -146,5 +146,18 @@ namespace TestSystem.Services
             this.testRepo.Update(test);
             this.Saver.SaveChanges();
         }
+
+        public AdministerTestDto GetTest(string testName, string categoryName)
+        {
+            var test = this.testRepo.All
+               .Include(t => t.Category)               
+               .Include(t => t.Questions)
+               .ThenInclude(q => q.Answers)
+               .Where(t => t.TestName == testName && t.Category.Name == categoryName)
+               .FirstOrDefault();
+
+            var testToBeReturned = this.Mapper.MapTo<AdministerTestDto>(test);
+            return testToBeReturned;
+        }
     }
 }

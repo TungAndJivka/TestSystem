@@ -11,12 +11,12 @@ namespace TestSystem.Web.Areas.Administration.Controllers
 {
     [Area("Administration")]
     [Authorize(Roles = "Admin")]
-    public class CreateTestController : Controller    
+    public class AdministerTestController : Controller    
     {
         private readonly ITestService testService;
         private readonly IMappingProvider mapper;
 
-        public CreateTestController(ITestService testService, IMappingProvider mapper)
+        public AdministerTestController(ITestService testService, IMappingProvider mapper)
         {
             this.testService = testService;
             this.mapper = mapper;
@@ -56,10 +56,30 @@ namespace TestSystem.Web.Areas.Administration.Controllers
 
             return RedirectToRoute(new
             {
-                area = "Adminstration",
+                area = "Administration",
                 controller = "Dashboard",
                 action = "Index"
             });
+
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditTest(string testName, string categoryName)
+        {
+            if (string.IsNullOrEmpty(testName))
+            {
+                return this.View();
+            }
+
+            if (string.IsNullOrEmpty(categoryName))
+            {
+                return this.View();
+            }
+
+            var testDto = testService.GetTest(testName, categoryName);
+            var testViewModel = this.mapper.MapTo<AdministerTestViewModel>(testDto);
+
+            return this.View(testViewModel);
         }
     }
 }

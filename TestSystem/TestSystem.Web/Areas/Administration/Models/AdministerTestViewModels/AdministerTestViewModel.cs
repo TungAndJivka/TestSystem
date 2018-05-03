@@ -8,6 +8,10 @@ namespace TestSystem.Web.Areas.Administration.Models.CreateTestViewModels
 {
     public class AdministerTestViewModel
     {
+
+        public string Id { get; set; }
+
+
         [Required(ErrorMessage = "Test name is required")]
         [StringLength(30, MinimumLength = 4, ErrorMessage = "The Test name should be between 4 and 30 symbols long")]
         public string TestName { get; set; }
@@ -20,6 +24,6 @@ namespace TestSystem.Web.Areas.Administration.Models.CreateTestViewModels
         public string Category { get; set; }
 
         [Required(ErrorMessage = "Question is required")]
-        public ICollection<QuestionViewModel> Questions { get; set; }
+        public IList<QuestionViewModel> Questions { get; set; }
     }
 }
