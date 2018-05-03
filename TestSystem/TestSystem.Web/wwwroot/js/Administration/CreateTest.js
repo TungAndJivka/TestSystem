@@ -16,7 +16,7 @@
             <div id="question-{{q_id}}-answer-0" class="answer-container">
                 <div class="answer-heading">
                     <div class="answerNumber" id="answerNumber">Answer 1</div>
-                    <input clas id="Questions_{{q_id}}__Answers_0__IsCorrect" class="answer-is-correct create-test-radio" name="radio-{{q_id}}" type="radio" value="true" autocomplete="off">
+                    <input id="Questions_{{q_id}}__Answers_0__IsCorrect" class="answer-is-correct create-test-radio" name="radio-{{q_id}}" type="radio" value="true" autocomplete="off">
                     <button class="delete-answer create-test-btn-red" type="button">
                         <span class="glyphicon glyphicon-remove"></span>
                     </button>        
