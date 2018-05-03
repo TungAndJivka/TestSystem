@@ -42,7 +42,8 @@ const categoryTabClickSubmitted = (function (categoryName) {
             </div>
         `);
 
-    let testName = categoryName ;
+    let testName = categoryName + ' Test';
+    //let testName = categoryName ;
 
     $('#DashboardContent').append(row);
     $('#testName').html(testName);

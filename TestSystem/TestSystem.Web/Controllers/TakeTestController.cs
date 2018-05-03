@@ -46,7 +46,7 @@ namespace TestSystem.Web.Controllers
                 return RedirectToAction("Index", "Dashboard");
             }
 
-            if (check == StatusType.TestNotStarted)
+            if (check == StatusType.TestNotSubmitted)
             {
                 testDto = this.resultService.GetTestFromCategory(user.Id, id);
                 startTime = (DateTime)resultService.GetUserTest(user.Id, testDto.Id).StartTime;
