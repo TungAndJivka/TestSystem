@@ -3,8 +3,7 @@
     <div class="panel-heading">
         <a class="questionNumber" id="questionNumber" data-toggle="collapse" href="#collapse-{{q_id}}">Question {{q_number}}</a>
         <button type="button" class="delete-question create-test-btn-red">
-            <span class="glyphicon glyphicon-remove">
-            </span>
+            <span class="glyphicon glyphicon-remove"></span>
         </button>
     </div>
 
@@ -19,8 +18,7 @@
                     <div class="answerNumber" id="answerNumber">Answer 1</div>
                     <input clas id="Questions_{{q_id}}__Answers_0__IsCorrect" class="answer-is-correct create-test-radio" name="radio-{{q_id}}" type="radio" value="true" autocomplete="off">
                     <button class="delete-answer create-test-btn-red" type="button">
-                        <span class="glyphicon glyphicon-minus"></span> 
-                        Answer
+                        <span class="glyphicon glyphicon-remove"></span>
                     </button>        
                 </div>
                 <div class="answer-body">        
@@ -33,8 +31,7 @@
                     <div class="answerNumber" id="answerNumber">Answer 2</div>
                     <input clas id="Questions_{{q_id}}__Answers_1__IsCorrect" class="answer-is-correct create-test-radio" name="radio-{{q_id}}" type="radio" value="true" autocomplete="off">
                     <button class="delete-answer create-test-btn-red" type="button">
-                        <span class="glyphicon glyphicon-minus"></span> 
-                        Answer
+                        <span class="glyphicon glyphicon-remove"></span>
                     </button>        
                 </div>
                 <div class="answer-body">        
@@ -47,8 +44,7 @@
                     <div class="answerNumber" id="answerNumber">Answer 3</div>
                     <input clas id="Questions_{{q_id}}__Answers_2__IsCorrect" class="answer-is-correct create-test-radio" name="radio-{{q_id}}" type="radio" value="true" autocomplete="off">
                     <button class="delete-answer create-test-btn-red" type="button">
-                        <span class="glyphicon glyphicon-minus"></span> 
-                        Answer
+                        <span class="glyphicon glyphicon-remove"></span> 
                     </button>        
                 </div>
                 <div class="answer-body">        
@@ -72,8 +68,7 @@ let answerTemplate = `
         <div class="answerNumber" id="answerNumber">Answer {{a_number}}</div>
         <input id="Questions_{{q_id}}__Answers_{{a_id}}__IsCorrect" class="answer-is-correct create-test-radio" name="radio-{{q_id}}" type="radio" value="true" autocomplete="off">
         <button class="delete-answer create-test-btn-red" type="button">
-            <span class="glyphicon glyphicon-minus"></span> 
-             Answer
+            <span class="glyphicon glyphicon-remove"></span>
         </button>        
     </div>
     <div class="answer-body">        

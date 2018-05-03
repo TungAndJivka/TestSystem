@@ -39,7 +39,7 @@
 
 .answer-body {
     padding-left: 10%;
-    padding-right: 15%;
+    padding-right: 10%;
 }
 
 #save-draft-test {
@@ -89,6 +89,8 @@
     padding: 6px 12px 6px 12px;
     text-decoration: none;
     border: none;
+    float: left;
+    margin-right: 10px;
 }
 
     .create-test-btn-red:hover {
@@ -132,6 +134,7 @@
 
 .create-test-radio{
     transform: scale(2);
+    float: right;
 }
 
 .add-answer {
