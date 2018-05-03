@@ -54,8 +54,7 @@
                         <td>
                             <div class="col col-sm-4">
                                 <form asp-area="Administration" asp-controller="Dashboard" asp-action="PublishTest" method="post">
-                                    <input id="testName" name="testName" type="hidden" value="@test.TestName" />
-                                    <input id="categoryName" name="categoryName" type="hidden" value="@test.Category" />
+                                    <input id="testId" name="testId" type="hidden" value="@test.Id" />
                                     <button type="submit" class="btn dashBtn publishBtn">
                                         <span class="glyphicon glyphicon-ok" style="color:green"></span>
                                         Publish

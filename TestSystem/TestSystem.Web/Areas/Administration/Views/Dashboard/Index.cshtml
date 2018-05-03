@@ -4,8 +4,16 @@
     ViewData["Title"] = "Admin Dashboard";
 }
 
+
 <h2 class="page-header">@ViewData["Title"]</h2>
 
+@*@if (Model.ShowAlert)
+{
+    <div class="alert alert-danger alert-dismissible" style="margin-left: 10%; margin-right: 10%;">
+        <a href="#" onclick="@{Model.ShowAlert = false;}" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Error!</strong> Test does not match <b>publish requirements</b>.
+    </div>
+}*@
 
 <div class="dash-content">
     <ul class="nav nav-tabs" id="myTab" role="tablist">

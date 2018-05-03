@@ -30,11 +30,12 @@ namespace TestSystem.Web.Areas.Administration.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index(DashboardViewModel model)
-        {
+        public IActionResult Index(DashboardViewModel model, bool id = false)
+        {           
             var results = resultService.GetTestResultsForDashBoard();
             var TestResultViewModels = this.mapper.EnumerableProjectTo<TestResultDto, TestResultViewModel>(results).ToList();
             model.TestResults = TestResultViewModels;
+            model.ShowAlert = id;
 
             var existingTestDtos = testService.AllTestsForDashBoard();
             var existingTests = this.mapper.EnumerableProjectTo<ExistingTestDto, ExistingTestViewModel>(existingTestDtos).ToList();
@@ -45,20 +46,19 @@ namespace TestSystem.Web.Areas.Administration.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult PublishTest(string testName, string categoryName)
+        public IActionResult PublishTest(string testId)
         {
-            if (string.IsNullOrEmpty(testName))
+            if (string.IsNullOrEmpty(testId))
             {
                 return this.View();
             }
 
-            if (string.IsNullOrEmpty(categoryName))
+            bool result = this.testService.PublishTest(testId);
+
+            if (!result)
             {
-                return this.View();
+                TempData["Error"] = "Error! Test does not match publish requirements.";
             }
-
-            this.testService.PublishTest(testName, categoryName);
-
 
             return RedirectToAction("Index", "Dashboard");
         }

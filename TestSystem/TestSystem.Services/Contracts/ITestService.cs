@@ -17,8 +17,10 @@ namespace TestSystem.Services.Contracts
 
         void CreateTest(AdministerTestDto testDto);
 
-        void PublishTest(string testName, string categoryName);
+        bool PublishTest(string testId);
+
         void DeleteTest(string testName, string categoryName);
+
         AdministerTestDto GetTest(string testName, string categoryName);
     }
 }

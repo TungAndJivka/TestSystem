@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace TestSystem.Web.Areas.Administration.Models.DashboardViewModels
 {
@@ -16,5 +13,12 @@ namespace TestSystem.Web.Areas.Administration.Models.DashboardViewModels
         public ICollection<ExistingTestViewModel> ExistingTests { get; set; }
 
         public ICollection<TestResultViewModel> TestResults { get; set; }
+
+        public bool ShowAlert { get; set; }
+
+        public void HideAlert()
+        {
+            this.ShowAlert = false;
+        }
     }
 }
