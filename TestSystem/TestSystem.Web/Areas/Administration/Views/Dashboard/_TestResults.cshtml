@@ -3,15 +3,16 @@
 
 
 
-<table id="resultstable" class="table table-bordered tab-content" >
+<table id="resultstable" class="table table-bordered tab-content">
     <thead class="table-header">
         <tr>
-            <th class="col-md-4 text-center">UserName</th>
+            <th class="col-md-2 text-center">User Name</th>
             <th class="col-md-2 text-center">Test Name</th>
-            <th class="col-md-2 text-center">Category</th>
-            <th class="col-md-5 text-center">Requested Time</th>
-            <th class="col-md-5 text-center">Execution Time</th>
-            <th class="col-md-5 text-center">Result</th>
+            <th class="col-md-1 text-center">Category</th>
+            <th class="col-md-1 text-center">Requested Time</th>
+            <th class="col-md-1 text-center">Execution Time</th>
+            <th class="col-md-1 text-center">Score</th>
+            <th class="col-md-2 text-center">Result</th>
         </tr>
     </thead>
     @if (Model.Any())
@@ -23,15 +24,15 @@
                     <td>@result.UserName</td>
                     <td>@result.TestName</td>
                     <td>@result.CategoryName</td>
-                    <td>@result.RequestedTime</td>
-                    <td>@result.ExecutionTime</td>
+                    <td>@result.RequestedTime.Minutes mins</td>
+                    <td>@result.ExecutionTime.Minutes mins</td>
+                    <td>@Math.Round(result.Result, 1)</td>
                     @if (result.Result >= 80)
                     {
                         <td>Passed</td>
                     }
                     else
                     {
-
                         <td>Failed</td>
                     }
                 </tr>

@@ -281,7 +281,19 @@ table.dataTable.no-footer {
     border: 0.5px solid #ddd !important;
 }
 
+.table-bordered > thead > tr > th {
+    border: 0.5px solid #ddd !important;
+}
+
+table.dataTable thead th {
+    border-bottom: none;
+}
+
 #tests {
+    padding-top: 20px;
+}
+
+#results {
     padding-top: 20px;
 }
 
