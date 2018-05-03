@@ -30,12 +30,11 @@ namespace TestSystem.Web.Areas.Administration.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index(DashboardViewModel model, bool id = false)
+        public IActionResult Index(DashboardViewModel model)
         {           
             var results = resultService.GetTestResultsForDashBoard();
             var TestResultViewModels = this.mapper.EnumerableProjectTo<TestResultDto, TestResultViewModel>(results).ToList();
             model.TestResults = TestResultViewModels;
-            model.ShowAlert = id;
 
             var existingTestDtos = testService.AllTestsForDashBoard();
             var existingTests = this.mapper.EnumerableProjectTo<ExistingTestDto, ExistingTestViewModel>(existingTestDtos).ToList();

@@ -13,12 +13,5 @@ namespace TestSystem.Web.Areas.Administration.Models.DashboardViewModels
         public ICollection<ExistingTestViewModel> ExistingTests { get; set; }
 
         public ICollection<TestResultViewModel> TestResults { get; set; }
-
-        public bool ShowAlert { get; set; }
-
-        public void HideAlert()
-        {
-            this.ShowAlert = false;
-        }
     }
 }

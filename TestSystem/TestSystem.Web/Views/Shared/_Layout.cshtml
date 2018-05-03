@@ -52,7 +52,7 @@
         @if ((string)TempData["Error"] != null)
         {
             <div class="alert alert-danger alert-dismissible" style="margin-left: 10%; margin-right: 10%; margin-top: 5%;">
-                <a href="#" onclick="@{Model.ShowAlert = false;}" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                 <strong>Error!</strong> Test does not match <b>publish requirements</b>.
             </div>
         }

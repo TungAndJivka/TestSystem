@@ -51,18 +51,17 @@
 .page-header {
     color:dimgray;
     font-weight: bolder;
+    text-align: center;
 }
 
 .pagination {
     justify-content:center;
-    align-self:center;
-    
+    align-self:center;    
 }
 
 .table {
     color:dimgrey;
 }
-
 
 .footer {
     padding-left: 20%;
