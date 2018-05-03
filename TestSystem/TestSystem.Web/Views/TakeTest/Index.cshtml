@@ -51,7 +51,7 @@
                             @(i + 1).
                         </div>
                         <div class="col col-lg-11 title">
-                            @question.Description
+                            @Html.Raw(question.Description)
                         </div>
                     </div>
 
@@ -62,7 +62,7 @@
                         <div class="li">
 
                             <input asp-for="@Model.Questions[i].SelectedAnswer" type="radio" value="@answer.Id" id="@answer.Id" class="radioBtn">
-                            <label for="@answer.Id">@answer.Content</label>
+                            <label for="@answer.Id">@Html.Raw(answer.Content)</label>
 
                             <div class="check"><div class="inside"></div></div>
                         </div>
