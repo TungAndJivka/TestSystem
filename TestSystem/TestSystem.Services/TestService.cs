@@ -75,11 +75,17 @@ namespace TestSystem.Services
             {
                 throw new ArgumentNullException(nameof(testDto));
             }
-            var category = this.categoryRepo.All.Where(c => c.Name == testDto.Category).Select(c => c.Id).SingleOrDefault();
+
+            Guid category = this.categoryRepo.All
+                .Where(c => c.Name == testDto.Category)
+                .Select(c => c.Id)
+                .SingleOrDefault();
+
             if( category == default(Guid))
             {
 
             }
+
             Test testToBeAdded = new Test()
             {
                 TestName = testDto.TestName,
@@ -87,7 +93,8 @@ namespace TestSystem.Services
                 Duration = TimeSpan.FromMinutes(testDto.Duration),
                 IsPusblished = testDto.IsPusblished,
                 Questions = this.Mapper.EnumerableProjectTo<AdministerQuestionDto, Question>(testDto.Questions).ToList()
-            };   
+            };  
+            
             this.testRepo.Add(testToBeAdded);
             Saver.SaveChanges();
         }

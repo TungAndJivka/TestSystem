@@ -35,7 +35,10 @@ namespace TestSystem.Tests.Business.Services
 
         }
 
-        // GetAll() TESTS:
+
+
+// GetAll() TESTS:
+
         [TestMethod]
         public void GetAllMethod_Should_Call_TestRepo_All()
         {
@@ -80,7 +83,10 @@ namespace TestSystem.Tests.Business.Services
             Assert.AreEqual(2, tests.Count());
         }
 
-        // GetRandomTest() TESTS:
+
+
+// GetRandomTest() TESTS:
+
         [TestMethod]
         public void GetRandomTest_Should_Call_Repo_All()
         {
@@ -177,7 +183,10 @@ namespace TestSystem.Tests.Business.Services
             Assert.AreEqual(testDto, result);
         }
 
-        // GetFullTestInfo() TESTS:
+
+
+// GetFullTestInfo() TESTS:
+
         [TestMethod]
         public void GetFullTestInfo_Should_Return_Correct()
         {
@@ -244,7 +253,10 @@ namespace TestSystem.Tests.Business.Services
             mapperMock.Verify(x => x.MapTo<TestDto>(test), Times.Once);
         }
 
-        // GetQuestionsCount() TESTS:
+
+        
+ // GetQuestionsCount() TESTS:
+
         [TestMethod]
         public void GetQuestionsCount_Should_Return_Correct()
         {
@@ -297,7 +309,179 @@ namespace TestSystem.Tests.Business.Services
             testRepoMock.Verify(x => x.All, Times.Once);
         }
 
+
+
+// AllTestsForDashboard() TESTS:
+
+        [TestMethod]
+        public void AllTestsForDashboard_Should_Call_TestRepo_All()
+        {
+            // Arrange
+            testRepoMock.Setup(x => x.All).Verifiable();
+
+            // Act
+            var tests = testService.AllTestsForDashBoard();
+
+            // Assert
+            testRepoMock.Verify(x => x.All, Times.Once);
+        }
+
+        [TestMethod]
+        public void AllTestsForDashboard_Should_Call_Mapper_ProjectTo()
+        {
+            // Arrange
+            mapperMock.Setup(x => x.EnumerableProjectTo<Test, ExistingTestDto>(It.IsAny<IQueryable<Test>>())).Verifiable();
+
+            // Act
+            var tests = testService.AllTestsForDashBoard();
+
+            // Assert
+            mapperMock.Verify(x => x.EnumerableProjectTo<Test, ExistingTestDto>(It.IsAny<IQueryable<Test>>()), Times.Once);
+        }
+
+        [TestMethod]
+        public void AllTestsForDashboard_Should_Return_Correct()
+        {
+            // Arrange
+            var all = new List<Test>() { new Test(), new Test() };
+            var allDto = new List<ExistingTestDto>() { new ExistingTestDto(), new ExistingTestDto() };
+            testRepoMock.Setup(x => x.All).Verifiable();
+            testRepoMock.Setup(x => x.All).Returns(all.AsQueryable());
+            mapperMock.Setup(x => x.EnumerableProjectTo<Test, ExistingTestDto>(It.IsAny<IQueryable<Test>>())).Verifiable();
+            mapperMock.Setup(x => x.EnumerableProjectTo<Test, ExistingTestDto>(It.IsAny<IQueryable<Test>>())).Returns(allDto);
+
+            // Act
+            var tests = testService.AllTestsForDashBoard().ToList();
+
+            // Assert
+            Assert.AreEqual(2, tests.Count());
+        }
+
+
+// CreateTest() TESTS:
+
+        [TestMethod]
+        public void CreateTest_Should_Throw_ArgumentNullException_When_Dto_Is_Null()
+        {
+            // Arrange, Act & Assert
+            Assert.ThrowsException<ArgumentNullException>(() => testService.CreateTest(null));
+        }
+
+        [TestMethod]
+        public void CreateTest_Should_Call_TestRepo_Add()
+        {
+            // Arrange
+            var dbQuestions = new List<Question>() { new Question(), new Question(), new Question()};
+            var questions = new List<AdministerQuestionDto>() { new AdministerQuestionDto(), new AdministerQuestionDto(), new AdministerQuestionDto() };
+
+            var testDto = new AdministerTestDto()
+            {
+                Category = "Java",
+                TestName = "Some Test",
+                Duration = 20,
+                IsPusblished = false,
+                Questions = questions
+            };
+
+            var allCategories = new List<Category>() { new Category { Id = Guid.NewGuid(), Name = "Java"} };
+
+            categoryRepoMock.Setup(x => x.All).Returns(allCategories.AsQueryable());
+            testRepoMock.Setup(x => x.Add(It.IsAny<Test>())).Verifiable();
+            saverMock.Setup(x => x.SaveChanges()).Verifiable();
+
+            mapperMock
+                .Setup(x => x.EnumerableProjectTo<AdministerQuestionDto, Question>(It.IsAny<ICollection<AdministerQuestionDto>>()))
+                .Verifiable();
+
+            mapperMock
+                .Setup(x => x.EnumerableProjectTo<AdministerQuestionDto, Question>(It.IsAny<ICollection<AdministerQuestionDto>>()))
+                .Returns(dbQuestions);
+
+            // Act 
+            testService.CreateTest(testDto);
+
+            // Assert
+            testRepoMock.Verify(x => x.Add(It.IsAny<Test>()), Times.Once());
+        }
+
+        [TestMethod]
+        public void CreateTest_Should_Call_Mapper_Enumerable_ProjectTo_ManyTimes()
+        {
+            // Arrange
+            var dbQuestions = new List<Question>() { new Question(), new Question(), new Question() };
+            var questions = new List<AdministerQuestionDto>() { new AdministerQuestionDto(), new AdministerQuestionDto(), new AdministerQuestionDto() };
+
+            var testDto = new AdministerTestDto()
+            {
+                Category = "Java",
+                TestName = "Some Test",
+                Duration = 20,
+                IsPusblished = false,
+                Questions = questions
+            };
+
+            var allCategories = new List<Category>() { new Category { Id = Guid.NewGuid(), Name = "Java" } };
+
+            categoryRepoMock.Setup(x => x.All).Returns(allCategories.AsQueryable());
+            testRepoMock.Setup(x => x.Add(It.IsAny<Test>())).Verifiable();
+            saverMock.Setup(x => x.SaveChanges()).Verifiable();
+
+            mapperMock
+                .Setup(x => x.EnumerableProjectTo<AdministerQuestionDto, Question>(It.IsAny<ICollection<AdministerQuestionDto>>()))
+                .Verifiable();
+
+            mapperMock
+                .Setup(x => x.EnumerableProjectTo<AdministerQuestionDto, Question>(It.IsAny<ICollection<AdministerQuestionDto>>()))
+                .Returns(dbQuestions);
+
+            // Act 
+            testService.CreateTest(testDto);
+
+            // Assert
+            mapperMock.Verify(x => x.EnumerableProjectTo<AdministerQuestionDto, Question>(It.IsAny<ICollection<AdministerQuestionDto>>()), Times.AtLeastOnce());
+        }
+
+        [TestMethod]
+        public void CreateTest_Should_Call_Saver_SaveChanges()
+        {
+            // Arrange
+            var dbQuestions = new List<Question>() { new Question(), new Question(), new Question() };
+            var questions = new List<AdministerQuestionDto>() { new AdministerQuestionDto(), new AdministerQuestionDto(), new AdministerQuestionDto() };
+
+            var testDto = new AdministerTestDto()
+            {
+                Category = "Java",
+                TestName = "Some Test",
+                Duration = 20,
+                IsPusblished = false,
+                Questions = questions
+            };
+
+            var allCategories = new List<Category>() { new Category { Id = Guid.NewGuid(), Name = "Java" } };
+
+            categoryRepoMock.Setup(x => x.All).Returns(allCategories.AsQueryable());
+            testRepoMock.Setup(x => x.Add(It.IsAny<Test>())).Verifiable();
+            saverMock.Setup(x => x.SaveChanges()).Verifiable();
+
+            mapperMock
+                .Setup(x => x.EnumerableProjectTo<AdministerQuestionDto, Question>(It.IsAny<ICollection<AdministerQuestionDto>>()))
+                .Verifiable();
+
+            mapperMock
+                .Setup(x => x.EnumerableProjectTo<AdministerQuestionDto, Question>(It.IsAny<ICollection<AdministerQuestionDto>>()))
+                .Returns(dbQuestions);
+
+            // Act 
+            testService.CreateTest(testDto);
+
+            // Assert
+            saverMock.Verify(x => x.SaveChanges(), Times.Once());
+        }
+
+
+
         // CONSTRUCTOR VALIDATIONS TESTS:
+
         [TestMethod]
         public void Constructor_Should_Throw_ArgumentNullException_When_TestRepo_Is_Null()
         {
