@@ -62,7 +62,7 @@
                                 </form>
                             </div>
                             <div class="col col-sm-4">
-                                <form asp-area="Administration" asp-controller="AdministerTest" asp-action="EditTest" method="post">
+                                <form asp-area="Administration" asp-controller="AdministerTest" asp-action="EditTest" method="get">
                                     <input id="testName" name="testName" type="hidden" value="@test.TestName" />
                                     <input id="categoryName" name="categoryName" type="hidden" value="@test.Category" />
                                     <button type="submit" class='btn dashBtn'>

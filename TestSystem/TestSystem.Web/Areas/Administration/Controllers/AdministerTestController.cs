@@ -62,8 +62,8 @@ namespace TestSystem.Web.Areas.Administration.Controllers
             });
 
         }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        [HttpGet]
+        
         public IActionResult EditTest(string testName, string categoryName)
         {
             if (string.IsNullOrEmpty(testName))
