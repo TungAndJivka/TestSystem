@@ -27,10 +27,12 @@ namespace TestSystem.Web.Areas.Administration.Controllers
         {
             return View();
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Index(AdministerTestViewModel createTestViewModel)
+        public IActionResult Index(AdministerTestViewModel createTestViewModel, bool id)
         {
+
             if (createTestViewModel == null)
             {
                 return View(createTestViewModel);
@@ -43,8 +45,10 @@ namespace TestSystem.Web.Areas.Administration.Controllers
             }
 
             var createTestDto = this.mapper.MapTo<AdministerTestDto>(createTestViewModel);
+            createTestDto.IsPusblished = id;
 
             this.testService.CreateTest(createTestDto);
+
             //try
             //{
                 
