@@ -88,6 +88,18 @@ namespace TestSystem.Tests.Business.Services
 // GetRandomTest() TESTS:
 
         [TestMethod]
+        public void GetRandomTest_Should_Throw_ArgumentNullException_When_Category_Is_Null()
+        {
+            Assert.ThrowsException<ArgumentNullException>(() => testService.GetRandomTestByCategory(null));
+        }
+
+        [TestMethod]
+        public void GetRandomTest_Should_Throw_ArgumentNullException_When_Category_Is_Empty()
+        {
+            Assert.ThrowsException<ArgumentException>(() => testService.GetRandomTestByCategory(""));
+        }
+
+        [TestMethod]
         public void GetRandomTest_Should_Call_Repo_All()
         {
             // Arrange
@@ -188,6 +200,18 @@ namespace TestSystem.Tests.Business.Services
 // GetFullTestInfo() TESTS:
 
         [TestMethod]
+        public void GetFullTestInfo_Should_Throw_ArgumentNullException_When_TestId_Is_Null()
+        {
+            Assert.ThrowsException<ArgumentNullException>(() => testService.GetFullTestInfo(null));
+        }
+
+        [TestMethod]
+        public void GetFullTestInfo_Should_Throw_ArgumentNullException_When_TestId_Is_Empty()
+        {
+            Assert.ThrowsException<ArgumentException>(() => testService.GetFullTestInfo(""));
+        }
+
+        [TestMethod]
         public void GetFullTestInfo_Should_Return_Correct()
         {
             // Arrange
@@ -254,8 +278,20 @@ namespace TestSystem.Tests.Business.Services
         }
 
 
-        
- // GetQuestionsCount() TESTS:
+
+// GetQuestionsCount() TESTS:
+
+        [TestMethod]
+        public void GetQuestionsCount_Should_Throw_ArgumentNullException_When_TestId_Is_Null()
+        {
+            Assert.ThrowsException<ArgumentNullException>(() => testService.GetQuestionsCount(null));
+        }
+
+        [TestMethod]
+        public void GetQuestionsCount_Should_Throw_ArgumentNullException_When_TestId_Is_Empty()
+        {
+            Assert.ThrowsException<ArgumentException>(() => testService.GetQuestionsCount(""));
+        }
 
         [TestMethod]
         public void GetQuestionsCount_Should_Return_Correct()
@@ -480,12 +516,362 @@ namespace TestSystem.Tests.Business.Services
 
 
 
-        // CONSTRUCTOR VALIDATIONS TESTS:
+// GetTest() TESTS:
+
+        [TestMethod]
+        public void GetTest_Should_Throw_ArgumentNullException_When_TestName_Is_Null()
+        {
+            Assert.ThrowsException<ArgumentNullException>(() => testService.GetTest(null, "Java"));
+        }
+
+        [TestMethod]
+        public void GetTest_Should_Throw_ArgumentNullException_When_TestName_Is_Empty()
+        {
+            Assert.ThrowsException<ArgumentException>(() => testService.GetTest("", "Java"));
+        }
+
+        [TestMethod]
+        public void GetTest_Should_Throw_ArgumentNullException_When_CategoryName_Is_Null()
+        {
+            Assert.ThrowsException<ArgumentNullException>(() => testService.GetTest("Test1", null));
+        }
+
+        [TestMethod]
+        public void GetTest_Should_Throw_ArgumentNullException_When_CategoryName_Is_Empty()
+        {
+            Assert.ThrowsException<ArgumentException>(() => testService.GetTest("Test1", ""));
+        }
+
+        [TestMethod]
+        public void GetTest_Should_Return_Correct()
+        {
+            // Arrange
+            var testId = Guid.NewGuid();
+            var category = new Category() { Name = "Java"};
+            var answers = new List<Answer>() { new Answer(), new Answer(), new Answer() };
+            var questions = new List<Question>() { new Question() { Answers = answers } };
+            var test = new Test() { Id = testId, Questions = questions, Category = category, TestName = "Test1"};
+            var all = new List<Test>() { test };
+            testRepoMock.Setup(x => x.All).Verifiable();
+            testRepoMock.Setup(x => x.All).Returns(all.AsQueryable());
+            AdministerTestDto testDto = new AdministerTestDto();
+            mapperMock.Setup(x => x.MapTo<AdministerTestDto>(test)).Verifiable();
+            mapperMock.Setup(x => x.MapTo<AdministerTestDto>(test)).Returns(testDto);
+
+            // Act
+            var result = testService.GetTest("Test1", "Java");
+
+            // Assert
+            Assert.AreEqual(testDto, result);
+        }
+
+        [TestMethod]
+        public void GetTest_Should_Call_Repo()
+        {
+            // Arrange
+            var testId = Guid.NewGuid();
+            var category = new Category() { Name = "Java" };
+            var answers = new List<Answer>() { new Answer(), new Answer(), new Answer() };
+            var questions = new List<Question>() { new Question() { Answers = answers } };
+            var test = new Test() { Id = testId, Questions = questions, Category = category, TestName = "Test1" };
+            var all = new List<Test>() { test };
+            testRepoMock.Setup(x => x.All).Verifiable();
+            testRepoMock.Setup(x => x.All).Returns(all.AsQueryable());
+            AdministerTestDto testDto = new AdministerTestDto();
+            mapperMock.Setup(x => x.MapTo<AdministerTestDto>(test)).Verifiable();
+            mapperMock.Setup(x => x.MapTo<AdministerTestDto>(test)).Returns(testDto);
+
+            // Act
+            var result = testService.GetTest("Test1", "Java");
+
+            // Assert
+            testRepoMock.Verify(x => x.All, Times.Once);
+        }
+
+        [TestMethod]
+        public void GetTest_Should_Call_Mapper()
+        {
+            // Arrange
+            var testId = Guid.NewGuid();
+            var category = new Category() { Name = "Java" };
+            var answers = new List<Answer>() { new Answer(), new Answer(), new Answer() };
+            var questions = new List<Question>() { new Question() { Answers = answers } };
+            var test = new Test() { Id = testId, Questions = questions, Category = category, TestName = "Test1" };
+            var all = new List<Test>() { test };
+            testRepoMock.Setup(x => x.All).Verifiable();
+            testRepoMock.Setup(x => x.All).Returns(all.AsQueryable());
+            AdministerTestDto testDto = new AdministerTestDto();
+            mapperMock.Setup(x => x.MapTo<AdministerTestDto>(test)).Verifiable();
+            mapperMock.Setup(x => x.MapTo<AdministerTestDto>(test)).Returns(testDto);
+
+            // Act
+            var result = testService.GetTest("Test1", "Java");
+
+            // Assert
+            mapperMock.Verify(x => x.MapTo<AdministerTestDto>(test), Times.Once);
+        }
+
+
+
+// PublishTest() TESTS:
+
+        [TestMethod]
+        public void PublishTest_Should_Throw_ArgumentNullException_When_TestName_Is_Null()
+        {
+            Assert.ThrowsException<ArgumentNullException>(() => testService.PublishTest(null));
+        }
+
+        [TestMethod]
+        public void PublishTest_Should_Throw_ArgumentNullException_When_TestName_Is_Empty()
+        {
+            Assert.ThrowsException<ArgumentException>(() => testService.PublishTest(""));
+        }
+
+        [TestMethod]
+        public void PublishTest_Should_Call_Repo_All()
+        {
+            // Arrange
+            var testId = Guid.NewGuid();
+            var category = new Category() { Name = "Java" };
+            var answers = new List<Answer>() { new Answer(), new Answer(), new Answer() };
+            var questions = new List<Question>() { new Question() { Answers = answers } };
+            var test = new Test() { Id = testId, Questions = questions, Category = category, TestName = "Test1" };
+            var all = new List<Test>() { test };
+            testRepoMock.Setup(x => x.All).Verifiable();
+            testRepoMock.Setup(x => x.Update(It.IsAny<Test>())).Verifiable();
+            testRepoMock.Setup(x => x.All).Returns(all.AsQueryable());
+            saverMock.Setup(x => x.SaveChanges()).Verifiable();
+
+            // Act
+            testService.PublishTest(testId.ToString());
+
+            // Assert
+            testRepoMock.Verify(x => x.All, Times.Once);
+        }
+
+        [TestMethod]
+        public void PublishTest_Should_Return_False_When_Questions_Count_Is_0()
+        {
+            // Arrange
+            var testId = Guid.NewGuid();
+            var category = new Category() { Name = "Java" };
+            var questions = new List<Question>();
+            var test = new Test() { Id = testId, Questions = questions, Category = category, TestName = "Test1" };
+            var all = new List<Test>() { test };
+            testRepoMock.Setup(x => x.All).Verifiable();
+            testRepoMock.Setup(x => x.Update(It.IsAny<Test>())).Verifiable();
+            testRepoMock.Setup(x => x.All).Returns(all.AsQueryable());
+            saverMock.Setup(x => x.SaveChanges()).Verifiable();
+
+            // Act
+            bool result = testService.PublishTest(testId.ToString());
+
+            // Assert
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void PublishTest_Should_Return_True_When_Questions_Count_Is_More_Than_0()
+        {
+            // Arrange
+            var testId = Guid.NewGuid();
+            var category = new Category() { Name = "Java" };
+            var answers = new List<Answer>() { new Answer(), new Answer(), new Answer() };
+            var questions = new List<Question>() { new Question() { Answers = answers } };
+            var test = new Test() { Id = testId, Questions = questions, Category = category, TestName = "Test1" };
+            var all = new List<Test>() { test };
+            testRepoMock.Setup(x => x.All).Verifiable();
+            testRepoMock.Setup(x => x.Update(It.IsAny<Test>())).Verifiable();
+            testRepoMock.Setup(x => x.All).Returns(all.AsQueryable());
+            saverMock.Setup(x => x.SaveChanges()).Verifiable();
+
+            // Act
+            bool result = testService.PublishTest(testId.ToString());
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void PublishTest_Should_Call_Repo_Update()
+        {
+            // Arrange
+            var testId = Guid.NewGuid();
+            var category = new Category() { Name = "Java" };
+            var answers = new List<Answer>() { new Answer(), new Answer(), new Answer() };
+            var questions = new List<Question>() { new Question() { Answers = answers } };
+            var test = new Test() { Id = testId, Questions = questions, Category = category, TestName = "Test1" };
+            var all = new List<Test>() { test };
+            testRepoMock.Setup(x => x.All).Verifiable();
+            testRepoMock.Setup(x => x.Update(It.IsAny<Test>())).Verifiable();
+            testRepoMock.Setup(x => x.All).Returns(all.AsQueryable());
+            saverMock.Setup(x => x.SaveChanges()).Verifiable();
+
+            // Act
+            bool result = testService.PublishTest(testId.ToString());
+
+            // Assert
+            testRepoMock.Verify(x => x.Update(It.IsAny<Test>()), Times.Once);
+        }
+
+        [TestMethod]
+        public void PublishTest_Should_Set_IsPublished_True()
+        {
+            // Arrange
+            var testId = Guid.NewGuid();
+            var category = new Category() { Name = "Java" };
+            var answers = new List<Answer>() { new Answer(), new Answer(), new Answer() };
+            var questions = new List<Question>() { new Question() { Answers = answers } };
+            var test = new Test() { Id = testId, Questions = questions, Category = category, TestName = "Test1" };
+            var all = new List<Test>() { test };
+            testRepoMock.Setup(x => x.All).Verifiable();
+            testRepoMock.Setup(x => x.Update(It.IsAny<Test>())).Verifiable();
+            testRepoMock.Setup(x => x.All).Returns(all.AsQueryable());
+            saverMock.Setup(x => x.SaveChanges()).Verifiable();
+
+            // Act
+            bool result = testService.PublishTest(testId.ToString());
+
+            // Assert
+            Assert.IsTrue(test.IsPusblished == true);
+        }
+
+        [TestMethod]
+        public void PublishTest_Should_Call_Saver_SaveChanges()
+        {
+            // Arrange
+            var testId = Guid.NewGuid();
+            var category = new Category() { Name = "Java" };
+            var answers = new List<Answer>() { new Answer(), new Answer(), new Answer() };
+            var questions = new List<Question>() { new Question() { Answers = answers } };
+            var test = new Test() { Id = testId, Questions = questions, Category = category, TestName = "Test1" };
+            var all = new List<Test>() { test };
+            testRepoMock.Setup(x => x.All).Verifiable();
+            testRepoMock.Setup(x => x.Update(It.IsAny<Test>())).Verifiable();
+            testRepoMock.Setup(x => x.All).Returns(all.AsQueryable());
+            saverMock.Setup(x => x.SaveChanges()).Verifiable();
+
+            // Act
+            bool result = testService.PublishTest(testId.ToString());
+
+            // Assert
+            saverMock.Verify(x => x.SaveChanges(), Times.Once);
+        }
+
+
+
+// DeleteTest() TESTS:
+
+        [TestMethod]
+        public void DeleteTest_Should_Throw_ArgumentNullException_When_TestName_Is_Null()
+        {
+            Assert.ThrowsException<ArgumentNullException>(() => testService.DeleteTest(null, "Java"));
+        }
+
+        [TestMethod]
+        public void DeleteTest_Should_Throw_ArgumentNullException_When_TestName_Is_Empty()
+        {
+            Assert.ThrowsException<ArgumentException>(() => testService.DeleteTest("", "Java"));
+        }
+
+        [TestMethod]
+        public void DeleteTest_Should_Throw_ArgumentNullException_When_CategoryName_Is_Null()
+        {
+            Assert.ThrowsException<ArgumentNullException>(() => testService.DeleteTest("Test1", null));
+        }
+
+        [TestMethod]
+        public void DeleteTest_Should_Throw_ArgumentNullException_When_CategoryName_Is_Empty()
+        {
+            Assert.ThrowsException<ArgumentException>(() => testService.DeleteTest("Test1", ""));
+        }
+
+        [TestMethod]
+        public void DeleteTest_Should_Call_Repo_All()
+        {
+            // Arrange
+            var category = new Category() { Name = "Java" };
+            var test = new Test() { Category = category, TestName = "Test1" };
+            var all = new List<Test>() { test };
+
+            testRepoMock.Setup(x => x.All).Verifiable();
+            testRepoMock.Setup(x => x.Update(It.IsAny<Test>())).Verifiable();
+            testRepoMock.Setup(x => x.All).Returns(all.AsQueryable());
+            saverMock.Setup(x => x.SaveChanges()).Verifiable();
+
+            // Act
+            testService.DeleteTest("Test1", "Java");
+
+            // Assert
+        }
+
+        [TestMethod]
+        public void DeleteTest_Should_Set_IsDeleted_True()
+        {
+            // Arrange
+            var category = new Category() { Name = "Java" };
+            var test = new Test() { Category = category, TestName = "Test1" };
+            var all = new List<Test>() { test };
+
+            testRepoMock.Setup(x => x.All).Verifiable();
+            testRepoMock.Setup(x => x.Update(It.IsAny<Test>())).Verifiable();
+            testRepoMock.Setup(x => x.All).Returns(all.AsQueryable());
+            saverMock.Setup(x => x.SaveChanges()).Verifiable();
+
+            // Act
+            testService.DeleteTest("Test1", "Java");
+
+            // Assert
+            Assert.IsTrue(test.IsDeleted == true);
+        }
+
+        [TestMethod]
+        public void DeleteTest_Should_Call_Repo_Update()
+        {
+            // Arrange
+            var category = new Category() { Name = "Java" };
+            var test = new Test() { Category = category, TestName = "Test1" };
+            var all = new List<Test>() { test };
+
+            testRepoMock.Setup(x => x.All).Verifiable();
+            testRepoMock.Setup(x => x.Update(It.IsAny<Test>())).Verifiable();
+            testRepoMock.Setup(x => x.All).Returns(all.AsQueryable());
+            saverMock.Setup(x => x.SaveChanges()).Verifiable();
+
+            // Act
+            testService.DeleteTest("Test1", "Java");
+
+            // Assert
+            testRepoMock.Verify(x => x.Update(It.IsAny<Test>()), Times.Once);
+        }
+
+        [TestMethod]
+        public void DeleteTest_Should_Call_Saver_SaveChanges()
+        {
+            // Arrange
+            var category = new Category() { Name = "Java" };
+            var test = new Test() { Category = category, TestName = "Test1" };
+            var all = new List<Test>() { test };
+
+            testRepoMock.Setup(x => x.All).Verifiable();
+            testRepoMock.Setup(x => x.Update(It.IsAny<Test>())).Verifiable();
+            testRepoMock.Setup(x => x.All).Returns(all.AsQueryable());
+            saverMock.Setup(x => x.SaveChanges()).Verifiable();
+
+            // Act
+            testService.DeleteTest("Test1", "Java");
+
+            // Assert
+            saverMock.Verify(x => x.SaveChanges(), Times.Once);
+        }
+
+
+
+// CONSTRUCTOR VALIDATIONS TESTS:
 
         [TestMethod]
         public void Constructor_Should_Throw_ArgumentNullException_When_TestRepo_Is_Null()
         {
-
             //Act & Assert
             Assert.ThrowsException<ArgumentNullException>(() 
                 => new TestService(null, categoryRepoMock.Object, mapperMock.Object, saverMock.Object, randomMock.Object));
@@ -516,6 +902,13 @@ namespace TestSystem.Tests.Business.Services
                 => new TestService(testRepoMock.Object, categoryRepoMock.Object, mapperMock.Object, saverMock.Object, null));
         }
 
+        [TestMethod]
+        public void Constructor_Should_Throw_ArgumentNullException_When_CategoryRepo_Is_Null()
+        {
+            //Act & Assert
+            Assert.ThrowsException<ArgumentNullException>(()
+                => new TestService(testRepoMock.Object, null, mapperMock.Object, saverMock.Object, randomMock.Object));
+        }
 
     }
 }
