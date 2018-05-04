@@ -32,6 +32,9 @@ namespace TestSystem.Services
 
         public UserTestDto GetUserTest(string userId, string testId)
         {
+            Guard.WhenArgument(userId, "userId").IsNullOrEmpty().Throw();
+            Guard.WhenArgument(testId, "testId").IsNullOrEmpty().Throw();
+
             var entity = userTestRepo.All
                 .Where(x => x.UserId == userId && x.TestId.ToString() == testId)
                 .FirstOrDefault();
@@ -53,12 +56,17 @@ namespace TestSystem.Services
 
         public void AddResult(UserTestDto result)
         {
+            Guard.WhenArgument(result, "result").IsNull().Throw();
+
             UserTest userTest = Mapper.MapTo<UserTest>(result);
             userTestRepo.Add(userTest);
+            Saver.SaveChanges();
         }
 
         public void Update(UserTestDto result)
         {
+            Guard.WhenArgument(result, "result").IsNull().Throw();
+
             var entity = userTestRepo.All.Where(r => r.Id.ToString() == result.Id.ToString()).FirstOrDefault();
 
             var answeredQuestions = Mapper.ProjectTo<AnsweredQuestion>(result.AnsweredQuestions.AsQueryable());
@@ -74,6 +82,9 @@ namespace TestSystem.Services
 
         public StatusType CheckForTakenTest(string userId, string categoryName)
         {
+            Guard.WhenArgument(userId, "userId").IsNullOrEmpty().Throw();
+            Guard.WhenArgument(categoryName, "categoryName").IsNullOrEmpty().Throw();
+
             var userTest = userTestRepo.All.Where(x => x.UserId == userId && x.Test.Category.Name == categoryName).FirstOrDefault();
 
             if (userTest == null)
@@ -91,6 +102,8 @@ namespace TestSystem.Services
 
         public IEnumerable<TestDto> GetUserResults(string userId)
         {
+            Guard.WhenArgument(userId, "userId").IsNullOrEmpty().Throw();
+
             var results = userTestRepo.All
                 .Where(r => r.UserId == userId)
                 .Include(r => r.Test)
@@ -109,6 +122,9 @@ namespace TestSystem.Services
 
         public TestDto GetTestFromCategory(string userId, string categoryName)
         {
+            Guard.WhenArgument(userId, "userId").IsNullOrEmpty().Throw();
+            Guard.WhenArgument(categoryName, "categoryName").IsNullOrEmpty().Throw();
+
             Test testEntity = userTestRepo.All
                 .Where(r => r.UserId == userId)
                 .Include(r => r.Test)
