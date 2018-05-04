@@ -22,6 +22,8 @@ namespace TestSystem.Services
 
         public AnswerDto GetById(string id)
         {
+            Guard.WhenArgument(id, "id").IsNullOrEmpty().Throw();
+
             var entity = answerRepo.All.Where(a => a.Id.ToString().Equals(id)).FirstOrDefault();
             var answerDto = Mapper.MapTo<AnswerDto>(entity);
             return answerDto;

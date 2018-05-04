@@ -32,7 +32,9 @@ namespace TestSystem.Tests.Business.Services
             questionService = new QuestionService(questionRepoMock.Object, mapperMock.Object, saverMock.Object, randomMock.Object);
         }
 
-        // GetQuestionByTestId TESTS:
+
+// GetQuestionByTestId TESTS:
+
         [TestMethod]
         public void GetQuestionByTestId_Should_Call_Repo_All()
         {
@@ -108,12 +110,25 @@ namespace TestSystem.Tests.Business.Services
             Assert.AreEqual(2, result.Count());
         }
 
+        [TestMethod]
+        public void GetAllQuestionsByTestId_Should_Throw_ArgumentNullException_When_testId_Is_Null()
+        {
+            Assert.ThrowsException<ArgumentNullException>(() => questionService.GetAllQuestionsByTestId(null));
+        }
 
-        // CONSTRUCTOR VALIDATIONS TESTS:
+        [TestMethod]
+        public void GetAllQuestionsByTestId_Should_Throw_ArgumentException_When_testId_Is_Empty()
+        {
+            Assert.ThrowsException<ArgumentException>(() => questionService.GetAllQuestionsByTestId(""));
+        }
+
+
+
+// CONSTRUCTOR VALIDATIONS TESTS:
+
         [TestMethod]
         public void Constructor_Should_Throw_ArgumentNullException_When_Repo_Is_Null()
         {
-
             //Act & Assert
             Assert.ThrowsException<ArgumentNullException>(()
                 => new QuestionService(null, mapperMock.Object, saverMock.Object, randomMock.Object));
@@ -130,7 +145,6 @@ namespace TestSystem.Tests.Business.Services
         [TestMethod]
         public void Constructor_Should_Throw_ArgumentNullException_When_Saver_Is_Null()
         {
-
             //Act & Assert
             Assert.ThrowsException<ArgumentNullException>(()
                 => new QuestionService(questionRepoMock.Object, mapperMock.Object, null, randomMock.Object));
