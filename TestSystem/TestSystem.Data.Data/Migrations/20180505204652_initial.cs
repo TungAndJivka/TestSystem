@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace TestSystem.Data.Data.Migrations
 {
-    public partial class Initial1 : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -55,7 +55,7 @@ namespace TestSystem.Data.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    CreatedOn = table.Column<DateTime>(nullable: true),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     ModifiedOn = table.Column<DateTime>(nullable: true),
@@ -178,7 +178,7 @@ namespace TestSystem.Data.Data.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     CategoryId = table.Column<Guid>(nullable: false),
-                    CreatedOn = table.Column<DateTime>(nullable: true),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
                     Duration = table.Column<TimeSpan>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
@@ -209,7 +209,7 @@ namespace TestSystem.Data.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    CreatedOn = table.Column<DateTime>(nullable: true),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
                     Description = table.Column<string>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
@@ -232,12 +232,13 @@ namespace TestSystem.Data.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    CreatedOn = table.Column<DateTime>(nullable: true),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     ModifiedOn = table.Column<DateTime>(nullable: true),
-                    Passed = table.Column<bool>(nullable: false),
-                    Score = table.Column<double>(nullable: false),
+                    Score = table.Column<double>(nullable: true),
+                    StartTime = table.Column<DateTime>(nullable: false),
+                    SubmittedOn = table.Column<DateTime>(nullable: true),
                     TestId = table.Column<Guid>(nullable: false),
                     UserId = table.Column<string>(nullable: false)
                 },
@@ -264,7 +265,7 @@ namespace TestSystem.Data.Data.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     Content = table.Column<string>(nullable: false),
-                    CreatedOn = table.Column<DateTime>(nullable: true),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
                     IsCorrect = table.Column<bool>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
@@ -288,7 +289,7 @@ namespace TestSystem.Data.Data.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     AnswerId = table.Column<Guid>(nullable: false),
-                    CreatedOn = table.Column<DateTime>(nullable: true),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     ModifiedOn = table.Column<DateTime>(nullable: true),

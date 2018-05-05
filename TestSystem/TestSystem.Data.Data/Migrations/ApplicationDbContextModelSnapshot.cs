@@ -238,7 +238,7 @@ namespace TestSystem.Data.Data.Migrations
 
                     b.Property<DateTime?>("DeletedOn");
 
-                    b.Property<TimeSpan?>("Duration");
+                    b.Property<TimeSpan>("Duration");
 
                     b.Property<bool>("IsDeleted");
 

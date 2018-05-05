@@ -154,7 +154,7 @@ namespace TestSystem.Web
                 .ForMember(dto => dto.TestName, o => o.MapFrom(dm => dm.Test.TestName))
                 .ForMember(dto => dto.CategoryName, o => o.MapFrom(dm => dm.Test.Category.Name))
                 .ForMember(dto => dto.RequestedTime, o => o.MapFrom(dm => dm.Test.Duration))
-                .ForMember(dto => dto.ExecutionTime, o => o.MapFrom(dm => dm.SubmittedOn.Value.Subtract(dm.StartTime)))
+                .ForMember(dto => dto.ExecutionTime, o => o.MapFrom(dm => dm.SubmittedOn.Value.Subtract(dm.CreatedOn)))
                 .ForMember(dto => dto.Result, o => o.MapFrom(dm => dm.Score));
 
 

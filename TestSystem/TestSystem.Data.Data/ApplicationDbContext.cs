@@ -13,7 +13,7 @@ namespace TestSystem.Web.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
-            Seed();
+            //Seed();
         }
 
         private void Seed()
@@ -36,67 +36,11 @@ namespace TestSystem.Web.Data
                 this.Categories.AddRange(list);
                 this.SaveChanges();
             }
-
-            // TESTS:
-            var t1 = new Test() { Id = Guid.NewGuid(), TestName = "Test 1", CreatedOn = DateTime.Now, Duration = TimeSpan.FromMinutes(20), CategoryId = c1.Id, IsPusblished = true };
-            var t2 = new Test() { Id = Guid.NewGuid(), TestName = "Test 5", CreatedOn = DateTime.Now, Duration = TimeSpan.FromMinutes(30), CategoryId = c1.Id, IsPusblished = true };
-            var t3 = new Test() { Id = Guid.NewGuid(), TestName = "Test 3", CreatedOn = DateTime.Now, Duration = TimeSpan.FromMinutes(20), CategoryId = c3.Id, IsPusblished = true };
-            var t4 = new Test() { Id = Guid.NewGuid(), TestName = "Test 4", CreatedOn = DateTime.Now, Duration = TimeSpan.FromMinutes(20), CategoryId = c4.Id, IsPusblished = true };
-
-            if (this.Tests != null && this.Tests.Count() == 0)
-            {
-                var list = new List<Test>() { t1, t2, t3, t4 };
-                this.Tests.AddRange(list);
-                this.SaveChanges();
-            }
-
-            // QUESTIONS:
-            var q1 = new Question() { Id = Guid.NewGuid(), CreatedOn = DateTime.Now, Description = "What's the size of the Earth?", TestId = t1.Id };
-            var q2 = new Question() { Id = Guid.NewGuid(), CreatedOn = DateTime.Now, Description = "What's day is it?", TestId = t1.Id };
-            var q3 = new Question() { Id = Guid.NewGuid(), CreatedOn = DateTime.Now, Description = "What's the size of the Moon?", TestId = t1.Id };
-            var q4 = new Question() { Id = Guid.NewGuid(), CreatedOn = DateTime.Now, Description = "What's the distance to the Sun?", TestId = t1.Id };
-
-            var q5 = new Question() { Id = Guid.NewGuid(), CreatedOn = DateTime.Now, Description = "What's the size of the Earth?", TestId = t2.Id };
-            var q6 = new Question() { Id = Guid.NewGuid(), CreatedOn = DateTime.Now, Description = "What's the size of the Moon?", TestId = t2.Id };
-            var q7 = new Question() { Id = Guid.NewGuid(), CreatedOn = DateTime.Now, Description = "What's day is it?", TestId = t2.Id };
-            var q8 = new Question() { Id = Guid.NewGuid(), CreatedOn = DateTime.Now, Description = "What's the distance to the Sun?", TestId = t2.Id };
-
-            if (this.Questions != null && this.Questions.Count() == 0)
-            {
-                var list = new List<Question>() { q1, q2, q3, q4, q5, q6, q7, q8 };
-                this.Questions.AddRange(list);
-                this.SaveChanges();
-            }
-
-            // ANSWERS:
-            var a1 = new Answer() { Id = Guid.NewGuid(), CreatedOn = DateTime.Now, Content = "9 730 173 sq.m.", IsCorrect = true, QuestionID = q1.Id };
-            var a2 = new Answer() { Id = Guid.NewGuid(), CreatedOn = DateTime.Now, Content = "2 sq.m.", IsCorrect = false, QuestionID = q1.Id };
-            var a3 = new Answer() { Id = Guid.NewGuid(), CreatedOn = DateTime.Now, Content = "-1", IsCorrect = false, QuestionID = q1.Id };
-
-            var a4 = new Answer() { Id = Guid.NewGuid(), CreatedOn = DateTime.Now, Content = "Today", IsCorrect = true, QuestionID = q2.Id };
-            var a5 = new Answer() { Id = Guid.NewGuid(), CreatedOn = DateTime.Now, Content = "Monday", IsCorrect = false, QuestionID = q2.Id };
-            var a6 = new Answer() { Id = Guid.NewGuid(), CreatedOn = DateTime.Now, Content = "Tuesday", IsCorrect = false, QuestionID = q2.Id };
-
-            var a7 = new Answer() { Id = Guid.NewGuid(), CreatedOn = DateTime.Now, Content = "Big size", IsCorrect = true, QuestionID = q3.Id };
-            var a8 = new Answer() { Id = Guid.NewGuid(), CreatedOn = DateTime.Now, Content = "Banana", IsCorrect = false, QuestionID = q3.Id };
-
-            var a9 = new Answer() { Id = Guid.NewGuid(), CreatedOn = DateTime.Now, Content = "123344598 km", IsCorrect = true, QuestionID = q4.Id };
-            var a10 = new Answer() { Id = Guid.NewGuid(), CreatedOn = DateTime.Now, Content = "1", IsCorrect = false, QuestionID = q4.Id };
-
-            if (this.Answers != null && this.Answers.Count() == 0)
-            {
-                var list = new List<Answer>() { a1, a2, a3, a4, a5, a6, a7, a8, a9, a10 };
-                this.Answers.AddRange(list);
-                this.SaveChanges();
-            }
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            // Customize the ASP.NET Identity model and override the defaults if needed.
-            // For example, you can rename the ASP.NET Identity table names and more.
-            // Add your customizations after calling base.OnModelCreating(builder);
 
             builder.Entity<Test>()
                 .HasOne<Category>(t => t.Category)
