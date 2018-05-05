@@ -132,9 +132,10 @@
     text-align: center;
 }
 
-.create-test-radio{
+.create-test-radio {
     transform: scale(2);
     float: right;
+    margin-top: 100px !important;
 }
 
 .add-answer {
@@ -142,3 +143,7 @@
     margin-bottom: 70px;
 }
 
+.delete-answer {
+    float: right;
+    margin-left: 10px;
+}
