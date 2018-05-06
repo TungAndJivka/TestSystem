@@ -69,7 +69,7 @@ namespace TestSystem.Web.Controllers
                 StartedOn = startTime
             };
 
-            if (check == StatusType.TestNotStarted)
+            if (check == StatusType.TestNotStarted)  // move to service
             {
                 var resultDto = mapper.MapTo<UserTestDto>(model);
                 resultDto.Id = Guid.NewGuid();

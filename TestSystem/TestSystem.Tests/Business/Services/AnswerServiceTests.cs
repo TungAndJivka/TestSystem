@@ -34,6 +34,18 @@ namespace TestSystem.Tests.Business.Services
 
         // GetByID method TESTS:
         [TestMethod]
+        public void GetByID_Method_Should_Throw_ArgumentNullException_When_Id_Is_Null()
+        {
+            Assert.ThrowsException<ArgumentNullException>(() => answerService.GetById(null));
+        }
+
+        [TestMethod]
+        public void GetByID_Method_Should_Throw_ArgumentException_When_Id_Is_Null()
+        {
+            Assert.ThrowsException<ArgumentException>(() => answerService.GetById(""));
+        }
+
+        [TestMethod]
         public void GetByID_Method_Should_Call_Repo_All()
         {
             // Arrange

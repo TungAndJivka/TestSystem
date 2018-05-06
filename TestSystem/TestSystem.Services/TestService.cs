@@ -21,6 +21,7 @@ namespace TestSystem.Services
             : base(mapper, saver, random)
         {
             Guard.WhenArgument(testRepo, "testRepo").IsNull().Throw();
+            Guard.WhenArgument(categoryRepo, "categoryRepo").IsNull().Throw();
             this.testRepo = testRepo;
             this.categoryRepo = categoryRepo;
         }
@@ -34,6 +35,8 @@ namespace TestSystem.Services
 
         public TestDto GetRandomTestByCategory(string categoryName)
         {
+            Guard.WhenArgument(categoryName, "categoryName").IsNullOrEmpty().Throw();
+
             var tests = testRepo.All
                 .Include(t => t.Category)
                 .Where(t => t.Category.Name == categoryName && t.IsPusblished)
@@ -52,6 +55,8 @@ namespace TestSystem.Services
                              
         public TestDto GetFullTestInfo(string testId)
         {
+            Guard.WhenArgument(testId, "testId").IsNullOrEmpty().Throw();
+
             var entities = testRepo.All
                 .Where(t => t.Id.ToString().Equals(testId))
                 .Include(t => t.Questions)
@@ -101,6 +106,8 @@ namespace TestSystem.Services
 
         public int GetQuestionsCount(string testId)
         {
+            Guard.WhenArgument(testId, "testId").IsNullOrEmpty().Throw();
+
             var test = testRepo.All.Where(t => t.Id.ToString().Equals(testId)).Include(t => t.Questions).FirstOrDefault();
             if (test != null)
             {
@@ -112,10 +119,7 @@ namespace TestSystem.Services
 
         public bool PublishTest(string testId)
         {
-            if (string.IsNullOrEmpty(testId))
-            {
-                throw new ArgumentNullException("Id cannot be null!");
-            }
+            Guard.WhenArgument(testId, "testId").IsNullOrEmpty().Throw();
 
             var test = this.testRepo.All
                .Where(t => t.Id.ToString() == testId)
@@ -135,15 +139,8 @@ namespace TestSystem.Services
 
         public void DeleteTest(string testName, string categoryName)
         {
-            if (string.IsNullOrEmpty(testName))
-            {
-                throw new ArgumentNullException("Name cannot be null!");
-            }
-
-            if (string.IsNullOrEmpty(categoryName))
-            {
-                throw new ArgumentNullException("Category Name cannot be null!");
-            }
+            Guard.WhenArgument(testName, "testName").IsNullOrEmpty().Throw();
+            Guard.WhenArgument(categoryName, "categoryName").IsNullOrEmpty().Throw();
 
             var test = this.testRepo.All
                .Include(t => t.Category)
@@ -157,6 +154,9 @@ namespace TestSystem.Services
 
         public AdministerTestDto GetTest(string testName, string categoryName)
         {
+            Guard.WhenArgument(testName, "testName").IsNullOrEmpty().Throw();
+            Guard.WhenArgument(categoryName, "categoryName").IsNullOrEmpty().Throw();
+
             var test = this.testRepo.All
                .Include(t => t.Category)               
                .Include(t => t.Questions)

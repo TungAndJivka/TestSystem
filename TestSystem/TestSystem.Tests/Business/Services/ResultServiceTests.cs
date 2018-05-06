@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.EntityFrameworkCore.Query;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -33,7 +34,8 @@ namespace TestSystem.Tests.Business.Services
         }
 
 
-        // GetAll() TESTS:
+// GetAll() TESTS:
+
         [TestMethod]
         public void GetAllMethod_Should_Call_ResultRepo_All()
         {
@@ -60,8 +62,33 @@ namespace TestSystem.Tests.Business.Services
             mapperMock.Verify(x => x.ProjectTo<UserTestDto>(It.IsAny<IQueryable<UserTest>>()), Times.Once);
         }
 
+        [TestMethod]
+        public void GetAllMethod_Should_Return_Correct()
+        {
+            // Arrange
+            var all = new List<UserTest>() { new UserTest(), new UserTest() };
+            var allDto = new List<UserTestDto>() { new UserTestDto(), new UserTestDto() };
+            resultRepoMock.Setup(x => x.All).Verifiable();
+            resultRepoMock.Setup(x => x.All).Returns(all.AsQueryable());
+            mapperMock.Setup(x => x.ProjectTo<UserTestDto>(It.IsAny<IQueryable<UserTest>>())).Verifiable();
+            mapperMock.Setup(x => x.ProjectTo<UserTestDto>(It.IsAny<IQueryable<UserTest>>())).Returns(allDto.AsQueryable());
 
-        // Update() method TESTS:
+            // Act
+            var results = resultService.GetAll().ToList();
+
+            // Assert
+            Assert.AreEqual(2, results.Count());
+        }
+
+
+// Update() method TESTS:
+
+        [TestMethod]
+        public void Update_Should_Throw_ArgumentNullExcepton_When_Dto_Is_Null()
+        {
+            Assert.ThrowsException<ArgumentNullException>(() => resultService.Update(null));
+        }
+
         [TestMethod]
         public void Update_Should_Call_Repo_Update()
         {
@@ -83,7 +110,6 @@ namespace TestSystem.Tests.Business.Services
             // Assert
             resultRepoMock.Verify(x => x.Update(It.IsAny<UserTest>()), Times.Once);
         }
-
 
         [TestMethod]
         public void Update_Should_Call_Saver_SaveChanges()
@@ -107,8 +133,151 @@ namespace TestSystem.Tests.Business.Services
             saverMock.Verify(x => x.SaveChanges(), Times.Once);
         }
 
+        [TestMethod]
+        public void Update_Should_Set_Score()
+        {
+            // Arrange
+            var id = Guid.NewGuid();
+            var entity = new UserTest() { Id = id };
+            var result = new UserTestDto() { Id = id, Score = 50.0, SubmittedOn = DateTime.Now, AnsweredQuestions = new List<AnsweredQuestionDto>() };
+            var all = new List<UserTest>() { entity };
+            var aq = new List<AnsweredQuestion>();
+            resultRepoMock.Setup(x => x.All).Returns(all.AsQueryable());
+            mapperMock.Setup(x => x.ProjectTo<AnsweredQuestion>(It.IsAny<IQueryable<AnsweredQuestionDto>>())).Returns(aq.AsQueryable());
 
-        // GetUserResults() TESTS:
+            resultRepoMock.Setup(x => x.Update(It.IsAny<UserTest>())).Verifiable();
+            saverMock.Setup(x => x.SaveChanges()).Verifiable();
+
+            // Act
+            resultService.Update(result);
+
+            // Assert
+            Assert.AreEqual(50.0, result.Score);
+        }
+
+        [TestMethod]
+        public void Update_Should_Set_SubmittedOn()
+        {
+            // Arrange
+            var time = DateTime.Now;
+            var id = Guid.NewGuid();
+            var entity = new UserTest() { Id = id };
+            var result = new UserTestDto() { Id = id, Score = 0.0, SubmittedOn = time, AnsweredQuestions = new List<AnsweredQuestionDto>() };
+            var all = new List<UserTest>() { entity };
+            var aq = new List<AnsweredQuestion>();
+            resultRepoMock.Setup(x => x.All).Returns(all.AsQueryable());
+            mapperMock.Setup(x => x.ProjectTo<AnsweredQuestion>(It.IsAny<IQueryable<AnsweredQuestionDto>>())).Returns(aq.AsQueryable());
+
+            resultRepoMock.Setup(x => x.Update(It.IsAny<UserTest>())).Verifiable();
+            saverMock.Setup(x => x.SaveChanges()).Verifiable();
+
+            // Act
+            resultService.Update(result);
+
+            // Assert
+            Assert.AreEqual(time, result.SubmittedOn);
+        }
+
+        [TestMethod]
+        public void Update_Should_Set_AnsweredQuestions()
+        {
+            // Arrange
+            var id = Guid.NewGuid();
+            var entity = new UserTest() { Id = id };
+            var result = new UserTestDto() { Id = id, Score = 0.0, SubmittedOn = DateTime.Now, AnsweredQuestions = new List<AnsweredQuestionDto>() { new AnsweredQuestionDto() } };
+            var all = new List<UserTest>() { entity };
+            var aq = new List<AnsweredQuestion>() { new AnsweredQuestion() };
+            resultRepoMock.Setup(x => x.All).Returns(all.AsQueryable());
+            mapperMock.Setup(x => x.ProjectTo<AnsweredQuestion>(It.IsAny<IQueryable<AnsweredQuestionDto>>())).Returns(aq.AsQueryable());
+
+            resultRepoMock.Setup(x => x.Update(It.IsAny<UserTest>())).Verifiable();
+            saverMock.Setup(x => x.SaveChanges()).Verifiable();
+
+            // Act
+            resultService.Update(result);
+
+            // Assert
+            Assert.AreEqual(1, result.AnsweredQuestions.Count);
+        }
+
+
+
+// AddResult() method TESTS:
+
+        [TestMethod]
+        public void AddResult_Should_Throw_ArgumentNullExcepton_When_Dto_Is_Null()
+        {
+            Assert.ThrowsException<ArgumentNullException>(() => resultService.AddResult(null));
+        }
+
+        [TestMethod]
+        public void AddResult_Should_Call_Repo_Add()
+        {
+            // Arrange
+            var id = Guid.NewGuid();
+            var entity = new UserTest() { Id = id };
+            var result = new UserTestDto() { Id = id };
+            var all = new List<UserTest>() { entity };
+
+            resultRepoMock.Setup(x => x.All).Returns(all.AsQueryable());
+            resultRepoMock.Setup(x => x.Add(It.IsAny<UserTest>())).Verifiable();
+            saverMock.Setup(x => x.SaveChanges()).Verifiable();
+
+            // Act
+            resultService.AddResult(result);
+
+            // Assert
+            resultRepoMock.Verify(x => x.Add(It.IsAny<UserTest>()), Times.Once);
+        }
+
+        [TestMethod]
+        public void AddResult_Should_Call_Saver_SaveChanges()
+        {
+            // Arrange
+            var id = Guid.NewGuid();
+            var entity = new UserTest() { Id = id };
+            var result = new UserTestDto() { Id = id };
+            var all = new List<UserTest>() { entity };
+
+            resultRepoMock.Setup(x => x.All).Returns(all.AsQueryable());
+            resultRepoMock.Setup(x => x.Add(It.IsAny<UserTest>())).Verifiable();
+            saverMock.Setup(x => x.SaveChanges()).Verifiable();
+
+            // Act
+            resultService.AddResult(result);
+
+            // Assert
+            saverMock.Verify(x => x.SaveChanges(), Times.Once);
+        }
+
+
+
+// GetUserTest() TESTS:
+
+        [TestMethod]
+        public void GetUserTest_Should_Throw_ArgumentNullException_When_UserId_Is_Null()
+        {
+            Assert.ThrowsException<ArgumentNullException>(() => resultService.GetUserTest(null, "testId"));
+        }
+
+        [TestMethod]
+        public void GetUserTest_Should_Throw_ArgumentNullException_When_UserId_Is_Empty()
+        {
+            Assert.ThrowsException<ArgumentException>(() => resultService.GetUserTest("", "testId"));
+        }
+
+        [TestMethod]
+        public void GetUserTest_Should_Throw_ArgumentNullException_When_TestId_Is_Null()
+        {
+            Assert.ThrowsException<ArgumentNullException>(() => resultService.GetUserTest("userId", null));
+        }
+
+        [TestMethod]
+        public void GetUserTest_Should_Throw_ArgumentNullException_When_TestId_Is_Empty()
+        {
+            Assert.ThrowsException<ArgumentException>(() => resultService.GetUserTest("userId", ""));
+        }
+
         [TestMethod]
         public void GetUserTestsMethod_Should_Return_Correct_Tests()
         {
@@ -164,7 +333,6 @@ namespace TestSystem.Tests.Business.Services
             Assert.AreEqual(resultDto, actual.First());
         }
 
-
         [TestMethod]
         public void GetUserTestsMethod_Should_Call_Mapper_ProjectTo()
         {
@@ -202,7 +370,34 @@ namespace TestSystem.Tests.Business.Services
             resultRepoMock.Verify(x => x.All, Times.Once);
         }
 
-        // CheckForTakenTest() method TESTS:
+
+
+// CheckForTakenTest() method TESTS:
+
+        [TestMethod]
+        public void CheckForTakenTest_Should_Throw_ArgumentNullException_When_UserId_Is_Null()
+        {
+            Assert.ThrowsException<ArgumentNullException>(() => resultService.CheckForTakenTest(null, "categoryName"));
+        }
+
+        [TestMethod]
+        public void CheckForTakenTest_Throw_ArgumentNullException_When_UserId_Is_Empty()
+        {
+            Assert.ThrowsException<ArgumentException>(() => resultService.CheckForTakenTest("", "categoryName"));
+        }
+
+        [TestMethod]
+        public void CheckForTakenTest_Throw_ArgumentNullException_When_CategoryName_Is_Null()
+        {
+            Assert.ThrowsException<ArgumentNullException>(() => resultService.CheckForTakenTest("userId", null));
+        }
+
+        [TestMethod]
+        public void CheckForTakenTest_Should_Throw_ArgumentNullException_When_CategoryName_Is_Empty()
+        {
+            Assert.ThrowsException<ArgumentException>(() => resultService.CheckForTakenTest("userId", ""));
+        }
+
         [TestMethod]
         public void CheckForTakenTest_Should_Return_1_When_No_Test_Found()
         {
@@ -238,7 +433,6 @@ namespace TestSystem.Tests.Business.Services
             Assert.AreEqual(StatusType.TestNotSubmitted, actual);
         }
 
-
         [TestMethod]
         public void CheckForTakenTest_Should_Return_3_When_Test_Found_And_Submitted()
         {
@@ -258,7 +452,34 @@ namespace TestSystem.Tests.Business.Services
             Assert.AreEqual(StatusType.TestSubmitted, actual);
         }
 
-        // GetTestFromCategory() Tests:
+
+
+// GetTestFromCategory() Tests:
+
+        [TestMethod]
+        public void GetTestFromCategory_Should_Throw_ArgumentNullException_When_UserId_Is_Null()
+        {
+            Assert.ThrowsException<ArgumentNullException>(() => resultService.GetTestFromCategory(null, "categoryName"));
+        }
+
+        [TestMethod]
+        public void GetTestFromCategory_Throw_ArgumentNullException_When_UserId_Is_Empty()
+        {
+            Assert.ThrowsException<ArgumentException>(() => resultService.GetTestFromCategory("", "categoryName"));
+        }
+
+        [TestMethod]
+        public void GetTestFromCategory_Throw_ArgumentNullException_When_CategoryName_Is_Null()
+        {
+            Assert.ThrowsException<ArgumentNullException>(() => resultService.GetTestFromCategory("userId", null));
+        }
+
+        [TestMethod]
+        public void GetTestFromCategory_Should_Throw_ArgumentNullException_When_CategoryName_Is_Empty()
+        {
+            Assert.ThrowsException<ArgumentException>(() => resultService.GetTestFromCategory("userId", ""));
+        }
+
         [TestMethod]
         public void GetTestFromCategory_Should_Call_Repo_All()
         {
@@ -287,6 +508,7 @@ namespace TestSystem.Tests.Business.Services
             resultRepoMock.Verify(x => x.All, Times.Once);
         }
 
+        [TestMethod]
         public void GetTestFromCategory_Should_Call_Mapper_MapTo()
         {
             // Arrange
@@ -314,6 +536,7 @@ namespace TestSystem.Tests.Business.Services
             mapperMock.Verify(x => x.MapTo<TestDto>(test), Times.Once);
         }
 
+        [TestMethod]
         public void GetTestFromCategory_Should_Return_Correct()
         {
             // Arrange
@@ -341,7 +564,188 @@ namespace TestSystem.Tests.Business.Services
             Assert.AreEqual(testDto, actual);
         }
 
-        // CONSTRUCTOR VALIDATIONS TESTS:
+
+
+// GetUserResults TESTS:
+
+        [TestMethod]
+        public void GetUserResults_Should_Throw_ArgumentNullException_When_UserId_Is_Null()
+        {
+            Assert.ThrowsException<ArgumentNullException>(() => resultService.GetUserResults(null));
+        }
+
+        [TestMethod]
+        public void GetUserResults_Should_Throw_ArgumentNullException_When_UserId_Is_Empty()
+        {
+            Assert.ThrowsException<ArgumentException>(() => resultService.GetUserResults(""));
+        }
+
+        [TestMethod]
+        public void GetUserResults_Should_Return_Correct_Results()
+        {
+            // Arrange
+            Guid userId = Guid.NewGuid();
+            var test1 = new Test();
+            var test2 = new Test();
+            var all = new List<UserTest>() { new UserTest() { UserId = userId.ToString(), Test = test1 }, new UserTest() { UserId = Guid.NewGuid().ToString(), Test = test2 } };
+            var allDto = new List<TestDto>() { new TestDto() { TestName = "Test1"} };
+            resultRepoMock.Setup(x => x.All).Verifiable();
+            resultRepoMock.Setup(x => x.All).Returns(all.AsQueryable());
+            mapperMock.Setup(x => x.ProjectTo<TestDto>(It.IsAny<IQueryable<Test>>())).Verifiable();
+            mapperMock.Setup(x => x.ProjectTo<TestDto>(It.IsAny<IQueryable<Test>>())).Returns(allDto.AsQueryable());
+
+            // Act
+            var results = resultService.GetUserResults(userId.ToString()).ToList();
+
+            // Assert
+            Assert.AreEqual("Test1", results[0].TestName);
+        }
+
+        [TestMethod]
+        public void GetUserResults_Should_Call_Mapper_ProjectTo()
+        {
+            // Arrange
+            Guid userId = Guid.NewGuid();
+            var test1 = new Test();
+            var test2 = new Test();
+            var all = new List<UserTest>() { new UserTest() { UserId = userId.ToString(), Test = test1 }, new UserTest() { UserId = Guid.NewGuid().ToString(), Test = test2 } };
+            var allDto = new List<TestDto>() { new TestDto() { TestName = "Test1" } };
+            resultRepoMock.Setup(x => x.All).Verifiable();
+            resultRepoMock.Setup(x => x.All).Returns(all.AsQueryable());
+            mapperMock.Setup(x => x.ProjectTo<TestDto>(It.IsAny<IQueryable<Test>>())).Verifiable();
+            mapperMock.Setup(x => x.ProjectTo<TestDto>(It.IsAny<IQueryable<Test>>())).Returns(allDto.AsQueryable());
+
+            // Act
+            var results = resultService.GetUserResults(userId.ToString()).ToList();
+
+            // Assert
+            mapperMock.Verify(x => x.ProjectTo<TestDto>(It.IsAny<IQueryable<Test>>()), Times.Once);
+        }
+
+        [TestMethod]
+        public void GetUserResults_Should_Call_Repo_All()
+        {
+            // Arrange
+            Guid userId = Guid.NewGuid();
+            var test1 = new Test();
+            var test2 = new Test();
+            var all = new List<UserTest>() { new UserTest() { UserId = userId.ToString(), Test = test1 }, new UserTest() { UserId = Guid.NewGuid().ToString(), Test = test2 } };
+            var allDto = new List<TestDto>() { new TestDto() { TestName = "Test1" } };
+            resultRepoMock.Setup(x => x.All).Verifiable();
+            resultRepoMock.Setup(x => x.All).Returns(all.AsQueryable());
+            mapperMock.Setup(x => x.ProjectTo<TestDto>(It.IsAny<IQueryable<Test>>())).Verifiable();
+            mapperMock.Setup(x => x.ProjectTo<TestDto>(It.IsAny<IQueryable<Test>>())).Returns(allDto.AsQueryable());
+
+            // Act
+            var results = resultService.GetUserResults(userId.ToString()).ToList();
+
+            // Assert
+            resultRepoMock.Verify(x => x.All, Times.Once);
+        }
+
+        [TestMethod]
+        public void GetUserResults_Should_Return_Correct_ResultsCount()
+        {
+            // Arrange
+            Guid userId = Guid.NewGuid();
+            var test1 = new Test();
+            var test2 = new Test();
+            var all = new List<UserTest>() { new UserTest() { UserId = userId.ToString(), Test = test1 }, new UserTest() { UserId = Guid.NewGuid().ToString(), Test = test2 } };
+            var allDto = new List<TestDto>() { new TestDto() { TestName = "Test1" } };
+            resultRepoMock.Setup(x => x.All).Verifiable();
+            resultRepoMock.Setup(x => x.All).Returns(all.AsQueryable());
+            mapperMock.Setup(x => x.ProjectTo<TestDto>(It.IsAny<IQueryable<Test>>())).Verifiable();
+            mapperMock.Setup(x => x.ProjectTo<TestDto>(It.IsAny<IQueryable<Test>>())).Returns(allDto.AsQueryable());
+
+            // Act
+            var results = resultService.GetUserResults(userId.ToString()).ToList();
+
+            // Assert
+            Assert.AreEqual(1, results.Count());
+        }
+
+
+// GetTestResultsForDashBoard() TESTS:
+
+        [TestMethod]
+        public void GetTestResultsForDashBoard_Should_Call_ResultRepo_All()
+        {
+            // Arrange
+            var user1 = new User();
+            var test1 = new Test() { Category = new Category() };
+
+            var user2 = new User();
+            var test2 = new Test() { Category = new Category() };
+
+            var all = new List<UserTest>() { new UserTest() { User = user1, Test = test1 }, new UserTest() { User = user2, Test = test2 } };
+            var allDto = new List<TestResultDto>() { new TestResultDto(), new TestResultDto() };
+
+            resultRepoMock.Setup(x => x.All).Verifiable();
+            resultRepoMock.Setup(x => x.All).Returns(all.AsQueryable());
+            mapperMock.Setup(x => x.ProjectTo<UserTestDto>(It.IsAny<IQueryable<UserTest>>())).Verifiable();
+            mapperMock.Setup(x => x.ProjectTo<TestResultDto>(It.IsAny<IQueryable<UserTest>>())).Returns(allDto.AsQueryable());
+
+            // Act
+            var results = resultService.GetTestResultsForDashBoard();
+
+            // Assert
+            resultRepoMock.Verify(x => x.All, Times.Once);
+        }
+
+        [TestMethod]
+        public void GetTestResultsForDashBoard_Should_Call_Mapper_ProjectTo()
+        {
+            // Arrange
+            var user1 = new User();
+            var test1 = new Test() { Category = new Category() };
+
+            var user2 = new User();
+            var test2 = new Test() { Category = new Category() };
+
+            var all = new List<UserTest>() { new UserTest() { User = user1, Test = test1 }, new UserTest() { User = user2, Test = test2 } };
+            var allDto = new List<TestResultDto>() { new TestResultDto(), new TestResultDto() };
+
+            resultRepoMock.Setup(x => x.All).Verifiable();
+            resultRepoMock.Setup(x => x.All).Returns(all.AsQueryable());
+            mapperMock.Setup(x => x.ProjectTo<TestResultDto>(It.IsAny<IQueryable<UserTest>>())).Verifiable();
+            mapperMock.Setup(x => x.ProjectTo<TestResultDto>(It.IsAny<IQueryable<UserTest>>())).Returns(allDto.AsQueryable());
+
+            // Act
+            var results = resultService.GetTestResultsForDashBoard();
+
+            // Assert
+            mapperMock.Verify(x => x.ProjectTo<TestResultDto>(It.IsAny<IQueryable<UserTest>>()), Times.Once);
+        }
+
+        [TestMethod]
+        public void GetTestResultsForDashBoard_Should_Return_Correct()
+        {
+            // Arrange
+            var user1 = new User();
+            var test1 = new Test() { Category = new Category() };
+
+            var user2 = new User();
+            var test2 = new Test() { Category = new Category() };
+
+            var all = new List<UserTest>() { new UserTest() { User = user1, Test = test1 }, new UserTest() { User = user2, Test = test2 } };
+            var allDto = new List<TestResultDto>() { new TestResultDto(), new TestResultDto() };
+
+            resultRepoMock.Setup(x => x.All).Verifiable();
+            resultRepoMock.Setup(x => x.All).Returns(all.AsQueryable());
+            mapperMock.Setup(x => x.ProjectTo<UserTestDto>(It.IsAny<IIncludableQueryable<UserTest, Category>>())).Verifiable();
+            mapperMock.Setup(x => x.ProjectTo<TestResultDto>(It.IsAny<IIncludableQueryable<UserTest, Category>>())).Returns(allDto.AsQueryable());
+
+            // Act
+            var results = resultService.GetTestResultsForDashBoard().ToList();
+
+            // Assert
+            Assert.AreEqual(2, results.Count());
+        }
+
+
+
+// CONSTRUCTOR VALIDATIONS TESTS:
+
         [TestMethod]
         public void Constructor_Should_Throw_ArgumentNullException_When_Repo_Is_Null()
         {

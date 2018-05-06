@@ -24,6 +24,8 @@ namespace TestSystem.Services
 
         public IEnumerable<QuestionDto> GetAllQuestionsByTestId(string testId)
         {
+            Guard.WhenArgument(testId, "testId").IsNullOrEmpty().Throw();
+
             var entities = questionRepo.All.Where(q => q.TestId.ToString().Equals(testId)).Include(q => q.Answers);
             var result = this.Mapper.ProjectTo<QuestionDto>(entities);
             return result;
