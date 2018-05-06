@@ -36,15 +36,32 @@
                                     Edit
                                 </a>
                             </div>
-                            <div class="col col-sm-4">
-                                <form asp-area="Administration" asp-controller="Dashboard" asp-action="DisableTest" method="post">
-                                    <input id="Id" name="Id" type="hidden" value="@test.Id" />
-                                    <button type="submit" class="btn dashBtn">
-                                        <span class="glyphicon glyphicon-remove" style="color:crimson"></span>
-                                        Disable
-                                    </button>
-                                </form>
-                            </div>
+                            @if (test.IsDisabled == false)
+                            {
+                                <div class="col col-sm-4">
+                                    <form asp-area="Administration" asp-controller="Dashboard" asp-action="DisableTest" method="post">
+                                        <input id="Id" name="Id" type="hidden" value="@test.Id" />
+                                        <button type="submit" class="btn dashBtn">
+                                            <span class="glyphicon glyphicon-remove" style="color:crimson"></span>
+                                            Disable
+                                        </button>
+                                    </form>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col col-sm-4">
+                                    <form asp-area="Administration" asp-controller="Dashboard" asp-action="EnableTest" method="post">
+                                        <input id="Id" name="Id" type="hidden" value="@test.Id" />
+                                        <button type="submit" class="btn dashBtn">
+                                            <span class="glyphicon glyphicon-plus-sign" style="color:green"></span>
+                                            Enable
+                                        </button>
+                                    </form>
+                                </div>
+
+                            }
+
                         </td>
                     }
                     else
