@@ -66,8 +66,8 @@ namespace TestSystem.Web.Areas.Administration.Controllers
             });
 
         }
-        [HttpGet]
-        
+
+        [HttpGet]        
         public IActionResult EditTest(string testName, string categoryName)
         {
             if (string.IsNullOrEmpty(testName))

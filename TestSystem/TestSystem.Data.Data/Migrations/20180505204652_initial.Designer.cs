@@ -11,8 +11,8 @@ using TestSystem.Web.Data;
 namespace TestSystem.Data.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180419173848_smallChanges")]
-    partial class smallChanges
+    [Migration("20180505204652_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -329,11 +329,11 @@ namespace TestSystem.Data.Data.Migrations
 
                     b.Property<DateTime?>("ModifiedOn");
 
-                    b.Property<bool?>("Passed");
-
                     b.Property<double?>("Score");
 
-                    b.Property<DateTime?>("StartTime");
+                    b.Property<DateTime>("StartTime");
+
+                    b.Property<DateTime?>("SubmittedOn");
 
                     b.Property<Guid>("TestId");
 
