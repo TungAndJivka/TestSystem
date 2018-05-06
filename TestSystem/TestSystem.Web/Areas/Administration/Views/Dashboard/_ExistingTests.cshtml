@@ -37,9 +37,8 @@
                                 </a>
                             </div>
                             <div class="col col-sm-4">
-                                <form asp-area="Administration" asp-controller="Dashboard" asp-action="DisableTest" method="get">
-                                    <input id="testName" name="testName" type="hidden" value="@test.TestName" />
-                                    <input id="categoryName" name="categoryName" type="hidden" value="@test.Category" />
+                                <form asp-area="Administration" asp-controller="Dashboard" asp-action="DisableTest" method="post">
+                                    <input id="Id" name="Id" type="hidden" value="@test.Id" />
                                     <button type="submit" class="btn dashBtn">
                                         <span class="glyphicon glyphicon-remove" style="color:crimson"></span>
                                         Disable

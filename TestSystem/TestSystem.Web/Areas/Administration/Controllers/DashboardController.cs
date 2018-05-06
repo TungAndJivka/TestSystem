@@ -84,5 +84,33 @@ namespace TestSystem.Web.Areas.Administration.Controllers
             return RedirectToAction("Index", "Dashboard");
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DisableTest(string Id)
+        {
+            if (string.IsNullOrEmpty(Id))
+            {
+                return this.View();
+            }
+
+            this.testService.DisableTest(Id);
+
+            return RedirectToAction("Index", "Dashboard");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EnableTest(string Id)
+        {
+            if (string.IsNullOrEmpty(Id))
+            {
+                return this.View();
+            }
+
+            this.testService.EnableTest(Id);
+
+            return RedirectToAction("Index", "Dashboard");
+        }
+
     }
 }

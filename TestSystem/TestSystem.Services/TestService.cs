@@ -51,8 +51,8 @@ namespace TestSystem.Services
 
             var testDto = Mapper.MapTo<TestDto>(dbTest);
             return testDto;
-        }   
-                             
+        }
+
         public TestDto GetFullTestInfo(string testId)
         {
             Guard.WhenArgument(testId, "testId").IsNullOrEmpty().Throw();
@@ -86,7 +86,7 @@ namespace TestSystem.Services
                 .Select(c => c.Id)
                 .SingleOrDefault();
 
-            if( category == default(Guid))
+            if (category == default(Guid))
             {
 
             }
@@ -98,8 +98,8 @@ namespace TestSystem.Services
                 Duration = TimeSpan.FromMinutes(testDto.Duration),
                 IsPusblished = testDto.IsPusblished,
                 Questions = this.Mapper.EnumerableProjectTo<AdministerQuestionDto, Question>(testDto.Questions).ToList()
-            };  
-            
+            };
+
             this.testRepo.Add(testToBeAdded);
             Saver.SaveChanges();
         }
@@ -158,7 +158,7 @@ namespace TestSystem.Services
             Guard.WhenArgument(categoryName, "categoryName").IsNullOrEmpty().Throw();
 
             var test = this.testRepo.All
-               .Include(t => t.Category)               
+               .Include(t => t.Category)
                .Include(t => t.Questions)
                .ThenInclude(q => q.Answers)
                .Where(t => t.TestName == testName && t.Category.Name == categoryName)
@@ -167,5 +167,39 @@ namespace TestSystem.Services
             var testToBeReturned = this.Mapper.MapTo<AdministerTestDto>(test);
             return testToBeReturned;
         }
+
+        public void DisableTest(string Id)
+        {
+            if (Id == null)
+            {
+                throw new ArgumentNullException(nameof(Id));
+            }
+
+            var test = this.testRepo.All
+                        .Where(t => t.Id.ToString() == Id)
+                        .FirstOrDefault();
+
+            test.IsDisabled = true;
+
+            this.testRepo.Update(test);
+            this.Saver.SaveChanges();
+        }
+        public void EnableTest(string Id)
+        {
+            if (Id == null)
+            {
+                throw new ArgumentNullException(nameof(Id));
+            }
+
+            var test = this.testRepo.All
+                        .Where(t => t.Id.ToString() == Id)
+                        .FirstOrDefault();
+
+            test.IsDisabled = false;
+
+            this.testRepo.Update(test);
+            this.Saver.SaveChanges();
+        }
+
     }
 }

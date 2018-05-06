@@ -22,5 +22,9 @@ namespace TestSystem.Services.Contracts
         void DeleteTest(string testName, string categoryName);
 
         AdministerTestDto GetTest(string testName, string categoryName);
+
+        void DisableTest(string Id);
+
+        void EnableTest(string Id);
     }
 }
