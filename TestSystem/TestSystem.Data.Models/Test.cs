@@ -27,6 +27,9 @@ namespace TestSystem.Data.Models
         [Required]
         public bool IsPusblished { get; set; }
 
+        [Required]
+        public bool IsDisabled { get; set; }
+
         public ICollection<UserTest> UserTests { get; set; } //NP
     }
 }

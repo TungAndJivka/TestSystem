@@ -10,6 +10,7 @@ namespace TestSystem.DTO
         public string TestName { get; set; } 
         public TimeSpan Duration { get; set; }
         public bool IsPusblished { get; set; }
+        public bool IsDisabled { get; set; }
 
         public string CategoryId { get; set; }
         public CategoryDto Category { get; set; }  //NP

@@ -13,7 +13,7 @@ namespace TestSystem.Web.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
-            //Seed();
+            Seed();
         }
 
         private void Seed()

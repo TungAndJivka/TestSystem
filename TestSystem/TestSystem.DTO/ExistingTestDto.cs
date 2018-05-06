@@ -10,5 +10,6 @@ namespace TestSystem.DTO
         public string TestName { get; set; }
         public string Category { get; set; }
         public bool IsPusblished { get; set; }
+        public bool IsDisabled { get; set; }
     }
 }
