@@ -42,7 +42,7 @@ namespace TestSystem.Services
 
             var tests = testRepo.All
                 .Include(t => t.Category)
-                .Where(t => t.Category.Name == categoryName && t.IsPusblished)
+                .Where(t => t.Category.Name == categoryName && t.IsPusblished && (t.IsDisabled ==false))
                 .Include(t => t.Questions)
                 .ThenInclude(q => q.Answers)
                 .ToList();

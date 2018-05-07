@@ -21,7 +21,7 @@
                         </button>
                     </div>
 
-                    <div id="collapse-@q" class="panel-collapse collapse in">
+                    <div id="collapse-@q" class="panel-collapse collapse">
                         <div class="panel-body">
                             <div>Description</div>
                             <textarea id="@string.Format("Questions_{0}__Description", q)" name="Questions[@q].Description" class="summernote form-control input-lg" value="">@Model.Questions[q].Description</textarea>
@@ -58,13 +58,15 @@
                                 </div>
                             }
                         </div>
+                        <div class="panel-body">
+                            <button class="add-answer create-test-btn-green" name="collapse-@q" type="button">
+                                <span class="glyphicon glyphicon-plus"></span>
+                                Answer
+                            </button>
+                        </div>
+
                     </div>
-                    <div class="panel-body">
-                        <button class="add-answer create-test-btn-green" name="collapse-@q" type="button">
-                            <span class="glyphicon glyphicon-plus"></span>
-                            Answer
-                        </button>
-                    </div>
+
                 </div>
             }
         }
