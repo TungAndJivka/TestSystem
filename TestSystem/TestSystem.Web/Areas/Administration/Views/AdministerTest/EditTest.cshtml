@@ -15,22 +15,59 @@
                 <label asp-for="TestName"></label>
                 <input asp-for="TestName" class="form-control" />
                 <span asp-validation-for="TestName" class="text-danger"></span>
+                <input asp-for="@Model.Id" type="hidden" value="@Model.Id" />
+                <input asp-for="Id" type="hidden" value="Id" />
+                <span asp-validation-for="Id" class="text-danger"></span>
+
             </div>
             <div class="form-group col-md-2">
                 <label asp-for="Duration"></label>
                 <input asp-for="Duration" class="form-control" />
                 <span asp-validation-for="Duration" class="text-danger"></span>
             </div>
+
             <div class="form-group col-md-4">
                 <label asp-for="Category"></label>
                 <select asp-for="Category" class="selectpicker form-control">
-                    <option disabled selected>Select category</option>
-                    <option>Java</option>
-                    <option>SQL</option>
-                    <option>JavaScript</option>
-                    <option>.NET</option>
+                    
+                    @if (Model.Category == "Java")
+                    {
+                        <option selected>Java</option>
+                    }
+                    else
+                    {
+                        <option>Java</option>
+                    }
+
+                    @if (Model.Category == "SQL")
+                    {
+                        <option selected>SQL</option>
+                    }
+                    else
+                    {
+                        <option>SQL</option>
+                    }
+
+                    @if (Model.Category == "JavaScript")
+                    {
+                        <option selected>JavaScript</option>
+                    }
+                    else
+                    {
+                        <option>JavaScript</option>
+                    }
+
+                    @if (Model.Category == ".NET")
+                    {
+                        <option selected>.NET</option>
+                    }
+                    else
+                    {
+                        <option>.NET</option>
+                    }
+
                 </select>
-                <span asp-validation-for="Category" class="text-danger"></span>
+                <span asp-validation-for="Category" class="text-danger"></span>g
             </div>
         </div>
 
@@ -41,19 +78,18 @@
 
         <div>
             <div class="col col-lg-6">
-                <button class="create-test" type="submit" id="save-draft-test">
-                    Save Draft
+                <button asp-route-id="false" class="create-test" type="submit" id="save-draft-test">
+                    Save Changes
                 </button>
             </div>
-            <div class="col col-lg-6">
-                <button class="create-test" type="submit" id="save-published-test">
+            @*<div class="col col-lg-6">
+                <button asp-route-id="true" class="create-test" type="submit" id="save-published-test">
                     <span class="glyphicon glyphicon-ok"></span>
                     Publish
                 </button>
-            </div>
+            </div>*@
         </div>
 
-        <input asp-for="Id" type="hidden" value="@Model.Id" />
     </form>
 
 </div>

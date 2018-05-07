@@ -9,6 +9,7 @@ using TestSystem.Data.Models;
 using TestSystem.DTO;
 using TestSystem.Infrastructure.Providers;
 using TestSystem.Services;
+using TestSystem.Services.Contracts;
 
 namespace TestSystem.Tests.Business.Services
 {
@@ -19,6 +20,7 @@ namespace TestSystem.Tests.Business.Services
         Mock<IMappingProvider> mapperMock;
         Mock<ISaver> saverMock;
         Mock<IRandomProvider> randomMock;
+        Mock<IAnswerService> answerServiceMock;
         QuestionService questionService;
 
         [TestInitialize]
@@ -28,8 +30,9 @@ namespace TestSystem.Tests.Business.Services
             mapperMock = new Mock<IMappingProvider>();
             saverMock = new Mock<ISaver>();
             randomMock = new Mock<IRandomProvider>();
+            answerServiceMock = new Mock<IAnswerService>();
 
-            questionService = new QuestionService(questionRepoMock.Object, mapperMock.Object, saverMock.Object, randomMock.Object);
+            questionService = new QuestionService(questionRepoMock.Object, mapperMock.Object, saverMock.Object, randomMock.Object, answerServiceMock.Object);
         }
 
 
@@ -131,7 +134,7 @@ namespace TestSystem.Tests.Business.Services
         {
             //Act & Assert
             Assert.ThrowsException<ArgumentNullException>(()
-                => new QuestionService(null, mapperMock.Object, saverMock.Object, randomMock.Object));
+                => new QuestionService(null, mapperMock.Object, saverMock.Object, randomMock.Object, answerServiceMock.Object));
         }
 
         [TestMethod]
@@ -139,7 +142,7 @@ namespace TestSystem.Tests.Business.Services
         {
             //Act & Assert
             Assert.ThrowsException<ArgumentNullException>(()
-                => new QuestionService(questionRepoMock.Object, null, saverMock.Object, randomMock.Object));
+                => new QuestionService(questionRepoMock.Object, null, saverMock.Object, randomMock.Object, answerServiceMock.Object));
         }
 
         [TestMethod]
@@ -147,7 +150,7 @@ namespace TestSystem.Tests.Business.Services
         {
             //Act & Assert
             Assert.ThrowsException<ArgumentNullException>(()
-                => new QuestionService(questionRepoMock.Object, mapperMock.Object, null, randomMock.Object));
+                => new QuestionService(questionRepoMock.Object, mapperMock.Object, null, randomMock.Object, answerServiceMock.Object));
         }
 
         [TestMethod]
@@ -155,7 +158,7 @@ namespace TestSystem.Tests.Business.Services
         {
             //Act & Assert
             Assert.ThrowsException<ArgumentNullException>(()
-                => new QuestionService(questionRepoMock.Object, mapperMock.Object, saverMock.Object, null));
+                => new QuestionService(questionRepoMock.Object, mapperMock.Object, saverMock.Object, null, answerServiceMock.Object));
         }
     }
 }

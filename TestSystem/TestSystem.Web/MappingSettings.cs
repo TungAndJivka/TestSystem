@@ -11,105 +11,27 @@ namespace TestSystem.Web
     {
         public MappingSettings()
         {
-            this.CreateMap<Test, TestDto>(MemberList.Source)
-                .ForMember(t => t.Questions, o => o.MapFrom(x => x.Questions))
-                .ForMember(t => t.CategoryId, o => o.MapFrom(x => x.CategoryId.ToString()))
-                
-                .ForMember(t => t.Id, o => o.MapFrom(x => x.Id.ToString()))
-                .MaxDepth(3);
 
-            this.CreateMap<Question, QuestionDto>()
-                .ForMember(dto => dto.Answers, options => options.MapFrom(q => q.Answers));
+            ViewModelToDtoMapping();
 
-            //this.CreateMap<TestDto, TestSystem.Web.Areas.Administration.Models.DashboardViewModels.TestViewModel>()
-            //   .ForMember(vm => vm.CategoryName, options => options.MapFrom(x => x.Category.Name));
-
-            ViewMoDelToDtoMapping();
             DtoToViewModelMapping();
+
             DtoToDataModelMapping();
+
             DataModelToDtoMapping();
+           
+        }
 
 
-
-
-
-            //this.CreateMap<UserTest, TestResultDto>(MemberList.Source)
-            //    .ForMember(db => db.UserName, option => option.MapFrom(x => x.User.UserName))
-            //    .ForMember(db => db.TestName, option => option.MapFrom(x => x.Test.TestName))
-            //    .ForMember(db => db.Category, option => option.MapFrom(x => x.Test.Category.Name))
-            //    .ForMember(db => db.RequestedTime, option => option.MapFrom(x => x.Test.Duration));
-
-
-
-            this.CreateMap<TestDto, AdministerTestViewModel>()
-                .ForMember(x => x.Duration, option => option.MapFrom(o => o.Duration))
-                .ForMember(t => t.TestName, o => o.MapFrom(x => x.TestName))
-                .ForMember(t => t.Category, o => o.MapFrom(x => x.Category.Name))
-                .ForMember(t => t.Questions, o => o.MapFrom(x => x.Questions))
-                .MaxDepth(3)
-                .ReverseMap();
-
-            //this.CreateMap<UserTestDto, TestSystem.Web.Areas.Administration.Models.DashboardViewModels.ResultViewModel>()
-            //   .ForMember(vm => vm.User, options => options.MapFrom(x => x.User.UserName))
-            //   .ForMember(vm => vm.TestName, options => options.MapFrom(x => x.Test.TestName))
-            //   .ForMember(vm => vm.Duration, options => options.MapFrom(x => x.Test.Duration))
-            //   .ForMember(vm => vm.CategoryName, options => options.MapFrom(x => x.Test.Category.Name));
-
-
-            // Optional
-            this.CreateMap<AnswerDto, TestSystem.Web.Models.TakeTestViewModels.AnswerViewModel>(MemberList.Source);
-
-
-            this.CreateMap<QuestionDto, TestSystem.Web.Models.TakeTestViewModels.QuestionViewModel>(MemberList.Source);
-
+        private void ViewModelToDtoMapping()
+        {
             this.CreateMap<QuestionViewModel, QuestionDto>(MemberList.Source);
 
             this.CreateMap<AnswerViewModel, AnswerDto>(MemberList.Source);
 
-
-
-            this.CreateMap<Question, QuestionDto>(MemberList.Source)
- .ForMember(q => q.Answers, o => o.MapFrom(x => x.Answers))
- .MaxDepth(3);
-
-            // Explicit Collection mappings:
-            this.CreateMap<Category, CategoryDto>()
-    .ForMember(dto => dto.Tests, db => db.MapFrom(x => x.Tests))
-    .ForMember(dto => dto.Id, db => db.MapFrom(x => x.Id.ToString()))
-    .MaxDepth(5);
-
-
-
-            this.CreateMap<Question, QuestionDto>()
-                .ForMember(q => q.Answers, o => o.MapFrom(x => x.Answers))
-                .MaxDepth(3);
-
-            this.CreateMap<QuestionDto, TestSystem.Web.Models.TakeTestViewModels.QuestionViewModel>()
-                .ForMember(q => q.Answers, o => o.MapFrom(x => x.Answers))
-                .MaxDepth(3)
-                .ReverseMap();
-
-            this.CreateMap<Answer, AnswerDto>()
-                .ForMember(dto => dto.AnsweredQuestions, o => o.MapFrom(x => x.AnsweredQuestions))
-                .MaxDepth(3)
-                .ReverseMap();
-
-            this.CreateMap<UserTestDto, UserTest>(MemberList.Source)
-                .ForMember(dto => dto.AnsweredQuestions, o => o.MapFrom(x => x.AnsweredQuestions))
-                .MaxDepth(3);
-
-            this.CreateMap<AnsweredQuestionDto, AnsweredQuestion>(MemberList.Source)
-                .ForMember(db => db.Id, options => options.MapFrom(dto => dto.Id));
-
-            this.CreateMap<TestSystem.Web.Models.TakeTestViewModels.IndexViewModel, UserTestDto>(MemberList.Source);
-        }
-
-
-
-        private void ViewMoDelToDtoMapping()
-        {
             this.CreateMap<AdministerTestViewModel, AdministerTestDto>()
                 .ForMember(t => t.Questions, o => o.MapFrom(t => t.Questions))
+                .ForMember(t => t.Category, o => o.MapFrom(t => t.Category))
                 .ReverseMap();
 
             this.CreateMap<QuestionViewModel, AdministerQuestionDto>()
@@ -120,29 +42,84 @@ namespace TestSystem.Web
                 .ForMember(a => a.Content, o => o.MapFrom(a => a.Content))
                 .ForMember(a => a.IsCorrect, o => o.MapFrom(a => a.IsCorrect))
                 .ReverseMap();
+
+            this.CreateMap<TestSystem.Web.Models.TakeTestViewModels.IndexViewModel, UserTestDto>(MemberList.Source);
+
+            this.CreateMap<AdministerTestViewModel, EditTestDto>()
+                .ForMember(t => t.Questions, o => o.MapFrom(t => t.Questions))
+                .ForMember(t => t.Category, o => o.MapFrom(t => t.Category))
+                .ReverseMap();
+
+            this.CreateMap<QuestionViewModel, EditQuestionDto>()
+               .ForMember(q => q.Answers, o => o.MapFrom(q => q.Answers))
+               .ReverseMap();
+
+            this.CreateMap<AnswerViewModel, EditAnswerDto>()
+                .ForMember(a => a.Content, o => o.MapFrom(a => a.Content))
+                .ForMember(a => a.IsCorrect, o => o.MapFrom(a => a.IsCorrect))
+                .ReverseMap();
         }
+
 
         private void DtoToViewModelMapping()
         {
+            this.CreateMap<AnswerDto, TestSystem.Web.Models.TakeTestViewModels.AnswerViewModel>(MemberList.Source);
+
+            this.CreateMap<QuestionDto, TestSystem.Web.Models.TakeTestViewModels.QuestionViewModel>(MemberList.Source);
+
             this.CreateMap<ExistingTestDto, ExistingTestViewModel>(MemberList.Destination);
+
             this.CreateMap<TestResultDto, TestResultViewModel>(MemberList.Destination);
+
+            this.CreateMap<TestDto, AdministerTestViewModel>()
+                .ForMember(x => x.Duration, option => option.MapFrom(o => o.Duration))
+                .ForMember(t => t.TestName, o => o.MapFrom(x => x.TestName))
+                .ForMember(t => t.Category, o => o.MapFrom(x => x.Category.Name))
+                .ForMember(t => t.Questions, o => o.MapFrom(x => x.Questions))
+                .MaxDepth(3)
+                .ReverseMap();
+
+            this.CreateMap<QuestionDto, TestSystem.Web.Models.TakeTestViewModels.QuestionViewModel>()
+                .ForMember(q => q.Answers, o => o.MapFrom(x => x.Answers))
+                .MaxDepth(3)
+                .ReverseMap();
         }
+
 
         private void DtoToDataModelMapping()
         {
             this.CreateMap<AdministerTestDto, Test>()
                 .ForMember(t => t.Questions, o => o.MapFrom(t => t.Questions));
 
-            this.CreateMap<AdministerQuestionDto, Question>();
+            this.CreateMap<AdministerQuestionDto, Question>(MemberList.Source);
+                //.ForMember(db => db.Id, options => options.MapFrom(dto => new Guid(dto.Id)))
+                //.ForMember(db => db.Answers, o => o.MapFrom(dto => dto.Answers));
 
+            this.CreateMap<AdministerAnswerDto, Answer>(MemberList.Source);
+                //.ForMember(db => db.Id, options => options.MapFrom(dto => new Guid(dto.Id)));
 
-            this.CreateMap<AdministerAnswerDto, Answer>();
+            this.CreateMap<UserTestDto, UserTest>(MemberList.Source)
+                .ForMember(db => db.AnsweredQuestions, o => o.MapFrom(dto => dto.AnsweredQuestions))
+                .MaxDepth(3);
 
+            this.CreateMap<AnsweredQuestionDto, AnsweredQuestion>(MemberList.Source)
+                .ForMember(db => db.Id, options => options.MapFrom(dto => dto.Id));
         }
 
 
         private void DataModelToDtoMapping()
         {
+            this.CreateMap<Test, AdministerTestDto>()
+                .ForMember(t => t.Questions, o => o.MapFrom(t => t.Questions))
+                .ForMember(t => t.Duration, o => o.MapFrom(t => t.Duration.Minutes))
+                .ForMember(t => t.Category, o => o.MapFrom(t => t.Category.Name));
+
+            this.CreateMap<Test, EditTestDto>()
+                .ForMember(t => t.Questions, o => o.MapFrom(t => t.Questions))
+                .ForMember(t => t.Duration, o => o.MapFrom(t => t.Duration.Minutes))
+                .ForMember(t => t.Category, o => o.MapFrom(t => t.Category.Name))
+                .ForMember(t => t.Id, o => o.MapFrom(t => t.Id.ToString()));
+
             this.CreateMap<Test, ExistingTestDto>()
                 .ForMember(t => t.Category, o => o.MapFrom(t => t.Category.Name))
                 .ForMember(t => t.TestName, o => o.MapFrom(t => t.TestName));
@@ -157,13 +134,32 @@ namespace TestSystem.Web
                 .ForMember(dto => dto.ExecutionTime, o => o.MapFrom(dm => dm.SubmittedOn.Value.Subtract(dm.CreatedOn)))
                 .ForMember(dto => dto.Result, o => o.MapFrom(dm => dm.Score));
 
+            this.CreateMap<Test, TestDto>(MemberList.Source)
+                .ForMember(t => t.Questions, o => o.MapFrom(x => x.Questions))
+                .ForMember(t => t.CategoryId, o => o.MapFrom(x => x.CategoryId.ToString()))
+                .ForMember(t => t.Id, o => o.MapFrom(x => x.Id.ToString()))
+                .MaxDepth(3);
 
-            //this.CreateMap<UserTest, TestResultDto>(MemberList.Destination)
-            //   .ForMember(ut => ut.UserName, o => o.MapFrom(ut => ut.User.UserName))
-            //   .ForMember(ut => ut.TestName, o => o.MapFrom(ut => ut.Test.TestName))
-            //   .ForMember(ut => ut.Category, o => o.MapFrom(ut => ut.Test.Category.Name))
-            //   .ForMember(ut => ut.ExecutionTime, o => o.MapFrom(ut => ut.SubmittedOn.Value.Subtract(ut.StartTime.Value)))
-            //   .ForMember(ut => ut.Result, o => o.MapFrom(ut => ut.Score));
+            this.CreateMap<Question, QuestionDto>()
+                .ForMember(dto => dto.Answers, options => options.MapFrom(q => q.Answers));
+
+            this.CreateMap<Question, QuestionDto>(MemberList.Source)
+                .ForMember(q => q.Answers, o => o.MapFrom(x => x.Answers))
+                .MaxDepth(3);
+
+            this.CreateMap<Category, CategoryDto>()
+                .ForMember(dto => dto.Tests, db => db.MapFrom(x => x.Tests))
+                .ForMember(dto => dto.Id, db => db.MapFrom(x => x.Id.ToString()))
+                .MaxDepth(5);
+
+            this.CreateMap<Question, QuestionDto>()
+                .ForMember(q => q.Answers, o => o.MapFrom(x => x.Answers))
+                .MaxDepth(3);
+
+            this.CreateMap<Answer, AnswerDto>()
+                .ForMember(dto => dto.AnsweredQuestions, o => o.MapFrom(x => x.AnsweredQuestions))
+                .MaxDepth(3)
+                .ReverseMap();
         }
     }
 }

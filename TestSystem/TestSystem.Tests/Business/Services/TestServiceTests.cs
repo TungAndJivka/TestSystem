@@ -9,6 +9,7 @@ using TestSystem.Data.Models;
 using TestSystem.DTO;
 using TestSystem.Infrastructure.Providers;
 using TestSystem.Services;
+using TestSystem.Services.Contracts;
 
 namespace TestSystem.Tests.Business.Services
 {
@@ -20,6 +21,7 @@ namespace TestSystem.Tests.Business.Services
         Mock<IMappingProvider>  mapperMock;
         Mock<ISaver> saverMock;
         Mock<IRandomProvider> randomMock;
+        Mock<IQuestionService> questionServiceMock;
         TestService testService;
 
         [TestInitialize]
@@ -30,8 +32,9 @@ namespace TestSystem.Tests.Business.Services
             mapperMock = new Mock<IMappingProvider>();
             saverMock = new Mock<ISaver>();
             randomMock = new Mock<IRandomProvider>();
+            questionServiceMock = new Mock<IQuestionService>();
 
-            testService = new TestService(testRepoMock.Object, categoryRepoMock.Object, mapperMock.Object, saverMock.Object, randomMock.Object);
+            testService = new TestService(testRepoMock.Object, categoryRepoMock.Object, mapperMock.Object, saverMock.Object, randomMock.Object, questionServiceMock.Object);
 
         }
 
@@ -865,155 +868,16 @@ namespace TestSystem.Tests.Business.Services
             saverMock.Verify(x => x.SaveChanges(), Times.Once);
         }
 
-        // DisableTest() TESTS
-
-        [TestMethod]
-        public void DisableTest_Should_Throw_ArgumentNullException_When_TestId_Is_Null()
-        {
-            Assert.ThrowsException<ArgumentNullException>(() => testService.DisableTest(null));
-        }
-
-        [TestMethod]
-        public void DisableTest_Should_Set_IsDisabled_True()
-        {
-            // Arrange
-            Guid guid = Guid.NewGuid();
-            var test = new Test() { Id = guid };
-            var all = new List<Test>() { test };
-
-            testRepoMock.Setup(x => x.All).Verifiable();
-            testRepoMock.Setup(x => x.Update(It.IsAny<Test>())).Verifiable();
-            testRepoMock.Setup(x => x.All).Returns(all.AsQueryable());
-            saverMock.Setup(x => x.SaveChanges()).Verifiable();
-
-            // Act
-            testService.DisableTest(guid.ToString());
-
-            // Assert
-            Assert.IsTrue(test.IsDisabled == true);
-        }
 
 
-        [TestMethod]
-        public void DisableTest_Should_Call_Repo_Update()
-        {
-            // Arrange
-            Guid guid = Guid.NewGuid();
-            var test = new Test() { Id = guid };
-            var all = new List<Test>() { test };
-
-            testRepoMock.Setup(x => x.All).Verifiable();
-            testRepoMock.Setup(x => x.Update(It.IsAny<Test>())).Verifiable();
-            testRepoMock.Setup(x => x.All).Returns(all.AsQueryable());
-            saverMock.Setup(x => x.SaveChanges()).Verifiable();
-
-            // Act
-            testService.DisableTest(guid.ToString());
-
-            // Assert
-            testRepoMock.Verify(x => x.Update(It.IsAny<Test>()), Times.Once);
-        }
-
-        [TestMethod]
-        public void DisableTest_Should_Call_Saver_SaveChanges()
-        {
-            // Arrange
-            Guid guid = Guid.NewGuid();
-            var test = new Test() { Id = guid };
-            var all = new List<Test>() { test };
-
-            testRepoMock.Setup(x => x.All).Verifiable();
-            testRepoMock.Setup(x => x.Update(It.IsAny<Test>())).Verifiable();
-            testRepoMock.Setup(x => x.All).Returns(all.AsQueryable());
-            saverMock.Setup(x => x.SaveChanges()).Verifiable();
-
-            // Act
-            testService.DisableTest(guid.ToString());
-
-            // Assert
-            saverMock.Verify(x => x.SaveChanges(), Times.Once);
-        }
-
-// EnableTest() TESTS
-
-        [TestMethod]
-        public void EnableTest_Should_Throw_ArgumentNullException_When_TestId_Is_Null()
-        {
-            Assert.ThrowsException<ArgumentNullException>(() => testService.DisableTest(null));
-        }
-
-        [TestMethod]
-        public void EnableTest_Should_Set_IsDisabled_False()
-        {
-            // Arrange
-            Guid guid = Guid.NewGuid();
-            var test = new Test() { Id = guid };
-            var all = new List<Test>() { test };
-
-            testRepoMock.Setup(x => x.All).Verifiable();
-            testRepoMock.Setup(x => x.Update(It.IsAny<Test>())).Verifiable();
-            testRepoMock.Setup(x => x.All).Returns(all.AsQueryable());
-            saverMock.Setup(x => x.SaveChanges()).Verifiable();
-
-            // Act
-            testService.EnableTest(guid.ToString());
-
-            // Assert
-            Assert.IsTrue(test.IsDisabled == false);
-        }
-
-
-        [TestMethod]
-        public void EnableTest_Should_Call_Repo_Update()
-        {
-            // Arrange
-            Guid guid = Guid.NewGuid();
-            var test = new Test() { Id = guid };
-            var all = new List<Test>() { test };
-
-            testRepoMock.Setup(x => x.All).Verifiable();
-            testRepoMock.Setup(x => x.Update(It.IsAny<Test>())).Verifiable();
-            testRepoMock.Setup(x => x.All).Returns(all.AsQueryable());
-            saverMock.Setup(x => x.SaveChanges()).Verifiable();
-
-            // Act
-            testService.EnableTest(guid.ToString());
-
-            // Assert
-            testRepoMock.Verify(x => x.Update(It.IsAny<Test>()), Times.Once);
-        }
-
-        [TestMethod]
-        public void EnableTest_Should_Call_Saver_SaveChanges()
-        {
-            // Arrange
-            Guid guid = Guid.NewGuid();
-            var test = new Test() { Id = guid };
-            var all = new List<Test>() { test };
-
-            testRepoMock.Setup(x => x.All).Verifiable();
-            testRepoMock.Setup(x => x.Update(It.IsAny<Test>())).Verifiable();
-            testRepoMock.Setup(x => x.All).Returns(all.AsQueryable());
-            saverMock.Setup(x => x.SaveChanges()).Verifiable();
-
-            // Act
-            testService.EnableTest(guid.ToString());
-
-            // Assert
-            saverMock.Verify(x => x.SaveChanges(), Times.Once);
-        }
-
-
-
-
-        // CONSTRUCTOR VALIDATIONS TESTS:
+// CONSTRUCTOR VALIDATIONS TESTS:
 
         [TestMethod]
         public void Constructor_Should_Throw_ArgumentNullException_When_TestRepo_Is_Null()
         {
             //Act & Assert
             Assert.ThrowsException<ArgumentNullException>(() 
-                => new TestService(null, categoryRepoMock.Object, mapperMock.Object, saverMock.Object, randomMock.Object));
+                => new TestService(null, categoryRepoMock.Object, mapperMock.Object, saverMock.Object, randomMock.Object, questionServiceMock.Object));
         }
 
         [TestMethod]
@@ -1021,7 +885,7 @@ namespace TestSystem.Tests.Business.Services
         {
             //Act & Assert
             Assert.ThrowsException<ArgumentNullException>(() 
-                => new TestService(testRepoMock.Object, categoryRepoMock.Object, null, saverMock.Object, randomMock.Object));
+                => new TestService(testRepoMock.Object, categoryRepoMock.Object, null, saverMock.Object, randomMock.Object, questionServiceMock.Object));
         }
 
         [TestMethod]
@@ -1030,7 +894,7 @@ namespace TestSystem.Tests.Business.Services
 
             //Act & Assert
             Assert.ThrowsException<ArgumentNullException>(() 
-                => new TestService(testRepoMock.Object, categoryRepoMock.Object, mapperMock.Object, null, randomMock.Object));
+                => new TestService(testRepoMock.Object, categoryRepoMock.Object, mapperMock.Object, null, randomMock.Object, questionServiceMock.Object));
         }
 
         [TestMethod]
@@ -1038,7 +902,7 @@ namespace TestSystem.Tests.Business.Services
         {
             //Act & Assert
             Assert.ThrowsException<ArgumentNullException>(() 
-                => new TestService(testRepoMock.Object, categoryRepoMock.Object, mapperMock.Object, saverMock.Object, null));
+                => new TestService(testRepoMock.Object, categoryRepoMock.Object, mapperMock.Object, saverMock.Object, null, questionServiceMock.Object));
         }
 
         [TestMethod]
@@ -1046,7 +910,7 @@ namespace TestSystem.Tests.Business.Services
         {
             //Act & Assert
             Assert.ThrowsException<ArgumentNullException>(()
-                => new TestService(testRepoMock.Object, null, mapperMock.Object, saverMock.Object, randomMock.Object));
+                => new TestService(testRepoMock.Object, null, mapperMock.Object, saverMock.Object, randomMock.Object, questionServiceMock.Object));
         }
 
     }

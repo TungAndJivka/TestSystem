@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
+using System.Linq;
 using TestSystem.DTO;
 using TestSystem.Infrastructure.Providers;
 using TestSystem.Services.Contracts;
@@ -28,6 +27,7 @@ namespace TestSystem.Web.Areas.Administration.Controllers
             return View();
         }
 
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Index(AdministerTestViewModel createTestViewModel, bool id)
@@ -37,7 +37,6 @@ namespace TestSystem.Web.Areas.Administration.Controllers
             {
                 return View(createTestViewModel);
             }
-            //Vallidations
 
             if (!this.ModelState.IsValid)
             {
@@ -49,15 +48,6 @@ namespace TestSystem.Web.Areas.Administration.Controllers
 
             this.testService.CreateTest(createTestDto);
 
-            //try
-            //{
-                
-            //}
-            //catch (Exception)
-            //{
-            //    return View(createTestViewModel);
-            //}
-
             return RedirectToRoute(new
             {
                 area = "Administration",
@@ -66,6 +56,7 @@ namespace TestSystem.Web.Areas.Administration.Controllers
             });
 
         }
+
 
         [HttpGet]        
         public IActionResult EditTest(string testName, string categoryName)
@@ -80,10 +71,43 @@ namespace TestSystem.Web.Areas.Administration.Controllers
                 return this.View();
             }
 
-            var testDto = testService.GetTest(testName, categoryName);
+            var testDto = testService.GetTestForEditing(testName, categoryName);
             var testViewModel = this.mapper.MapTo<AdministerTestViewModel>(testDto);
+            testDto.Category = categoryName;
 
             return this.View(testViewModel);
         }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditTest(AdministerTestViewModel editTestViewModel, bool id)
+        {
+            if (editTestViewModel.Duration == 0 
+                || editTestViewModel.Category == null 
+                || editTestViewModel.Category == string.Empty
+                || editTestViewModel.Questions.Count() < 1
+                || editTestViewModel.Questions.Any(x => x.Description == null)
+                || editTestViewModel.Questions.Any(tq => tq.Description == string.Empty)
+                || editTestViewModel.Questions.Any(q => q.Answers.Any(a => a.Content == null))
+                || editTestViewModel.Questions.Any(z => z.Answers.Count < 2)
+                || editTestViewModel.Questions.Any(z => z.Answers.Select(a => a.IsCorrect).Count() < 1)
+                )
+            {
+                return View(editTestViewModel);
+            }
+
+            var editTestDto = this.mapper.MapTo<EditTestDto>(editTestViewModel);
+            editTestDto.IsPusblished = id;
+            this.testService.EditTest(editTestDto);
+
+            return RedirectToRoute(new
+            {
+                area = "Administration",
+                controller = "Dashboard",
+                action = "Index"
+            });
+        }
+
     }
 }

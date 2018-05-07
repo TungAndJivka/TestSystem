@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 using TestSystem.Data.Models.Abstractions;
 
 namespace TestSystem.Data.Models
@@ -22,8 +21,6 @@ namespace TestSystem.Data.Models
         public Test Test { get; set; }
 
         public double? Score { get; set; }
-
-        public DateTime StartTime { get; set; }
 
         public DateTime? SubmittedOn { get; set; }
 

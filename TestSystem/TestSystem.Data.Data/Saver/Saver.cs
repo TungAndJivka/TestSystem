@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using TestSystem.Web.Data;
+﻿using TestSystem.Web.Data;
 
 namespace TestSystem.Data.Data.Saver
 {

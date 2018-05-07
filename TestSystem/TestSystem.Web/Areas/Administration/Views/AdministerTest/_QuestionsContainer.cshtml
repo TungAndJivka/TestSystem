@@ -26,6 +26,9 @@
                             <div>Description</div>
                             <textarea id="@string.Format("Questions_{0}__Description", q)" name="Questions[@q].Description" class="summernote form-control input-lg" value="">@Model.Questions[q].Description</textarea>
                             <span asp-validation-for="Questions[q].Description" class="text-danger"></span>
+                            <input asp-for="Questions[q].Id" type="hidden" value="@(Model.Questions[q].Id)" />
+                            <span asp-validation-for="Questions[q].Id" class="text-danger" style="display:none"></span>
+
                         </div>
                         <div class="answers-container">
                             @for (int a = 0; a < Model.Questions[q].Answers.Count; a++)
@@ -49,6 +52,9 @@
                                     <div class="answer-body">
                                         <textarea id="@string.Format("Questions_{0}__Answers_{1}__Content", q, a)" name="Questions[@q].Answers[@a].Content" class="summernote answer-content">@Model.Questions[q].Answers[a].Content</textarea>
                                         <span asp-validation-for="Questions[q].Answers[a].Content" class="text-danger"></span>
+                                        <input asp-for="Questions[q].Answers[a].Id" type="hidden" value="@(Model.Questions[q].Answers[a].Id)" />
+                                        <span asp-validation-for="Questions[q].Answers[a].Id" class="text-danger" style="display:none"></span>
+
                                     </div>
                                 </div>
                             }

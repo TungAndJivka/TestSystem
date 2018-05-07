@@ -1,30 +1,9 @@
 ﻿@import url('https://fonts.googleapis.com/css?family=Lato');
 
-/*body, html {
-    height: 100%;
-    background: #222222;
-    font-family: 'Lato', sans-serif;
-}*/
-
 #page {
     font-family: 'Lato', sans-serif;
 }
 
-/*.container {
-    display: block;
-    position: relative;
-    margin: 40px auto;
-    height: auto;
-    width: 500px;
-    padding: 20px;
-}*/
-
-/*.container ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    overflow: auto;
-}*/
 
 .li {
     display: block;
@@ -74,19 +53,6 @@
     border: 5px solid #FA8258;
 }
 
-/*input[type="radio"] .check::before {
-    display: block;
-    position: absolute;
-    content: '';
-    border-radius: 100%;
-    height: 15px;
-    width: 15px;
-    top: 5px;
-    left: 5px;
-    margin: auto;
-    transition: background 0.25s linear;
-    -webkit-transition: background 0.25s linear;
-}*/
 
 li .check::before {
     display: block;
@@ -126,35 +92,3 @@ input[type="radio"]:checked ~ label {
 }
 
 
-
-
-/* Styles for alert... 
-by the way it is so weird when you look at your code a couple of years after you wrote it XD */
-
-/*.alert {
-    box-sizing: border-box;
-    background-color: #0DFF92;
-    width: 100%;
-    position: relative;
-    top: 0;
-    left: 0;
-    z-index: 300;
-    padding: 20px 40px;
-    color: #333;
-}
-
-    .alert h2 {
-        font-size: 22px;
-        color: #232323;
-        margin-top: 0;
-    }
-
-    .alert p {
-        line-height: 1.6em;
-        font-size: 18px;
-    }
-
-    .alert a {
-        color: #232323;
-        font-weight: bold;
-    }*/

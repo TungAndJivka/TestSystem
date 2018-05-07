@@ -25,14 +25,6 @@ namespace TestSystem.Data.Data.Repositories
             }
         }
 
-        public IQueryable<T> AllAndDeleted
-        {
-            get
-            {
-                return this.context.Set<T>();
-            }
-        }
-
         public void Add(T entity)
         {
             EntityEntry entry = this.context.Entry(entity);
@@ -54,6 +46,12 @@ namespace TestSystem.Data.Data.Repositories
 
             var entry = this.context.Entry(entity);
             entry.State = EntityState.Modified;
+        }
+
+        public void RealDelete(T entity)
+        {
+            var entry = this.context.Entry(entity);
+            entry.State = EntityState.Deleted;
         }
 
         public void Update(T entity)

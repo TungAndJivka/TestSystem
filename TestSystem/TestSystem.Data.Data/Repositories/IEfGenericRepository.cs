@@ -7,10 +7,10 @@ namespace TestSystem.Data.Data.Repositories
         where T : class, IDeletable
     {
         IQueryable<T> All { get; }
-        IQueryable<T> AllAndDeleted { get; }
 
         void Add(T entity);
         void Delete(T entity);
+        void RealDelete(T entity);
         void Update(T entity);
     }
 }

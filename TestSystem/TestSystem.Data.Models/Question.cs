@@ -6,8 +6,7 @@ using TestSystem.Data.Models.Abstractions;
 namespace TestSystem.Data.Models
 {
     public class Question : DataModel
-    {
-               
+    {             
         public Question()
         {
             this.Answers = new HashSet<Answer>();

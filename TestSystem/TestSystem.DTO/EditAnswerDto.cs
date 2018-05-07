@@ -1,8 +1,8 @@
 ﻿namespace TestSystem.DTO
 {
-    public class AdministerAnswerDto
+    public class EditAnswerDto
     {
-        //public string Id { get; set; }
+        public string Id { get; set; }
         public string Content { get; set; }
         public bool IsCorrect { get; set; }
     }

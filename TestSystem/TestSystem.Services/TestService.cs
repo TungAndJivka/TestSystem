@@ -16,14 +16,17 @@ namespace TestSystem.Services
     {
         private readonly IEfGenericRepository<Category> categoryRepo;
         private readonly IEfGenericRepository<Test> testRepo;
+        private readonly IQuestionService questionService;
 
-        public TestService(IEfGenericRepository<Test> testRepo, IEfGenericRepository<Category> categoryRepo, IMappingProvider mapper, ISaver saver, IRandomProvider random)
+        public TestService(IEfGenericRepository<Test> testRepo, IEfGenericRepository<Category> categoryRepo, IMappingProvider mapper, ISaver saver, IRandomProvider random, IQuestionService questionService)
             : base(mapper, saver, random)
         {
             Guard.WhenArgument(testRepo, "testRepo").IsNull().Throw();
             Guard.WhenArgument(categoryRepo, "categoryRepo").IsNull().Throw();
+            Guard.WhenArgument(questionService, "questionService").IsNull().Throw();
             this.testRepo = testRepo;
             this.categoryRepo = categoryRepo;
+            this.questionService = questionService;
         }
 
         public IEnumerable<TestDto> GetAll()
@@ -57,13 +60,13 @@ namespace TestSystem.Services
         {
             Guard.WhenArgument(testId, "testId").IsNullOrEmpty().Throw();
 
-            var entities = testRepo.All
+            var entity = testRepo.All
                 .Where(t => t.Id.ToString().Equals(testId))
                 .Include(t => t.Questions)
                 .ThenInclude(q => q.Answers)
                 .FirstOrDefault();
 
-            var result = this.Mapper.MapTo<TestDto>(entities);
+            var result = this.Mapper.MapTo<TestDto>(entity);
             return result;
         }
 
@@ -86,11 +89,6 @@ namespace TestSystem.Services
                 .Select(c => c.Id)
                 .SingleOrDefault();
 
-            if (category == default(Guid))
-            {
-
-            }
-
             Test testToBeAdded = new Test()
             {
                 TestName = testDto.TestName,
@@ -103,6 +101,7 @@ namespace TestSystem.Services
             this.testRepo.Add(testToBeAdded);
             Saver.SaveChanges();
         }
+
 
         public int GetQuestionsCount(string testId)
         {
@@ -147,10 +146,16 @@ namespace TestSystem.Services
                .Where(t => t.TestName == testName && t.Category.Name == categoryName)
                .FirstOrDefault();
 
+            foreach (var question in test.Questions)
+            {
+                this.questionService.DeleteQuestion(question);
+            }
+
             test.IsDeleted = true;
             this.testRepo.Update(test);
             this.Saver.SaveChanges();
         }
+
 
         public AdministerTestDto GetTest(string testName, string categoryName)
         {
@@ -168,6 +173,57 @@ namespace TestSystem.Services
             return testToBeReturned;
         }
 
+        public EditTestDto GetTestForEditing(string testName, string categoryName)
+        {
+            Guard.WhenArgument(testName, "testName").IsNullOrEmpty().Throw();
+            Guard.WhenArgument(categoryName, "categoryName").IsNullOrEmpty().Throw();
+
+            var test = this.testRepo.All
+               .Include(t => t.Category)
+               .Include(t => t.Questions)
+               .ThenInclude(q => q.Answers)
+               .Where(t => t.TestName == testName && t.Category.Name == categoryName)
+               .FirstOrDefault();
+
+            var testToBeReturned = this.Mapper.MapTo<EditTestDto>(test);
+            return testToBeReturned;
+        }
+
+        public void EditTest(EditTestDto testDto)
+        {
+            Guard.WhenArgument(testDto, "testDto").IsNull().Throw();
+
+            var entity = testRepo.All
+                .Where(t => t.Id.ToString() == testDto.Id)
+                .Include(t => t.Questions)
+                .ThenInclude(q => q.Answers)
+                .FirstOrDefault();
+
+            foreach (var question in entity.Questions)
+            {
+                if (testDto.Questions.Any(x => x.Id == question.Id.ToString()))
+                {
+                    continue;
+                }
+                this.questionService.DeleteQuestion(question);
+            }
+
+            foreach (var question in testDto.Questions)
+            {
+                this.questionService.EditQuestion(question, entity.Id);
+            }
+
+            entity.TestName = testDto.TestName;
+            entity.Duration = TimeSpan.FromMinutes(testDto.Duration);
+            entity.CategoryId = this.categoryRepo.All.Where(x => x.Name == testDto.Category).FirstOrDefault().Id;
+            entity.IsPusblished = testDto.IsPusblished;
+            entity.ModifiedOn = DateTime.Now;
+
+            this.testRepo.Update(entity);
+            this.Saver.SaveChanges();
+        }
+
+
         public void DisableTest(string Id)
         {
             if (Id == null)
@@ -184,6 +240,8 @@ namespace TestSystem.Services
             this.testRepo.Update(test);
             this.Saver.SaveChanges();
         }
+
+
         public void EnableTest(string Id)
         {
             if (Id == null)

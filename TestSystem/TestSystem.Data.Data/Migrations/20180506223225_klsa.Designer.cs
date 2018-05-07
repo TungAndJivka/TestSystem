@@ -11,9 +11,10 @@ using TestSystem.Web.Data;
 namespace TestSystem.Data.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180506223225_klsa")]
+    partial class klsa
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -331,6 +332,8 @@ namespace TestSystem.Data.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn");
 
                     b.Property<double?>("Score");
+
+                    b.Property<DateTime>("StartTime");
 
                     b.Property<DateTime?>("SubmittedOn");
 

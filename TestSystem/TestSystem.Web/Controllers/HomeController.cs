@@ -89,7 +89,7 @@ namespace TestSystem.Web.Controllers
                 AddErrors(result);
             }
 
-            return this.RedirectToAction("Index");
+            return View("Index");
         }
 
 

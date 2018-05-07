@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace TestSystem.Web.Areas.Administration.Models.CreateTestViewModels
 {
     public class AdministerTestViewModel
     {
-
+        //[Required(ErrorMessage = "Test ID is required!")]
+        //[StringLength(36, MinimumLength = 36, ErrorMessage = "Test ID must be 36 symbols")]
         public string Id { get; set; }
-
 
         [Required(ErrorMessage = "Test name is required")]
         [StringLength(30, MinimumLength = 4, ErrorMessage = "The Test name should be between 4 and 30 symbols long")]

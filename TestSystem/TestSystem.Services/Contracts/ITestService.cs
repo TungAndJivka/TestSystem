@@ -23,8 +23,12 @@ namespace TestSystem.Services.Contracts
 
         AdministerTestDto GetTest(string testName, string categoryName);
 
+        EditTestDto GetTestForEditing(string testName, string categoryName);
+
         void DisableTest(string Id);
 
         void EnableTest(string Id);
+
+        void EditTest(EditTestDto testDto);
     }
 }
