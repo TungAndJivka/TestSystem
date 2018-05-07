@@ -49,18 +49,20 @@
     </div>
 
 
-
-    <div id="testsTakenStatistic" class="text-center">Total Test Taken by all Users: @Model.TestsTaken</div>
-
-    <div class="chart-container" style="position: relative; height:35vh; width:50vw">
-        <canvas id="myChart" ></canvas>
+    <div class="col col-lg-6" style="display:inline-block">
+        <div class="chart-container" style="position: relative; height:35vh; width:50vw">
+            <canvas id="myChart"></canvas>
+        </div>
     </div>
-    
-
-    @section scripts
-        {
-        <script src="~/js/Dashboard.js" asp-append-version="true"></script>
-    }
+    <div class="col col-lg-6" style="display:inline-block">
+        <div id="testsTakenStatistic" class="text-center">Total Test Taken by all Users: @Model.TestsTaken</div>
+    </div>
 
 
-</div>
+        @section scripts
+            {
+            <script src="~/js/Dashboard.js" asp-append-version="true"></script>
+        }
+
+
+    </div>
