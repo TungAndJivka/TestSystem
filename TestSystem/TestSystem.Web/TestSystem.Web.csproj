@@ -6,12 +6,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Administration\Views\NewFolder\**" />
     <Compile Remove="Data\**" />
     <Compile Remove="Views\Account\**" />
+    <Content Remove="Areas\Administration\Views\NewFolder\**" />
     <Content Remove="Data\**" />
     <Content Remove="Views\Account\**" />
+    <EmbeddedResource Remove="Areas\Administration\Views\NewFolder\**" />
     <EmbeddedResource Remove="Data\**" />
     <EmbeddedResource Remove="Views\Account\**" />
+    <None Remove="Areas\Administration\Views\NewFolder\**" />
     <None Remove="Data\**" />
     <None Remove="Views\Account\**" />
   </ItemGroup>
@@ -38,7 +42,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Administration\Views\NewFolder\" />
     <Folder Include="Configuration\" />
     <Folder Include="wwwroot\css\font\" />
   </ItemGroup>
