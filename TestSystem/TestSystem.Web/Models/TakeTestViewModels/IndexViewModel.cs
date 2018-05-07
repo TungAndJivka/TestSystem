@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace TestSystem.Web.Models.TakeTestViewModels
 {
-    public class IndexViewModel // TakeTest
+    public class IndexViewModel
     {
         public string UserId { get; set; }
 

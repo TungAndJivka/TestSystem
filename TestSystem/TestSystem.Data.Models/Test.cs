@@ -20,7 +20,7 @@ namespace TestSystem.Data.Models
 
         [Required]
         public Guid CategoryId { get; set; }
-        public Category Category { get; set; }  //NP
+        public Category Category { get; set; }
         
         public ICollection<Question> Questions { get; set; }
 
@@ -30,6 +30,6 @@ namespace TestSystem.Data.Models
         [Required]
         public bool IsDisabled { get; set; }
 
-        public ICollection<UserTest> UserTests { get; set; } //NP
+        public ICollection<UserTest> UserTests { get; set; }
     }
 }

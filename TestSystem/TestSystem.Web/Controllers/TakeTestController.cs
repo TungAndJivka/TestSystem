@@ -34,7 +34,7 @@ namespace TestSystem.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(string id) // id => categoryName
+        public async Task<IActionResult> Index(string id)
         {
             var user = await this.userManager.GetUserAsync(HttpContext.User);
             StatusType check = resultService.CheckForTakenTest(user.Id, id);

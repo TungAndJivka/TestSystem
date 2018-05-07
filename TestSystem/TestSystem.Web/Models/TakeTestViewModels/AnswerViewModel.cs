@@ -10,8 +10,5 @@ namespace TestSystem.Web.Models.TakeTestViewModels
         public string Id { get; set; }
 
         public string Content { get; set; }
-
-        //public bool IsSelected { get; set; }
-
     }
 }

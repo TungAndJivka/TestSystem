@@ -9,6 +9,6 @@ namespace TestSystem.DTO
         
         public string Name { get; set; }
 
-        public ICollection<TestDto> Tests { get; set; } //NP
+        public ICollection<TestDto> Tests { get; set; }
     }
 }

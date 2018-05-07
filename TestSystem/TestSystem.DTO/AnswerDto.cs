@@ -12,7 +12,8 @@ namespace TestSystem.DTO
         public bool IsCorrect { get; set; }
 
         public Guid QuestionID { get; set; }
-        public QuestionDto Question { get; set; } //NP
+
+        public QuestionDto Question { get; set; }
 
         public ICollection<AnsweredQuestionDto> AnsweredQuestions { get; set; }
 

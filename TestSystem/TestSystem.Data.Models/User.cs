@@ -13,12 +13,12 @@ namespace TestSystem.Data.Models
             this.UserTests = new HashSet<UserTest>();
         }
 
-        public ICollection<Test> Tests { get; set; } // not used
+        public ICollection<Test> Tests { get; set; }
 
         public bool IsDeleted { get; set; }
 
 
-        public ICollection<UserTest> UserTests { get; set; } //NP
+        public ICollection<UserTest> UserTests { get; set; }
         public DateTime? DeletedOn { get; set; }
     }
 }

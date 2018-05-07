@@ -5,8 +5,6 @@ namespace TestSystem.Web.Areas.Administration.Models.CreateTestViewModels
 {
     public class AdministerTestViewModel
     {
-        //[Required(ErrorMessage = "Test ID is required!")]
-        //[StringLength(36, MinimumLength = 36, ErrorMessage = "Test ID must be 36 symbols")]
         public string Id { get; set; }
 
         [Required(ErrorMessage = "Test name is required")]

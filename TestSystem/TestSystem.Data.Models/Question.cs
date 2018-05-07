@@ -15,10 +15,10 @@ namespace TestSystem.Data.Models
         [Required]
         public string Description { get; set; }
 
-        public ICollection<Answer> Answers { get; set; } //NP
+        public ICollection<Answer> Answers { get; set; }
 
         [Required]
         public Guid TestId { get; set; }
-        public Test Test { get; set; } //NP
+        public Test Test { get; set; }
     }
 }

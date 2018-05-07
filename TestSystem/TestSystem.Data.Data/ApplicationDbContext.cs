@@ -1,9 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
 using TestSystem.Data.Models;
 
 namespace TestSystem.Web.Data
@@ -18,7 +17,6 @@ namespace TestSystem.Web.Data
 
         private void Seed()
         {
-            // Testing data:
             if (this.Categories != null && this.Categories.Count() > 0)
             {
                 return;

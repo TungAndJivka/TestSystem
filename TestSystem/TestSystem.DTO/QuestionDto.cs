@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace TestSystem.DTO
 {
@@ -13,6 +11,7 @@ namespace TestSystem.DTO
         public ICollection<AnswerDto> Answers { get; set; }
 
         public string TestId { get; set; }
-        public TestDto Test { get; set; } //NP
+
+        public TestDto Test { get; set; }
     }
 }

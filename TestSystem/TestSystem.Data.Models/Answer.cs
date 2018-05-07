@@ -16,11 +16,11 @@ namespace TestSystem.Data.Models
         public string Content { get; set; }
 
         public Guid QuestionID { get; set; }
-        public Question Question { get; set; } //NP
+        public Question Question { get; set; }
 
         [Required]
         public bool IsCorrect {get; set;}
 
-        public ICollection<AnsweredQuestion> AnsweredQuestions { get; set; } //NP
+        public ICollection<AnsweredQuestion> AnsweredQuestions { get; set; }
     }
 }

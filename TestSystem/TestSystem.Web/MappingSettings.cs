@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using System;
 using TestSystem.Data.Models;
 using TestSystem.DTO;
 using TestSystem.Web.Areas.Administration.Models.CreateTestViewModels;
@@ -11,7 +10,6 @@ namespace TestSystem.Web
     {
         public MappingSettings()
         {
-
             ViewModelToDtoMapping();
 
             DtoToViewModelMapping();
@@ -19,7 +17,6 @@ namespace TestSystem.Web
             DtoToDataModelMapping();
 
             DataModelToDtoMapping();
-           
         }
 
 
@@ -92,11 +89,8 @@ namespace TestSystem.Web
                 .ForMember(t => t.Questions, o => o.MapFrom(t => t.Questions));
 
             this.CreateMap<AdministerQuestionDto, Question>(MemberList.Source);
-                //.ForMember(db => db.Id, options => options.MapFrom(dto => new Guid(dto.Id)))
-                //.ForMember(db => db.Answers, o => o.MapFrom(dto => dto.Answers));
 
             this.CreateMap<AdministerAnswerDto, Answer>(MemberList.Source);
-                //.ForMember(db => db.Id, options => options.MapFrom(dto => new Guid(dto.Id)));
 
             this.CreateMap<UserTestDto, UserTest>(MemberList.Source)
                 .ForMember(db => db.AnsweredQuestions, o => o.MapFrom(dto => dto.AnsweredQuestions))

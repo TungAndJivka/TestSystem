@@ -9,8 +9,11 @@ namespace TestSystem.Data.Data.Repositories
         IQueryable<T> All { get; }
 
         void Add(T entity);
+
         void Delete(T entity);
+
         void RealDelete(T entity);
+
         void Update(T entity);
     }
 }

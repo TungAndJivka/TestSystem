@@ -15,7 +15,7 @@ namespace TestSystem.Data.Models
         [Required]
         public string Name { get; set; }
 
-        public ICollection<Test> Tests { get; set; } //NP
+        public ICollection<Test> Tests { get; set; }
 
     }
 }

@@ -249,10 +249,8 @@ namespace TestSystem.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> LinkLogin(string provider)
         {
-            // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
-            // Request a redirect to the external login provider to link a login for the current user
             var redirectUrl = Url.Action(nameof(LinkLoginCallback));
             var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl, _userManager.GetUserId(User));
             return new ChallengeResult(provider, properties);
@@ -279,7 +277,6 @@ namespace TestSystem.Web.Controllers
                 throw new ApplicationException($"Unexpected error occurred adding external login for user with ID '{user.Id}'.");
             }
 
-            // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
             StatusMessage = "The external login was added.";
@@ -394,7 +391,6 @@ namespace TestSystem.Web.Controllers
                 return View(model);
             }
 
-            // Strip spaces and hypens
             var verificationCode = model.Code.Replace(" ", string.Empty).Replace("-", string.Empty);
 
             var is2faTokenValid = await _userManager.VerifyTwoFactorTokenAsync(
