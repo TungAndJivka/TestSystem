@@ -913,5 +913,147 @@ namespace TestSystem.Tests.Business.Services
                 => new TestService(testRepoMock.Object, null, mapperMock.Object, saverMock.Object, randomMock.Object, questionServiceMock.Object));
         }
 
+
+
+// DisableTest() TESTS
+
+        [TestMethod]
+        public void DisableTest_Should_Throw_ArgumentNullException_When_TestId_Is_Null()
+        {
+            Assert.ThrowsException<ArgumentNullException>(() => testService.DisableTest(null));
+        }
+
+        [TestMethod]
+        public void DisableTest_Should_Set_IsDisabled_True()
+        {
+            // Arrange
+            Guid guid = Guid.NewGuid();
+            var test = new Test() { Id = guid };
+            var all = new List<Test>() { test };
+
+            testRepoMock.Setup(x => x.All).Verifiable();
+            testRepoMock.Setup(x => x.Update(It.IsAny<Test>())).Verifiable();
+            testRepoMock.Setup(x => x.All).Returns(all.AsQueryable());
+            saverMock.Setup(x => x.SaveChanges()).Verifiable();
+
+            // Act
+            testService.DisableTest(guid.ToString());
+
+            // Assert
+            Assert.IsTrue(test.IsDisabled == true);
+        }
+
+
+        [TestMethod]
+        public void DisableTest_Should_Call_Repo_Update()
+        {
+            // Arrange
+            Guid guid = Guid.NewGuid();
+            var test = new Test() { Id = guid };
+            var all = new List<Test>() { test };
+
+            testRepoMock.Setup(x => x.All).Verifiable();
+            testRepoMock.Setup(x => x.Update(It.IsAny<Test>())).Verifiable();
+            testRepoMock.Setup(x => x.All).Returns(all.AsQueryable());
+            saverMock.Setup(x => x.SaveChanges()).Verifiable();
+
+            // Act
+            testService.DisableTest(guid.ToString());
+
+            // Assert
+            testRepoMock.Verify(x => x.Update(It.IsAny<Test>()), Times.Once);
+        }
+
+        [TestMethod]
+        public void DisableTest_Should_Call_Saver_SaveChanges()
+        {
+            // Arrange
+            Guid guid = Guid.NewGuid();
+            var test = new Test() { Id = guid };
+            var all = new List<Test>() { test };
+
+            testRepoMock.Setup(x => x.All).Verifiable();
+            testRepoMock.Setup(x => x.Update(It.IsAny<Test>())).Verifiable();
+            testRepoMock.Setup(x => x.All).Returns(all.AsQueryable());
+            saverMock.Setup(x => x.SaveChanges()).Verifiable();
+
+            // Act
+            testService.DisableTest(guid.ToString());
+
+            // Assert
+            saverMock.Verify(x => x.SaveChanges(), Times.Once);
+        }
+
+
+
+// EnableTest() TESTS
+
+        [TestMethod]
+        public void EnableTest_Should_Throw_ArgumentNullException_When_TestId_Is_Null()
+        {
+            Assert.ThrowsException<ArgumentNullException>(() => testService.DisableTest(null));
+        }
+
+        [TestMethod]
+        public void EnableTest_Should_Set_IsDisabled_False()
+        {
+            // Arrange
+            Guid guid = Guid.NewGuid();
+            var test = new Test() { Id = guid };
+            var all = new List<Test>() { test };
+
+            testRepoMock.Setup(x => x.All).Verifiable();
+            testRepoMock.Setup(x => x.Update(It.IsAny<Test>())).Verifiable();
+            testRepoMock.Setup(x => x.All).Returns(all.AsQueryable());
+            saverMock.Setup(x => x.SaveChanges()).Verifiable();
+
+            // Act
+            testService.EnableTest(guid.ToString());
+
+            // Assert
+            Assert.IsTrue(test.IsDisabled == false);
+        }
+
+
+        [TestMethod]
+        public void EnableTest_Should_Call_Repo_Update()
+        {
+            // Arrange
+            Guid guid = Guid.NewGuid();
+            var test = new Test() { Id = guid };
+            var all = new List<Test>() { test };
+
+            testRepoMock.Setup(x => x.All).Verifiable();
+            testRepoMock.Setup(x => x.Update(It.IsAny<Test>())).Verifiable();
+            testRepoMock.Setup(x => x.All).Returns(all.AsQueryable());
+            saverMock.Setup(x => x.SaveChanges()).Verifiable();
+
+            // Act
+            testService.EnableTest(guid.ToString());
+
+            // Assert
+            testRepoMock.Verify(x => x.Update(It.IsAny<Test>()), Times.Once);
+        }
+
+        [TestMethod]
+        public void EnableTest_Should_Call_Saver_SaveChanges()
+        {
+            // Arrange
+            Guid guid = Guid.NewGuid();
+            var test = new Test() { Id = guid };
+            var all = new List<Test>() { test };
+
+            testRepoMock.Setup(x => x.All).Verifiable();
+            testRepoMock.Setup(x => x.Update(It.IsAny<Test>())).Verifiable();
+            testRepoMock.Setup(x => x.All).Returns(all.AsQueryable());
+            saverMock.Setup(x => x.SaveChanges()).Verifiable();
+
+            // Act
+            testService.EnableTest(guid.ToString());
+
+            // Assert
+            saverMock.Verify(x => x.SaveChanges(), Times.Once);
+        }
+
     }
 }
