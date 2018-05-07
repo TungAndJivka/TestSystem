@@ -152,6 +152,7 @@ namespace TestSystem.Services
         public IEnumerable<TestResultDto> GetTestResultsForDashBoard()
         {
             var results = this.userTestRepo.All
+                .Where(r => r.SubmittedOn != null && r.Score != null)
                 .Include(ut => ut.User)
                 .Include(ut => ut.Test)
                 .ThenInclude(t => t.Category);
