@@ -159,5 +159,10 @@ namespace TestSystem.Services
 
             return this.Mapper.ProjectTo<TestResultDto>(results);
         }
+
+        public int GetTestsTaken()
+        {
+            return this.userTestRepo.All.Count();
+        }
     }
 }

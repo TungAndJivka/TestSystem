@@ -1,4 +1,10 @@
-﻿.table-header {
+﻿#testsTakenStatistic {
+    font-size: 25px;
+    color: #FA8258;
+    margin-top: 200px;
+}
+
+.table-header {
     font-size: 16px;
     color: white;
     font-weight: bolder;

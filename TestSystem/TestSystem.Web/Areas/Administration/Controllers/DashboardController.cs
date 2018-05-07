@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,15 +19,18 @@ namespace TestSystem.Web.Areas.Administration.Controllers
         private readonly ITestService testService;
         private readonly IResultService resultService;
         private readonly IMappingProvider mapper;
+        private IMemoryCache memoryCache;
 
         public DashboardController(
             ITestService testService,
             IResultService resultService,
-            IMappingProvider mapper)
+            IMappingProvider mapper,
+            IMemoryCache memoryCache)
         {
             this.testService = testService;
             this.resultService = resultService;
             this.mapper = mapper;
+            this.memoryCache = memoryCache;
         }
 
         [HttpGet]
@@ -35,6 +39,8 @@ namespace TestSystem.Web.Areas.Administration.Controllers
             var results = resultService.GetTestResultsForDashBoard();
             var TestResultViewModels = this.mapper.EnumerableProjectTo<TestResultDto, TestResultViewModel>(results).ToList();
             model.TestResults = TestResultViewModels;
+
+
 
             var existingTestDtos = testService.AllTestsForDashBoard();
             var existingTests = this.mapper.EnumerableProjectTo<ExistingTestDto, ExistingTestViewModel>(existingTestDtos).ToList();

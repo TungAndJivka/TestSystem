@@ -21,5 +21,7 @@ namespace TestSystem.Services.Contracts
         TestDto GetTestFromCategory(string userId, string categoryName);
 
         IEnumerable<TestResultDto> GetTestResultsForDashBoard();
+
+        int GetTestsTaken();
     }
 }

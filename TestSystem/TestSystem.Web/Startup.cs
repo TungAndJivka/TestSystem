@@ -92,6 +92,7 @@ namespace TestSystem.Web
         private void RegisterInfrastructure(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddMemoryCache();
             services.AddAutoMapper();
             services.AddScoped<IMappingProvider, MappingProvider>();
             services.AddScoped<IRandomProvider, RandomProvider>();

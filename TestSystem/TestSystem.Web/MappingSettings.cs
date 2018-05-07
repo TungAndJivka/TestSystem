@@ -82,7 +82,6 @@ namespace TestSystem.Web
                 .ReverseMap();
         }
 
-
         private void DtoToDataModelMapping()
         {
             this.CreateMap<AdministerTestDto, Test>()
@@ -99,7 +98,6 @@ namespace TestSystem.Web
             this.CreateMap<AnsweredQuestionDto, AnsweredQuestion>(MemberList.Source)
                 .ForMember(db => db.Id, options => options.MapFrom(dto => dto.Id));
         }
-
 
         private void DataModelToDtoMapping()
         {
