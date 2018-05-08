@@ -41,7 +41,7 @@ namespace TestSystem.Web.Controllers
 
         public IActionResult Index()
         {
-            var categoriesDto = this.categoryService.GetAllWithPublsihedTests();
+            var categoriesDto = this.categoryService.GetAllWithPublsihedAndActiveTests();
             int testsTaken;    
             var userId = userManager.GetUserId(HttpContext.User);
             var testsSumbitted = resultService.GetUserResults(userId);

@@ -9,6 +9,6 @@ namespace TestSystem.Services.Contracts
 
         IEnumerable<CategoryDto> GetAllWithTests();
 
-        IEnumerable<CategoryDto> GetAllWithPublsihedTests();
+        IEnumerable<CategoryDto> GetAllWithPublsihedAndActiveTests();
     }
 }

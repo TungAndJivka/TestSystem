@@ -30,9 +30,9 @@ namespace TestSystem.Services
             return categories;
         }
 
-        public IEnumerable<CategoryDto> GetAllWithPublsihedTests()
+        public IEnumerable<CategoryDto> GetAllWithPublsihedAndActiveTests()
         {
-            var entities = this.categoryRepo.All.Include(c => c.Tests).Where(c => c.Tests.Any<Test>(t => t.IsPusblished));            
+            var entities = this.categoryRepo.All.Include(c => c.Tests).Where(c => c.Tests.Any<Test>(t => t.IsPusblished && (t.IsDisabled ==false)));            
             var categories = this.Mapper.ProjectTo<CategoryDto>(entities);
             return categories;
         }
