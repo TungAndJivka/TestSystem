@@ -113,7 +113,7 @@ namespace TestSystem.Tests.Business.Services
             mapperMock.Setup(x => x.ProjectTo<CategoryDto>(It.IsAny<IQueryable<Category>>())).Returns(allDto.AsQueryable());
 
             // Act
-            var cats = categoryService.GetAllWithPublsihedTests();
+            var cats = categoryService.GetAllWithPublsihedAndActiveTests();
 
             // Assert
             categoryRepoMock.Verify(x => x.All, Times.Once);
@@ -141,7 +141,7 @@ namespace TestSystem.Tests.Business.Services
             mapperMock.Setup(x => x.ProjectTo<CategoryDto>(It.IsAny<IQueryable<Category>>())).Returns(allDto.AsQueryable());
 
             // Act
-            var cats = categoryService.GetAllWithPublsihedTests();
+            var cats = categoryService.GetAllWithPublsihedAndActiveTests();
 
             // Assert
             mapperMock.Verify(x => x.ProjectTo<CategoryDto>(It.IsAny<IQueryable<Category>>()), Times.Once);
@@ -169,7 +169,7 @@ namespace TestSystem.Tests.Business.Services
             mapperMock.Setup(x => x.ProjectTo<CategoryDto>(It.IsAny<IQueryable<Category>>())).Returns(allDto.AsQueryable());
 
             // Act
-            var cats = categoryService.GetAllWithPublsihedTests();
+            var cats = categoryService.GetAllWithPublsihedAndActiveTests();
 
             // Assert
             Assert.AreEqual(1, cats.Count());
@@ -198,7 +198,7 @@ namespace TestSystem.Tests.Business.Services
             mapperMock.Setup(x => x.ProjectTo<CategoryDto>(It.IsAny<IQueryable<Category>>())).Returns(allDto.AsQueryable());
 
             // Act
-            var cats = categoryService.GetAllWithPublsihedTests();
+            var cats = categoryService.GetAllWithPublsihedAndActiveTests();
 
             // Assert
             Assert.AreEqual(2, cats.First().Tests.Count());
